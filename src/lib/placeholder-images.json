@@ -1,3 +1,70 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Abstract background representing financial growth and data.",
+      "imageUrl": "https://images.unsplash.com/photo-1762279389002-7b6abd7bd6c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGZpbmFuY2V8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract finance"
+    },
+    {
+      "id": "article-1",
+      "description": "Image for an article about MASI index analysis.",
+      "imageUrl": "https://images.unsplash.com/photo-1649003515353-c58a239cf662?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdG9jayUyMGNoYXJ0fGVufDB8fHx8MTc2NjY5NjM1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stock chart"
+    },
+    {
+      "id": "article-2",
+      "description": "Image for an article about Moroccan banking sector.",
+      "imageUrl": "https://images.unsplash.com/photo-1644093387522-b1be6de270a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb2Rlcm4lMjBiYW5rfGVufDB8fHx8MTc2NjcwNDk3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern bank"
+    },
+    {
+      "id": "article-3",
+      "description": "Image for an article about real estate investment in Morocco.",
+      "imageUrl": "https://images.unsplash.com/photo-1643875402004-22631ef914aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc2NjY3NDk3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city architecture"
+    },
+    {
+      "id": "course-1",
+      "description": "Image for a course on how to invest your first salary.",
+      "imageUrl": "https://images.unsplash.com/photo-1573496799515-eebbb63814f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx5b3VuZyUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "young professional"
+    },
+    {
+      "id": "course-2",
+      "description": "Image for a course on advanced stock analysis.",
+      "imageUrl": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkYXRhJTIwYW5hbHlzaXN8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "data analysis"
+    },
+    {
+      "id": "resource-1",
+      "description": "Image for a digital product, a fee simulator.",
+      "imageUrl": "https://images.unsplash.com/photo-1716799323871-d82962608d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWxjdWxhdG9yJTIwbW9uZXl8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "calculator money"
+    },
+    {
+      "id": "resource-2",
+      "description": "Image for a digital product, a comparison list.",
+      "imageUrl": "https://images.unsplash.com/photo-1554224155-cfa08c2a758f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjaGVja2xpc3QlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "checklist document"
+    },
+    {
+      "id": "feature-articles",
+      "description": "Image for the articles feature card on the homepage.",
+      "imageUrl": "https://images.unsplash.com/photo-1734080512636-2741e9e3a2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXdzcGFwZXIlMjByZWFkaW5nfGVufDB8fHx8MTc2NjY2MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "newspaper reading"
+    },
+    {
+      "id": "feature-tools",
+      "description": "Image for the tools feature card on the homepage.",
+      "imageUrl": "https://images.unsplash.com/photo-1581166418878-11f0dde922c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VhcnMlMjB0b29sc3xlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gears tools"
+    },
+    {
+      "id": "feature-courses",
+      "description": "Image for the courses feature card on the homepage.",
+      "imageUrl": "https://images.unsplash.com/photo-1610484826967-09c5720778c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NjY2NzI0ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "online learning"
+    }
+  ]
 }
