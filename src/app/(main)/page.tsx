@@ -89,7 +89,7 @@ export default function Home() {
                      <div className="aspect-video overflow-hidden">
                         <Image
                             src={feature.image.imageUrl}
-                            alt={feature.image.description}
+                            alt={feature.title}
                             data-ai-hint={feature.image.imageHint}
                             width={600}
                             height={400}
