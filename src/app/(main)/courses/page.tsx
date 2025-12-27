@@ -19,6 +19,16 @@ const courses: Course[] = [
     href: "/courses/formation-bourse-casablanca"
   },
   {
+    id: "4",
+    title: "Excel & Power BI pour la Finance : de Débutant à Avancé",
+    description: "Maîtrisez Excel, Power Query et Power BI pour l'analyse de données financières. Une compétence très demandée, incluant un coaching carrière.",
+    level: "Tous Niveaux",
+    duration: "16 Heures",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'course-excel-power-bi')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'course-excel-power-bi')?.imageHint || '',
+    href: "/courses/formation-excel-power-bi"
+  },
+  {
     id: "1",
     title: "Comment Investir Votre Premier Salaire",
     description: "Un guide pour débutants pour commencer votre parcours d'investissement au Maroc. Apprenez les bases des actions, des obligations et de la création d'un portefeuille équilibré.",
@@ -26,16 +36,6 @@ const courses: Course[] = [
     duration: "4 Semaines",
     imageUrl: PlaceHolderImages.find(p => p.id === 'course-1')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'course-1')?.imageHint || '',
-    href: "#"
-  },
-  {
-    id: "2",
-    title: "Analyse et Évaluation Avancées des Actions",
-    description: "Maîtrisez l'analyse fondamentale et technique pour évaluer les actions marocaines. Ce cours est destiné à ceux qui cherchent à approfondir leurs compétences analytiques.",
-    level: "Avancé",
-    duration: "8 Semaines",
-    imageUrl: PlaceHolderImages.find(p => p.id === 'course-2')?.imageUrl || '',
-    imageHint: PlaceHolderImages.find(p => p.id === 'course-2')?.imageHint || '',
     href: "#"
   },
 ];
@@ -52,13 +52,13 @@ export default function CoursesPage() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
         {courses.map((course) => (
           <Card key={course.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            {course.id === "3" && (
+            {(course.id === "3" || course.id === "4") && (
                 <Badge className="absolute top-4 right-4 flex items-center gap-1 z-10 bg-yellow-400 text-yellow-900">
                     <Star className="h-4 w-4" /> NOUVEAU
                 </Badge>
             )}
             <CardHeader className="p-0">
-                <Link href={course.href} className="block aspect-video overflow-hidden">
+                <Link href={course.href} className="block aspect-video overflow-hidden group">
                     <Image
                         src={course.imageUrl}
                         alt={course.title}

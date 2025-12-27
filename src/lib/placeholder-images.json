@@ -31,10 +31,10 @@
       "imageHint": "young professional"
     },
     {
-      "id": "course-2",
-      "description": "Image for a course on advanced stock analysis.",
-      "imageUrl": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkYXRhJTIwYW5hbHlzaXN8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "data analysis"
+      "id": "course-excel-power-bi",
+      "description": "Image representing data analysis with spreadsheets and charts.",
+      "imageUrl": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleGNlbCUyMGRhc2hib2FyZHxlbnwwfHx8fDE3MjE4MTg0OTN8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "excel dashboard"
     },
     {
       "id": "resource-1",
@@ -51,7 +51,7 @@
     {
       "id": "feature-articles",
       "description": "Image for the articles feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1734080512636-2741e9e3a2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXdzcGFwZXIlMjByZWFkaW5nfGVufDB8fHx8MTc2NjY2MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1734080512636-2741e9e3a2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXdzcGFwZXIlMjByZWFkaW5nfGVufDB8fHx8fDE3NjY2NjE3Njh8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "newspaper reading"
     },
     {
