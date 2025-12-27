@@ -4,13 +4,15 @@
 import { useState } from 'react';
 
 // Instruction: Ce fichier est un outil temporaire pour vous aider à pousser votre code sur GitHub.
-// 1. Installez Node.js sur votre ordinateur si ce n'est pas déjà fait.
-// 2. Créez un jeton d'accès personnel sur GitHub avec les permissions "repo".
-//    (https://github.com/settings/tokens/new)
-// 3. Copiez TOUT le contenu de ce fichier dans un nouveau fichier sur votre ordinateur (ex: `upload.js`).
-// 4. Ouvrez un terminal et exécutez les commandes suivantes :
-//    - npm install @octokit/rest
-//    - GITHUB_TOKEN="VOTRE_JETON_ICI" node upload.js
+// Comme vous travaillez directement sur GitHub, la méthode la plus simple est la suivante.
+// 1. Sur votre dépôt GitHub en ligne, cliquez sur "Add file" > "Create new file".
+// 2. Pour chaque fichier listé ci-dessous dans `ALL_FILES`, copiez le chemin du fichier (ex: "src/app/page.tsx").
+// 3. Collez ce chemin dans le champ de nom de fichier sur GitHub.
+// 4. Copiez le contenu du fichier (tout ce qui se trouve entre les ```) et collez-le dans l'éditeur de fichier sur GitHub.
+// 5. Cliquez sur "Commit new file".
+// 6. Répétez pour tous les fichiers.
+
+// Une fois que vous avez transféré tous les fichiers une première fois, vous n'aurez plus qu'à mettre à jour ceux qui changent.
 
 const ALL_FILES = {
   ".env": ``,
@@ -28,7 +30,8 @@ runConfig:
   # more instances in response to increased traffic.
   maxInstances: 1
 `,
-  "components.json": `  "$schema": "https://ui.shadcn.com/schema.json",
+  "components.json": `{
+  "$schema": "https://ui.shadcn.com/schema.json",
   "style": "default",
   "rsc": true,
   "tsx": true,
@@ -602,7 +605,30 @@ const modules = [
       "Passer un ordre : limité, au marché et lecture du carnet d'ordres",
       "Cas pratique : calcul des frais sur un ordre réel",
     ],
-deep,
+  },
+  {
+    icon: BarChart,
+    title: "MODULE 3 : Analyse fondamentale – Version Spéciale Maroc",
+    points: [
+      "Lire et interpréter les publications des sociétés marocaines",
+      "Analyse financière complète (Bilan, Compte de résultat)",
+      "Ratios clés appliqués aux actions marocaines (PER, PBV, ROE, Yield)",
+      "Cas pratiques ultra détaillés : HPS, IAM, Label'Vie, Attijariwafa bank",
+    ],
+  },
+  {
+    icon: FileText,
+    title: "MODULE 4 : Analyse sectorielle du marché marocain",
+    points: [
+      "Banques et Assurances : ratios et analyse spécifique",
+      "Immobilier coté marocain (Risma, Aradei Capital)",
+      "BTP & matériaux (LafargeHolcim, TGCC)",
+      "Distribution, Consommation, Télécom & Énergie",
+    ],
+  },
+    {
+    icon: Radio,
+    title: "MODULE 5 : Analyse technique (Casablanca Edition)",
     points: [
         "Principaux outils appliqués aux actions marocaines",
         "Tendance MASI et moyennes mobiles",
@@ -951,7 +977,7 @@ export function CourseCurriculum() {
     <Dialog>
       <DialogTrigger asChild>
         <Button size="lg" className="font-bold text-lg w-full md:w-auto">
-          Voir le Programme &amp; le Prix
+          Voir le Programme & le Prix
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col">
@@ -2076,7 +2102,7 @@ import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/componentsİnput";
+import { Input } from "@/components/ui/input";
 import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
@@ -5176,7 +5202,7 @@ export {
   "src/components/ui/separator.tsx": `"use client"
 
 import * as React from "react"
-import *SeparatorPrimitive from "@radix-ui/react-separator"
+import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
 import { cn } from "@/lib/utils"
 
@@ -6828,7 +6854,7 @@ export { useToast, toast }
     {
       "id": "course-excel-power-bi",
       "description": "Image representing data analysis with spreadsheets and charts.",
-      "imageUrl": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleGNlbCUyMGRhc2hib2FyZHxlbnwwfHx8fDE3MjE4MTg0OTN8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxleGNlbCUyMGRhc2hib2FyZHxlbnwwfHx8fDE3MjE4MTg0OTN8MA&ixlib-rb-4.0.3&q=80&w=1080",
       "imageHint": "excel dashboard"
     },
     {
@@ -6858,7 +6884,7 @@ export { useToast, toast }
     {
       "id": "feature-courses",
       "description": "Image for the courses feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1610484826967-09c5720778c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NjY2NzI0ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1610484826967-09c5720778c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NjY2NzI0ODh8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "online learning"
     },
     {
@@ -7082,170 +7108,54 @@ export default {
 `
 };
 
-export default function GithubUploader() {
-  const [logs, setLogs] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState('');
-  const [repo, setRepo] = useState('smixjp2/the-moroccan-community');
-  const [owner, setOwner] = useState('smixjp2');
+// This is a simple React component that renders the file data.
+// In a real scenario, you'd use this data to create files in your GitHub repo.
+export default function GithubFileHelper() {
+  const [copied, setCopied] = useState('');
 
-  const pushToGithub = async () => {
-    setLoading(true);
-    setLogs([]);
-
-    const log = (message: string) => {
-      setLogs(prev => [...prev, message]);
-    };
-
-    try {
-      const { Octokit } = await import('@octokit/rest');
-      const octokit = new Octokit({ auth: token });
-
-      log('Authentification réussie.');
-
-      const repoName = repo.split('/')[1];
-
-      // 1. Get the latest commit SHA of the main branch
-      const { data: refData } = await octokit.git.getRef({
-        owner,
-        repo: repoName,
-        ref: 'heads/main',
-      });
-      const latestCommitSha = refData.object.sha;
-      log(`Dernier commit SHA: \${latestCommitSha}`);
-
-      // 2. Get the tree of the latest commit
-      const { data: commitData } = await octokit.git.getCommit({
-        owner,
-        repo: repoName,
-        commit_sha: latestCommitSha,
-      });
-      const latestTreeSha = commitData.tree.sha;
-      log(`Dernier arbre SHA: \${latestTreeSha}`);
-      
-      // 3. Create blobs for all files
-      const blobs = await Promise.all(
-        Object.entries(ALL_FILES).map(async ([path, content]) => {
-            log(`Création du blob pour: \${path}`);
-            const { data: blobData } = await octokit.git.createBlob({
-                owner,
-                repo: repoName,
-                content: Buffer.from(content).toString('base64'),
-                encoding: 'base64',
-            });
-            return {
-                path,
-                mode: '100644' as const, // file
-                type: 'blob' as const,
-                sha: blobData.sha,
-            };
-        })
-      );
-      log('Tous les blobs ont été créés.');
-
-      // 4. Create a new tree with the new blobs
-      const { data: newTree } = await octokit.git.createTree({
-        owner,
-        repo: repoName,
-        tree: blobs,
-        base_tree: latestTreeSha,
-      });
-      log(`Nouvel arbre créé: \${newTree.sha}`);
-      
-      // 5. Create a new commit
-      const { data: newCommit } = await octokit.git.createCommit({
-        owner,
-        repo: repoName,
-        message: 'Mise à jour automatique depuis Firebase Studio',
-        tree: newTree.sha,
-        parents: [latestCommitSha],
-      });
-      log(`Nouveau commit créé: \${newCommit.sha}`);
-
-      // 6. Update the main branch reference to point to the new commit
-      await octokit.git.updateRef({
-        owner,
-        repo: repoName,
-        ref: 'heads/main',
-        sha: newCommit.sha,
-      });
-
-      log('🎉 Succès ! La branche "main" a été mise à jour.');
-      log('Cloudflare Pages devrait maintenant démarrer un nouveau déploiement.');
-
-    } catch (error) {
-      console.error(error);
-      log('❌ Erreur: ' + (error instanceof Error ? error.message : 'Une erreur inconnue est survenue.'));
-      log('Vérifiez votre jeton, le nom du dépôt et les permissions.');
-    } finally {
-      setLoading(false);
-    }
+  const handleCopy = (filePath: string, content: string) => {
+    navigator.clipboard.writeText(content);
+    setCopied(filePath);
+    setTimeout(() => setCopied(''), 2000);
   };
 
   return (
     <div style={{ fontFamily: 'sans-serif', padding: '20px', color: '#333' }}>
-      <h1>Script de Déploiement vers GitHub</h1>
-      <p>Cet outil va pousser tous les fichiers du projet directement vers votre dépôt GitHub.</p>
-      
-      <div>
-        <label htmlFor="token" style={{ display: 'block', marginBottom: '5px' }}>
-          GitHub Personal Access Token:
-        </label>
-        <input
-          id="token"
-          type="password"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-          placeholder="collez votre jeton ici"
-          style={{ width: '400px', padding: '5px', marginBottom: '10px' }}
-        />
-      </div>
+      <h1>Aide au transfert de fichiers vers GitHub</h1>
+      <p style={{backgroundColor: '#ffebe6', border: '1px solid #ffcdd2', padding: '10px', borderRadius: '5px'}}>
+        <strong>Instruction importante :</strong> Pour chaque fichier ci-dessous, utilisez le bouton "Créer un fichier" dans l'interface de GitHub. Copiez le chemin du fichier, puis copiez le contenu du fichier et collez-le. Répétez cette opération pour tous les fichiers.
+      </p>
 
-      <div>
-        <label htmlFor="repo" style={{ display: 'block', marginBottom: '5px' }}>
-          Dépôt GitHub (propriétaire/nom):
-        </label>
-        <input
-          id="repo"
-          type="text"
-          value={repo}
-          onChange={(e) => {
-              setRepo(e.target.value);
-              setOwner(e.target.value.split('/')[0]);
-          }}
-          style={{ width: '400px', padding: '5px', marginBottom: '20px' }}
-        />
-      </div>
-      
-      <button 
-        onClick={pushToGithub} 
-        disabled={loading || !token || !repo}
-        style={{ 
-            padding: '10px 20px', 
-            fontSize: '16px', 
-            cursor: loading ? 'not-allowed' : 'pointer',
-            backgroundColor: (loading || !token || !repo) ? '#ccc' : '#0070f3',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px'
-        }}
-      >
-        {loading ? 'Déploiement en cours...' : 'Pousser vers GitHub'}
-      </button>
-
-      <div style={{ 
-          marginTop: '20px', 
-          backgroundColor: '#f5f5f5', 
-          border: '1px solid #ddd', 
-          padding: '10px',
-          height: '300px',
-          overflowY: 'scroll',
-          fontFamily: 'monospace'
-      }}>
-        {logs.map((log, index) => (
-          <div key={index}>{log}</div>
-        ))}
-      </div>
+      {Object.entries(ALL_FILES).map(([path, content]) => (
+        <div key={path} style={{ border: '1px solid #ddd', borderRadius: '5px', marginBottom: '15px', padding: '10px' }}>
+          <h3 style={{ margin: '0 0 10px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <input 
+              type="text" 
+              readOnly 
+              value={path} 
+              style={{ flexGrow: 1, marginRight: '10px', padding: '5px', border: '1px solid #ccc', borderRadius: '3px' }} 
+              onClick={(e) => (e.target as HTMLInputElement).select()}
+            />
+            <button 
+              onClick={() => handleCopy(path, content)}
+              style={{
+                padding: '5px 10px',
+                cursor: 'pointer',
+                backgroundColor: copied === path ? '#4caf50' : '#0070f3',
+                color: 'white',
+                border: 'none',
+                borderRadius: '3px'
+              }}
+            >
+              {copied === path ? 'Contenu copié !' : 'Copier le contenu'}
+            </button>
+          </h3>
+          <pre style={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '3px', maxHeight: '200px', overflowY: 'auto', whiteSpace: 'pre-wrap' }}>
+            <code>{content}</code>
+          </pre>
+        </div>
+      ))}
     </div>
   );
 }
+
