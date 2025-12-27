@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, Newspaper, Wrench, GraduationCap } from "lucide-react";
+import { ArrowRight, Newspaper, Wrench, GraduationCap, Crown } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Input } from "@/components/ui/input";
 
@@ -12,6 +12,7 @@ const featureImages = {
   tools: PlaceHolderImages.find(p => p.id === 'feature-tools'),
   courses: PlaceHolderImages.find(p => p.id === 'feature-courses'),
 }
+const privateCommunityImage = PlaceHolderImages.find(p => p.id === 'private-community');
 
 const features = [
   {
@@ -107,6 +108,39 @@ export default function Home() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <div className="relative rounded-lg overflow-hidden p-8 md:p-12 text-center text-white bg-card">
+              {privateCommunityImage && (
+                <Image
+                  src={privateCommunityImage.imageUrl}
+                  alt={privateCommunityImage.description}
+                  data-ai-hint={privateCommunityImage.imageHint}
+                  fill
+                  className="object-cover"
+                />
+              )}
+              <div className="absolute inset-0 bg-primary/80" />
+              <div className="relative z-10 max-w-2xl mx-auto">
+                  <div className="mb-4">
+                      <Crown className="h-12 w-12 mx-auto text-yellow-300" />
+                  </div>
+                  <h2 className="font-headline text-3xl font-bold md:text-4xl text-primary-foreground">
+                      Rejoignez notre Communauté Privée
+                  </h2>
+                  <p className="mt-4 text-lg text-primary-foreground/90">
+                      Accédez à du contenu exclusif, des analyses approfondies et interagissez directement avec nous en devenant membre payant sur YouTube.
+                  </p>
+                  <Button asChild size="lg" className="mt-8 font-bold bg-background text-foreground hover:bg-background/90">
+                      <a href="https://www.youtube.com/channel/UCK6m2fe2txUxNFxpn65rURg/join" target="_blank" rel="noopener noreferrer">
+                          Devenir Membre
+                      </a>
+                  </Button>
+              </div>
           </div>
         </div>
       </section>
