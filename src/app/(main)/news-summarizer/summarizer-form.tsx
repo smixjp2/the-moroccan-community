@@ -14,13 +14,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2, PlusCircle, Trash2, Sparkles } from "lucide-react";
 
 const articleSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  content: z.string().min(1, "Content is required"),
-  source: z.string().min(1, "Source is required"),
+  title: z.string().min(1, "Le titre est requis"),
+  content: z.string().min(1, "Le contenu est requis"),
+  source: z.string().min(1, "La source est requise"),
 });
 
 const formSchema = z.object({
-  articles: z.array(articleSchema).min(1, "Please add at least one article."),
+  articles: z.array(articleSchema).min(1, "Veuillez ajouter au moins un article."),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -50,7 +50,7 @@ export default function SummarizerForm() {
       const response = await summarizeInvestmentNews(values);
       setSummary(response.summary);
     } catch (e) {
-      setError("An error occurred while generating the summary. Please try again.");
+      setError("Une erreur est survenue lors de la génération du résumé. Veuillez réessayer.");
       console.error(e);
     } finally {
       setLoading(false);
@@ -61,8 +61,8 @@ export default function SummarizerForm() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">News Articles</CardTitle>
-          <CardDescription>Add one or more articles to summarize.</CardDescription>
+          <CardTitle className="font-headline">Articles de Presse</CardTitle>
+          <CardDescription>Ajoutez un ou plusieurs articles à résumer.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -78,7 +78,7 @@ export default function SummarizerForm() {
                           <FormItem>
                             <FormLabel>Source</FormLabel>
                             <FormControl>
-                              <Input placeholder="e.g., Le Matin" {...field} />
+                              <Input placeholder="ex: Le Matin" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -89,9 +89,9 @@ export default function SummarizerForm() {
                         name={`articles.${index}.title`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Title</FormLabel>
+                            <FormLabel>Titre</FormLabel>
                             <FormControl>
-                              <Input placeholder="Article Title" {...field} />
+                              <Input placeholder="Titre de l'article" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -102,9 +102,9 @@ export default function SummarizerForm() {
                         name={`articles.${index}.content`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Content</FormLabel>
+                            <FormLabel>Contenu</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="Paste article content here..." {...field} rows={5} />
+                              <Textarea placeholder="Collez le contenu de l'article ici..." {...field} rows={5} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -129,11 +129,11 @@ export default function SummarizerForm() {
               <div className="flex justify-between items-center">
                 <Button type="button" variant="outline" onClick={() => append({ title: "", content: "", source: "" })}>
                   <PlusCircle className="mr-2 h-4 w-4" />
-                  Add Article
+                  Ajouter un Article
                 </Button>
                 <Button type="submit" disabled={loading}>
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Summarize
+                  Résumer
                 </Button>
               </div>
             </form>
@@ -145,9 +145,9 @@ export default function SummarizerForm() {
         <CardHeader>
           <CardTitle className="font-headline flex items-center gap-2">
             <Sparkles className="text-accent" />
-            AI Generated Summary
+            Résumé Généré par IA
           </CardTitle>
-          <CardDescription>Your concise newsletter-ready summary will appear here.</CardDescription>
+          <CardDescription>Votre résumé concis prêt pour la newsletter apparaîtra ici.</CardDescription>
         </CardHeader>
         <CardContent>
           {loading && (
@@ -163,7 +163,7 @@ export default function SummarizerForm() {
           )}
           {!summary && !loading && (
             <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-              <p>Your summary will be generated here.</p>
+              <p>Votre résumé sera généré ici.</p>
             </div>
           )}
         </CardContent>

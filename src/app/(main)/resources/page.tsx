@@ -9,8 +9,8 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 const resources: Resource[] = [
   {
     id: "1",
-    title: "Brokerage Fee & Commission Simulator",
-    description: "An advanced Excel simulator to calculate entry and exit costs for every Moroccan bank broker. Plan your trades with precision.",
+    title: "Simulateur de Frais de Courtage et Commissions",
+    description: "Un simulateur Excel avancé pour calculer les coûts d'entrée et de sortie pour chaque courtier bancaire marocain. Planifiez vos transactions avec précision.",
     price: "199 MAD",
     href: "#",
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-1')?.imageUrl || '',
@@ -18,8 +18,8 @@ const resources: Resource[] = [
   },
   {
     id: "2",
-    title: "The Ultimate Broker Comparison List",
-    description: "A comprehensive PDF comparing all Moroccan bank brokers on commissions, fees, taxes, and platform features. Make an informed choice.",
+    title: "La Liste Comparative Ultime des Courtiers",
+    description: "Un PDF complet comparant tous les courtiers bancaires marocains sur les commissions, les frais, les taxes et les fonctionnalités de la plateforme. Faites un choix éclairé.",
     price: "99 MAD",
     href: "#",
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-2')?.imageUrl || '',
@@ -31,9 +31,9 @@ export default function ResourcesPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h1 className="font-headline text-4xl font-bold md:text-5xl">Digital Tools & Resources</h1>
+        <h1 className="font-headline text-4xl font-bold md:text-5xl">Outils et Ressources Numériques</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Accelerate your analysis and decision-making with our downloadable digital products.
+          Accélérez votre analyse et votre prise de décision avec nos produits numériques téléchargeables.
         </p>
       </div>
       <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
@@ -58,7 +58,7 @@ export default function ResourcesPage() {
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
                 <Button asChild className="font-bold">
                   <Link href={resource.href}>
-                    Get It Now <Download className="ml-2 h-4 w-4" />
+                    Obtenir <Download className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>

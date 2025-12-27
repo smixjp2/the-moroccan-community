@@ -16,22 +16,22 @@ const featureImages = {
 const features = [
   {
     icon: <Newspaper className="h-8 w-8 text-primary" />,
-    title: "In-Depth Articles",
-    description: "Explore expert analysis of the Moroccan stock market, sector trends, and MASI index performance.",
+    title: "Articles Approfondis",
+    description: "Explorez l'analyse d'experts du marché boursier marocain, les tendances sectorielles et la performance de l'indice MASI.",
     link: "/articles",
     image: featureImages.articles,
   },
   {
     icon: <Wrench className="h-8 w-8 text-primary" />,
-    title: "Powerful Simulators",
-    description: "Compare banks, brokers, and simulate fee impacts on your investments with our AI-powered tools.",
+    title: "Simulateurs Puissants",
+    description: "Comparez les banques, les courtiers et simulez l'impact des frais sur vos investissements avec nos outils alimentés par l'IA.",
     link: "/tools",
     image: featureImages.tools,
   },
   {
     icon: <GraduationCap className="h-8 w-8 text-primary" />,
-    title: "Investment Courses",
-    description: "From your first salary to advanced strategies, our courses empower you to invest with confidence.",
+    title: "Cours d'Investissement",
+    description: "De votre premier salaire aux stratégies avancées, nos cours vous permettent d'investir avec confiance.",
     link: "/courses",
     image: featureImages.courses,
   },
@@ -55,17 +55,17 @@ export default function Home() {
         <div className="relative z-10 container px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="font-headline text-4xl font-bold md:text-6xl lg:text-7xl drop-shadow-md">
-              Unlock Moroccan Market Potential
+              Débloquez le Potentiel du Marché Marocain
             </h1>
             <p className="mt-4 max-w-xl mx-auto text-lg text-primary-foreground/90 md:text-xl">
-              Your source for expert analysis, powerful tools, and educational resources for investing in Morocco.
+              Votre source d'analyses d'experts, d'outils puissants et de ressources pédagogiques pour investir au Maroc.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Button asChild size="lg" className="font-bold">
-                <Link href="/articles">Explore Analysis <ArrowRight className="ml-2" /></Link>
+                <Link href="/articles">Explorer les Analyses <ArrowRight className="ml-2" /></Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="font-bold">
-                <Link href="/tools">Use Tools</Link>
+                <Link href="/tools">Utiliser les Outils</Link>
               </Button>
             </div>
           </div>
@@ -75,9 +75,9 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="font-headline text-3xl font-bold md:text-4xl">Intelligence for Every Investor</h2>
+            <h2 className="font-headline text-3xl font-bold md:text-4xl">L'Intelligence pour Chaque Investisseur</h2>
             <p className="mt-4 text-muted-foreground md:text-lg">
-              Whether you're a beginner or a seasoned pro, MASI Insights provides the clarity you need to navigate the Moroccan market.
+              Que vous soyez débutant ou professionnel chevronné, The Moroccan Community vous apporte la clarté dont vous avez besoin pour naviguer sur le marché marocain.
             </p>
           </div>
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -102,7 +102,7 @@ export default function Home() {
                     <CardTitle className="font-headline text-2xl">{feature.title}</CardTitle>
                     <CardDescription className="mt-2">{feature.description}</CardDescription>
                     <Button asChild variant="link" className="px-0 mt-4 font-bold">
-                        <Link href={feature.link}>{feature.title.split(' ')[1]} Now <ArrowRight className="ml-2" /></Link>
+                        <Link href={feature.link}>Découvrir <ArrowRight className="ml-2" /></Link>
                     </Button>
                 </CardContent>
               </Card>
@@ -114,14 +114,14 @@ export default function Home() {
       <section className="bg-card py-16 md:py-24">
         <div className="container grid md:grid-cols-2 gap-8 items-center">
             <div>
-                <h2 className="font-headline text-3xl font-bold md:text-4xl">Stay Ahead of the Market</h2>
+                <h2 className="font-headline text-3xl font-bold md:text-4xl">Restez à l'Avant-Garde du Marché</h2>
                 <p className="mt-4 text-muted-foreground md:text-lg">
-                    Subscribe to our free weekly newsletter for the latest market news, analysis, and exclusive offers.
+                    Abonnez-vous à notre newsletter hebdomadaire gratuite pour recevoir les dernières actualités du marché, des analyses et des offres exclusives.
                 </p>
             </div>
             <form className="flex w-full max-w-md items-center space-x-2 mx-auto">
-              <Input type="email" placeholder="Your best email address" className="flex-1 py-6" />
-              <Button type="submit" size="lg">Subscribe</Button>
+              <Input type="email" placeholder="Votre meilleure adresse e-mail" className="flex-1 py-6" />
+              <Button type="submit" size="lg">S'abonner</Button>
             </form>
         </div>
       </section>

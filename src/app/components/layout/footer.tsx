@@ -11,10 +11,10 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
                 <Scaling className="h-6 w-6 text-primary" />
-                <span className="font-headline text-lg font-bold">MASI Insights</span>
+                <span className="font-headline text-lg font-bold">The Moroccan Community</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Your premier source for Moroccan market analysis and investment intelligence.
+              Votre source de premier plan pour l'analyse du marché marocain et l'intelligence d'investissement.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" asChild>
@@ -29,20 +29,20 @@ export function Footer() {
             </div>
           </div>
           <div className="md:col-span-2 space-y-4">
-            <h3 className="font-headline font-semibold">Subscribe to our Weekly Newsletter</h3>
+            <h3 className="font-headline font-semibold">Abonnez-vous à notre newsletter hebdomadaire</h3>
             <p className="text-muted-foreground text-sm">
-                Get weekly market insights, promotional offers, and new service updates delivered to your inbox.
+                Recevez chaque semaine des informations sur le marché, des offres promotionnelles et des mises à jour sur les nouveaux services directement dans votre boîte de réception.
             </p>
             <form className="flex w-full max-w-md items-center space-x-2">
-              <Input type="email" placeholder="Enter your email" className="flex-1" />
+              <Input type="email" placeholder="Entrez votre email" className="flex-1" />
               <Button type="submit" variant="default">
-                Subscribe
+                S'abonner
               </Button>
             </form>
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} MASI Insights. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} The Moroccan Community. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

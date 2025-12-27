@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
 
 const navLinks: NavLink[] = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "Accueil" },
   { href: "/articles", label: "Articles" },
-  { href: "/tools", label: "Tools" },
-  { href: "/courses", label: "Courses" },
-  { href: "/resources", label: "Resources" },
-  { href: "/news-summarizer", label: "News AI" },
+  { href: "/tools", label: "Outils" },
+  { href: "/courses", label: "Cours" },
+  { href: "/resources", label: "Ressources" },
+  { href: "/news-summarizer", label: "IA Actualités" },
 ];
 
 export function Header() {
@@ -43,7 +43,7 @@ export function Header() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="mr-6 flex items-center gap-2">
           <Scaling className="h-6 w-6 text-primary" />
-          <span className="font-headline text-lg font-bold">MASI Insights</span>
+          <span className="font-headline text-lg font-bold">The Moroccan Community</span>
         </Link>
 
         <div className="hidden md:flex flex-1 items-center justify-center">
@@ -55,13 +55,13 @@ export function Header() {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle navigation menu</span>
+                <span className="sr-only">Ouvrir le menu de navigation</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
               <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
                 <Scaling className="h-6 w-6 text-primary" />
-                <span className="font-headline text-lg font-bold">MASI Insights</span>
+                <span className="font-headline text-lg font-bold">The Moroccan Community</span>
               </Link>
               <NavLinks className="flex-col items-start space-y-4 text-lg" />
             </SheetContent>

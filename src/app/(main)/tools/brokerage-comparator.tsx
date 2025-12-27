@@ -4,28 +4,28 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Landmark } from "lucide-react";
 
 const brokerages: Brokerage[] = [
-    { name: "Attijariwafa Trade", fees: "0.45% per transaction", platform: "Good", responsiveness: "Average", logo: <Landmark className="text-yellow-500" /> },
-    { name: "BMCE Capital Bourse", fees: "0.40% per transaction", platform: "Excellent", responsiveness: "Good", logo: <Landmark className="text-blue-600" /> },
-    { name: "BP Bourse", fees: "0.50% per transaction", platform: "Basic", responsiveness: "Good", logo: <Landmark className="text-purple-600" /> },
-    { name: "CIH Trade", fees: "0.35% (Varies)", platform: "Modern", responsiveness: "Good (Digital)", logo: <Landmark className="text-pink-500" /> },
-    { name: "SG Maroc Bourse", fees: "0.55% per transaction", platform: "Good", responsiveness: "Average", logo: <Landmark className="text-red-600" /> },
+    { name: "Attijariwafa Trade", fees: "0.45% par transaction", platform: "Bonne", responsiveness: "Moyenne", logo: <Landmark className="text-yellow-500" /> },
+    { name: "BMCE Capital Bourse", fees: "0.40% par transaction", platform: "Excellente", responsiveness: "Bonne", logo: <Landmark className="text-blue-600" /> },
+    { name: "BP Bourse", fees: "0.50% par transaction", platform: "Basique", responsiveness: "Bonne", logo: <Landmark className="text-purple-600" /> },
+    { name: "CIH Trade", fees: "0.35% (Variable)", platform: "Moderne", responsiveness: "Bonne (Digitale)", logo: <Landmark className="text-pink-500" /> },
+    { name: "SG Maroc Bourse", fees: "0.55% par transaction", platform: "Bonne", responsiveness: "Moyenne", logo: <Landmark className="text-red-600" /> },
 ];
 
 export function BrokerageComparator() {
   return (
     <Card className="max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="font-headline">Brokerage Account Comparator</CardTitle>
-        <CardDescription>Compare Moroccan brokerages based on fees, trading platform, and service responsiveness.</CardDescription>
+        <CardTitle className="font-headline">Comparateur de Comptes de Courtage</CardTitle>
+        <CardDescription>Comparez les courtiers marocains en fonction des frais, de la plateforme de trading et de la réactivité du service.</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[250px]">Brokerage</TableHead>
-              <TableHead>Fees & Commissions</TableHead>
-              <TableHead>Trading Platform</TableHead>
-              <TableHead>Responsiveness</TableHead>
+              <TableHead className="w-[250px]">Courtier</TableHead>
+              <TableHead>Frais & Commissions</TableHead>
+              <TableHead>Plateforme de Trading</TableHead>
+              <TableHead>Réactivité</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

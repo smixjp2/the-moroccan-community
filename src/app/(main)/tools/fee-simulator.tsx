@@ -15,11 +15,11 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
 
 const formSchema = z.object({
-  initialInvestment: z.coerce.number().min(1000, "Must be at least 1,000"),
+  initialInvestment: z.coerce.number().min(1000, "Doit être d'au moins 1 000"),
   annualReturnRate: z.coerce.number().min(0).max(100),
-  investmentPeriod: z.coerce.number().int().min(1, "Must be at least 1 year"),
+  investmentPeriod: z.coerce.number().int().min(1, "Doit être d'au moins 1 an"),
   bankFees: z.coerce.number().min(0),
-  commissionStructure: z.string().min(10, "Please provide some detail"),
+  commissionStructure: z.string().min(10, "Veuillez fournir quelques détails"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -36,7 +36,7 @@ export default function FeeSimulator() {
       annualReturnRate: 8,
       investmentPeriod: 10,
       bankFees: 500,
-      commissionStructure: "0.5% on each transaction (buy/sell), with 2 transactions per year.",
+      commissionStructure: "0.5% sur chaque transaction (achat/vente), avec 2 transactions par an.",
     },
   });
 
@@ -48,7 +48,7 @@ export default function FeeSimulator() {
       const response = await feeSimulator(values);
       setResult(response);
     } catch (e) {
-      setError("An error occurred while running the simulation. Please try again.");
+      setError("Une erreur est survenue lors de l'exécution de la simulation. Veuillez réessayer.");
       console.error(e);
     } finally {
       setLoading(false);
@@ -59,9 +59,9 @@ export default function FeeSimulator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">Investment Fee Impact Simulator</CardTitle>
+          <CardTitle className="font-headline">Simulateur d'Impact des Frais d'Investissement</CardTitle>
           <CardDescription>
-            See how bank fees and commissions affect your investment returns over time.
+            Voyez comment les frais bancaires et les commissions affectent vos rendements d'investissement dans le temps.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -73,7 +73,7 @@ export default function FeeSimulator() {
                   name="initialInvestment"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Initial Investment (MAD)</FormLabel>
+                      <FormLabel>Investissement Initial (MAD)</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="100000" {...field} />
                       </FormControl>
@@ -86,7 +86,7 @@ export default function FeeSimulator() {
                   name="annualReturnRate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Annual Return Rate (%)</FormLabel>
+                      <FormLabel>Taux de Rendement Annuel (%)</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="8" {...field} />
                       </FormControl>
@@ -99,7 +99,7 @@ export default function FeeSimulator() {
                   name="investmentPeriod"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Investment Period (Years)</FormLabel>
+                      <FormLabel>Période d'Investissement (Années)</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="10" {...field} />
                       </FormControl>
@@ -112,7 +112,7 @@ export default function FeeSimulator() {
                   name="bankFees"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Annual Bank Fees (MAD)</FormLabel>
+                      <FormLabel>Frais Bancaires Annuels (MAD)</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="500" {...field} />
                       </FormControl>
@@ -126,9 +126,9 @@ export default function FeeSimulator() {
                 name="commissionStructure"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Commission Structure</FormLabel>
+                    <FormLabel>Structure des Commissions</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., 0.5% per transaction" {...field} />
+                      <Input placeholder="ex: 0.5% par transaction" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -136,7 +136,7 @@ export default function FeeSimulator() {
               />
               <Button type="submit" disabled={loading} className="w-full">
                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Calculate Impact
+                Calculer l'Impact
               </Button>
             </form>
           </Form>
@@ -146,8 +146,8 @@ export default function FeeSimulator() {
       <div className="space-y-8">
         <Card className="flex-1">
           <CardHeader>
-            <CardTitle className="font-headline">Simulation Results</CardTitle>
-            <CardDescription>The calculated impact of fees on your investment.</CardDescription>
+            <CardTitle className="font-headline">Résultats de la Simulation</CardTitle>
+            <CardDescription>L'impact calculé des frais sur votre investissement.</CardDescription>
           </CardHeader>
           <CardContent>
             {loading && (
@@ -161,7 +161,7 @@ export default function FeeSimulator() {
                 <div className="grid grid-cols-2 gap-4">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Final Value (No Fees)</CardTitle>
+                            <CardTitle className="text-sm font-medium">Valeur Finale (Sans Frais)</CardTitle>
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -170,7 +170,7 @@ export default function FeeSimulator() {
                     </Card>
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Final Value (With Fees)</CardTitle>
+                            <CardTitle className="text-sm font-medium">Valeur Finale (Avec Frais)</CardTitle>
                             <TrendingDown className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -180,23 +180,23 @@ export default function FeeSimulator() {
                 </div>
                 <Card>
                     <CardHeader className="pb-2">
-                         <CardTitle className="text-lg font-medium">Total Fees Paid</CardTitle>
+                         <CardTitle className="text-lg font-medium">Total des Frais Payés</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-3xl font-bold text-destructive">{formatCurrency(result.totalFeesPaid)}</p>
-                        <p className="text-xs text-muted-foreground">This is {result.feeImpactPercentage.toFixed(2)}% of your final potential value.</p>
+                        <p className="text-xs text-muted-foreground">Cela représente {result.feeImpactPercentage.toFixed(2)}% de votre valeur potentielle finale.</p>
                     </CardContent>
                 </Card>
                  <Alert>
                     <Info className="h-4 w-4" />
-                    <AlertTitle className="font-headline">AI Recommendation</AlertTitle>
+                    <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
                     <AlertDescription>{result.recommendation}</AlertDescription>
                 </Alert>
               </div>
             )}
             {!result && !loading && (
                  <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                    <p>Enter your investment details to see the simulation results here.</p>
+                    <p>Entrez les détails de votre investissement pour voir les résultats de la simulation ici.</p>
                  </div>
             )}
           </CardContent>

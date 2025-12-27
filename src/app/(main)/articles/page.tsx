@@ -8,9 +8,9 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 const articles: Article[] = [
   {
     id: "1",
-    title: "MASI Analysis: Q3 Trends and Future Outlook",
-    category: "Market Analysis",
-    excerpt: "A deep dive into the performance of the Moroccan All Shares Index in the third quarter and what to expect moving forward.",
+    title: "Analyse du MASI : Tendances du T3 et Perspectives",
+    category: "Analyse de Marché",
+    excerpt: "Une analyse approfondie de la performance de l'indice Moroccan All Shares au troisième trimestre et les prévisions à venir.",
     author: "Fatima Zahra",
     date: "2023-10-15",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-1')?.imageUrl || '',
@@ -18,9 +18,9 @@ const articles: Article[] = [
   },
   {
     id: "2",
-    title: "Banking Sector Deep Dive: Which Moroccan Bank Stock is a Buy?",
-    category: "Stock Analysis",
-    excerpt: "We compare the leading banks listed on the Casablanca Stock Exchange to identify the most promising investment opportunities.",
+    title: "Analyse du Secteur Bancaire : Quelle Action Bancaire Marocaine Acheter ?",
+    category: "Analyse d'Actions",
+    excerpt: "Nous comparons les principales banques cotées à la Bourse de Casablanca pour identifier les opportunités d'investissement les plus prometteuses.",
     author: "Youssef Alaoui",
     date: "2023-10-12",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-2')?.imageUrl || '',
@@ -28,9 +28,9 @@ const articles: Article[] = [
   },
   {
     id: "3",
-    title: "The Impact of Real Estate Trends on Construction Stocks",
-    category: "Sector Analysis",
-    excerpt: "Morocco's property market is evolving. Discover how these changes are affecting the valuation of major construction companies.",
+    title: "L'Impact des Tendances Immobilières sur les Actions du BTP",
+    category: "Analyse Sectorielle",
+    excerpt: "Le marché immobilier marocain est en pleine évolution. Découvrez comment ces changements affectent la valorisation des grandes entreprises de construction.",
     author: "Amina Saadi",
     date: "2023-10-10",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-3')?.imageUrl || '',
@@ -42,9 +42,9 @@ export default function ArticlesPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h1 className="font-headline text-4xl font-bold md:text-5xl">Market Insights & Analysis</h1>
+        <h1 className="font-headline text-4xl font-bold md:text-5xl">Aperçus et Analyses du Marché</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Stay informed with our expert analysis on the Moroccan stock market, individual stocks, and key sectors.
+          Restez informé grâce à nos analyses d'experts sur le marché boursier marocain, les actions individuelles et les secteurs clés.
         </p>
       </div>
 
@@ -71,7 +71,7 @@ export default function ArticlesPage() {
                 </h2>
                 <p className="text-muted-foreground text-sm mb-4">{article.excerpt}</p>
                 <div className="text-xs text-muted-foreground">
-                  By {article.author} on {new Date(article.date).toLocaleDateString()}
+                  Par {article.author} le {new Date(article.date).toLocaleDateString('fr-FR')}
                 </div>
               </CardContent>
             </Card>
