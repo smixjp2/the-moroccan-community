@@ -24,6 +24,7 @@ export interface Course {
   imageHint: string;
   duration: string;
   level: string;
+  href: string;
 }
 
 export interface Resource {
