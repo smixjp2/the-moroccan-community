@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Scaling, Twitter, Linkedin, Youtube } from "lucide-react";
+import { Scaling, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 
 export function Footer() {
@@ -18,13 +18,13 @@ export function Footer() {
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" asChild>
-                <a href="#" aria-label="Twitter"><Twitter className="h-5 w-5" /></a>
+                <a href="https://www.youtube.com/@The_Moroccan_Analyst" target="_blank" rel="noopener noreferrer" aria-label="The Moroccan Analyst YouTube"><Youtube className="h-5 w-5" /></a>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <a href="#" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
+                <a href="https://www.youtube.com/@TheMoroccanCFO" target="_blank" rel="noopener noreferrer" aria-label="The Moroccan CFO YouTube"><Youtube className="h-5 w-5" /></a>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <a href="#" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
+                <a href="https://www.instagram.com/the_moroccananalyst/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
               </Button>
             </div>
           </div>
