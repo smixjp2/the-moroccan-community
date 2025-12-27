@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { feeSimulator, type FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
 
@@ -54,14 +56,36 @@ export default function FeeSimulator() {
       setLoading(false);
     }
   }
+  
+  const chartData = result ? [
+    { name: "Valeur de l'investissement", "Sans Frais": result.finalValueWithoutFees, "Avec Frais": result.finalValueWithFees },
+  ] : [];
+
+  const chartConfig = {
+    "Sans Frais": {
+      label: "Sans Frais",
+      color: "hsl(var(--chart-2))",
+    },
+    "Avec Frais": {
+      label: "Avec Frais",
+      color: "hsl(var(--chart-1))",
+    },
+  };
 
   return (
+    <>
+     <div className="text-center max-w-3xl mx-auto mb-12">
+        <h1 className="font-headline text-4xl font-bold md:text-5xl">Simulateur d'Impact des Frais</h1>
+        <p className="mt-4 text-muted-foreground md:text-lg">
+            Voyez comment les frais bancaires et les commissions affectent vos rendements d'investissement dans le temps.
+        </p>
+      </div>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">Simulateur d'Impact des Frais d'Investissement</CardTitle>
+          <CardTitle className="font-headline">Paramètres de Simulation</CardTitle>
           <CardDescription>
-            Voyez comment les frais bancaires et les commissions affectent vos rendements d'investissement dans le temps.
+            Entrez les détails de votre investissement pour simuler l'impact des frais.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -187,6 +211,24 @@ export default function FeeSimulator() {
                         <p className="text-xs text-muted-foreground">Cela représente {result.feeImpactPercentage.toFixed(2)}% de votre valeur potentielle finale.</p>
                     </CardContent>
                 </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Analyse Visuelle</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ChartContainer config={chartConfig} className="h-[200px] w-full">
+                      <BarChart accessibilityLayer data={chartData}>
+                        <CartesianGrid vertical={false} />
+                        <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
+                        <YAxis tickFormatter={(value) => formatCurrency(value as number).replace('MAD', '').trim()} />
+                        <Tooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={4} />
+                        <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={4} />
+                      </BarChart>
+                    </ChartContainer>
+                  </CardContent>
+                </Card>
                  <Alert>
                     <Info className="h-4 w-4" />
                     <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
@@ -201,7 +243,27 @@ export default function FeeSimulator() {
             )}
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 font-headline">
+              <HelpCircle className="h-6 w-6 text-primary" />
+              Guide d'Utilisation du Simulateur
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-muted-foreground">
+            <p>Cet outil, alimenté par l'IA, est conçu pour vous montrer l'impact réel des frais sur le long terme.</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Investissement Initial :</strong> La somme que vous investissez au départ.</li>
+              <li><strong>Taux de Rendement Annuel (%) :</strong> Votre gain annuel estimé avant déduction des frais. Soyez réaliste ; un rendement moyen de 8 à 10 % est une attente commune pour les marchés actions.</li>
+              <li><strong>Période d'Investissement (Années) :</strong> La durée pendant laquelle vous prévoyez de laisser votre argent investi. L'impact des frais est plus visible sur de longues périodes.</li>
+              <li><strong>Frais Bancaires Annuels :</strong> Ce sont les frais fixes, comme les droits de garde, que votre banque prélève chaque année.</li>
+              <li><strong>Structure des Commissions :</strong> Décrivez ici les frais variables, comme les commissions sur les transactions (achat/vente). Soyez aussi précis que possible. L'IA utilisera cette information pour estimer les coûts.</li>
+            </ul>
+            <p><strong>Analyse des Résultats :</strong> Le graphique et les chiffres clés vous montrent la différence entre ce que vous auriez pu gagner (valeur sans frais) et ce qu'il vous reste réellement (valeur avec frais). La "Recommandation de l'IA" vous donne une interprétation de ces résultats pour vous aider à décider si la structure de frais est acceptable.</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
+    </>
   );
 }
