@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Article } from "@/lib/types";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { articles } from "@/lib/data";
 
 

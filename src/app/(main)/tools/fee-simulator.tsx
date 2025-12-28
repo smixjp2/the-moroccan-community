@@ -9,7 +9,7 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Responsive
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
@@ -217,15 +217,17 @@ export default function FeeSimulator() {
                   </CardHeader>
                   <CardContent>
                     <ChartContainer config={chartConfig} className="h-[200px] w-full">
-                      <BarChart accessibilityLayer data={chartData}>
-                        <CartesianGrid vertical={false} />
-                        <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
-                        <YAxis tickFormatter={(value) => formatCurrency(value as number).replace('MAD', '').trim()} />
-                        <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                        <Legend />
-                        <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={4} />
-                        <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={4} />
-                      </BarChart>
+                      <ResponsiveContainer>
+                        <BarChart accessibilityLayer data={chartData}>
+                          <CartesianGrid vertical={false} />
+                          <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
+                          <YAxis tickFormatter={(value) => formatCurrency(value as number).replace('MAD', '').trim()} />
+                          <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                          <Legend />
+                          <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={4} />
+                          <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={4} />
+                        </BarChart>
+                      </ResponsiveContainer>
                     </ChartContainer>
                   </CardContent>
                 </Card>
