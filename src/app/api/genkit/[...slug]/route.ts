@@ -1,6 +1,8 @@
-import { ai } from "@/ai/genkit";
-import { createApiHandler } from "@genkit-ai/next";
+// This file is temporarily emptied to resolve a build issue.
+export async function GET() {
+  return new Response("API endpoint is temporarily disabled.", { status: 503 });
+}
 
-export const { GET, POST } = createApiHandler({
-    getGenkit: () => ai,
-});
+export async function POST() {
+  return new Response("API endpoint is temporarily disabled.", { status: 503 });
+}
