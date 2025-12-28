@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { ArrowRight, Newspaper, Wrench, GraduationCap, Crown } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Input } from "@/components/ui/input";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
 const featureImages = {
@@ -37,6 +38,29 @@ const features = [
     image: featureImages.courses,
   },
 ];
+
+const faqItems = [
+    {
+        question: "Quel est le montant minimum pour commencer à investir en bourse au Maroc ?",
+        answer: "Il n'y a pas de minimum légal ! Vous pouvez commencer avec quelques centaines de dirhams pour acheter vos premières actions. L'important est de commencer et d'être régulier. Nos outils peuvent vous aider à simuler des petits investissements."
+    },
+    {
+        question: "Comment choisir un bon courtier (société de bourse) au Maroc ?",
+        answer: "Le choix dépend de vos besoins. Les critères clés sont les frais de transaction, la qualité de la plateforme de trading et la réactivité du service client. Utilisez notre comparateur de courtiers pour trouver celui qui vous convient le mieux."
+    },
+    {
+        question: "La bourse marocaine est-elle risquée ?",
+        answer: "Tout investissement en actions comporte un risque de perte en capital. Cependant, le marché marocain est généralement moins volatil que de grands marchés internationaux. Une bonne stratégie de diversification, que nous enseignons dans nos cours, est essentielle pour gérer ce risque."
+    },
+    {
+        question: "Dois-je payer des impôts sur mes gains en bourse ?",
+        answer: "Oui, les plus-values sur les actions sont imposées au Maroc. La fiscalité peut évoluer. Il est recommandé de consulter nos articles ou un conseiller fiscal pour connaître les dernières réglementations et optimiser votre déclaration."
+    },
+    {
+        question: "Qu'est-ce que le MASI et pourquoi est-il important ?",
+        answer: "Le MASI (Moroccan All Shares Index) est l'indice principal de la Bourse de Casablanca. Il représente la performance globale de toutes les actions cotées. Le suivre vous donne une idée de la tendance générale du marché, un peu comme le CAC 40 en France ou le S&P 500 aux États-Unis."
+    }
+]
 
 export default function Home() {
   return (
@@ -142,6 +166,29 @@ export default function Home() {
                   </Button>
               </div>
           </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container">
+            <div className="text-center max-w-3xl mx-auto">
+                <h2 className="font-headline text-3xl font-bold md:text-4xl">Questions Fréquentes</h2>
+                <p className="mt-4 text-muted-foreground md:text-lg">
+                    Trouvez ici les réponses aux questions les plus courantes sur l'investissement au Maroc.
+                </p>
+            </div>
+            <div className="mt-12 max-w-3xl mx-auto">
+                <Accordion type="single" collapsible className="w-full">
+                    {faqItems.map((item, index) => (
+                        <AccordionItem value={`item-${index}`} key={index}>
+                            <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline">{item.question}</AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground">
+                                {item.answer}
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
         </div>
       </section>
 
