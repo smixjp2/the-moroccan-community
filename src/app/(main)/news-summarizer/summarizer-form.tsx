@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { summarizeInvestmentNews } from "@/ai/flows/investment-news-summarizer";
+// import { summarizeInvestmentNews } from "@/ai/flows/investment-news-summarizer";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,16 +45,17 @@ export default function SummarizerForm() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setSummary(null);
-    setError(null);
-    try {
-      const response = await summarizeInvestmentNews(values);
-      setSummary(response.summary);
-    } catch (e) {
-      setError("Une erreur est survenue lors de la génération du résumé. Veuillez réessayer.");
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setLoading(false);
+    // try {
+    //   const response = await summarizeInvestmentNews(values);
+    //   setSummary(response.summary);
+    // } catch (e) {
+    //   setError("Une erreur est survenue lors de la génération du résumé. Veuillez réessayer.");
+    //   console.error(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
 
   return (
@@ -67,73 +68,75 @@ export default function SummarizerForm() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="space-y-6">
-                {fields.map((field, index) => (
-                  <Card key={field.id} className="p-4 relative">
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name={`articles.${index}.source`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Source</FormLabel>
-                            <FormControl>
-                              <Input placeholder="ex: Le Matin" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`articles.${index}.title`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Titre</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Titre de l'article" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`articles.${index}.content`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Contenu</FormLabel>
-                            <FormControl>
-                              <Textarea placeholder="Collez le contenu de l'article ici..." {...field} rows={5} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    {fields.length > 1 && (
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className="absolute top-2 right-2 text-muted-foreground hover:text-destructive"
-                            onClick={() => remove(index)}
-                        >
-                            <Trash2 className="h-4 w-4" />
-                        </Button>
-                    )}
-                  </Card>
-                ))}
-              </div>
+             <fieldset disabled>
+                <div className="space-y-6">
+                  {fields.map((field, index) => (
+                    <Card key={field.id} className="p-4 relative">
+                      <div className="space-y-4">
+                        <FormField
+                          control={form.control}
+                          name={`articles.${index}.source`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Source</FormLabel>
+                              <FormControl>
+                                <Input placeholder="ex: Le Matin" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`articles.${index}.title`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Titre</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Titre de l'article" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`articles.${index}.content`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Contenu</FormLabel>
+                              <FormControl>
+                                <Textarea placeholder="Collez le contenu de l'article ici..." {...field} rows={5} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      {fields.length > 1 && (
+                          <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-2 right-2 text-muted-foreground hover:text-destructive"
+                              onClick={() => remove(index)}
+                          >
+                              <Trash2 className="h-4 w-4" />
+                          </Button>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              </fieldset>
 
               <div className="flex justify-between items-center">
-                <Button type="button" variant="outline" onClick={() => append({ title: "", content: "", source: "" })}>
+                <Button type="button" variant="outline" onClick={() => append({ title: "", content: "", source: "" })} disabled>
                   <PlusCircle className="mr-2 h-4 w-4" />
                   Ajouter un Article
                 </Button>
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" disabled={true}>
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Résumer
+                  Résumer (Désactivé)
                 </Button>
               </div>
             </form>
@@ -161,11 +164,9 @@ export default function SummarizerForm() {
                 <p>{summary}</p>
             </div>
           )}
-          {!summary && !loading && (
-            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-              <p>Votre résumé sera généré ici.</p>
-            </div>
-          )}
+          <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+             <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+          </div>
         </CardContent>
       </Card>
     </div>

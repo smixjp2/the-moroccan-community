@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { feeSimulator, type FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
+// import { feeSimulator, type FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -15,6 +15,15 @@ import { Input } from "@/components/ui/input";
 import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
+
+// Mock type for FeeSimulatorOutput
+type FeeSimulatorOutput = {
+  finalValueWithoutFees: number;
+  totalFeesPaid: number;
+  finalValueWithFees: number;
+  feeImpactPercentage: number;
+  recommendation: string;
+};
 
 const formSchema = z.object({
   initialInvestment: z.coerce.number().min(1000, "Doit être d'au moins 1 000"),
@@ -45,16 +54,17 @@ export default function FeeSimulator() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setResult(null);
-    setError(null);
-    try {
-      const response = await feeSimulator(values);
-      setResult(response);
-    } catch (e) {
-      setError("Une erreur est survenue lors de l'exécution de la simulation. Veuillez réessayer.");
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setLoading(false);
+    // try {
+    //   const response = await feeSimulator(values);
+    //   setResult(response);
+    // } catch (e) {
+    //   setError("Une erreur est survenue lors de l'exécution de la simulation. Veuillez réessayer.");
+    //   console.error(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
   
   const chartData = result ? [
@@ -91,76 +101,77 @@ export default function FeeSimulator() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <fieldset disabled>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="initialInvestment"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Investissement Initial (MAD)</FormLabel>
+                        <FormControl>
+                          <Input type="number" placeholder="100000" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="annualReturnRate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Taux de Rendement Annuel (%)</FormLabel>
+                        <FormControl>
+                          <Input type="number" placeholder="8" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="investmentPeriod"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Période d'Investissement (Années)</FormLabel>
+                        <FormControl>
+                          <Input type="number" placeholder="10" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="bankFees"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Frais Bancaires Annuels (MAD)</FormLabel>
+                        <FormControl>
+                          <Input type="number" placeholder="500" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
-                  name="initialInvestment"
+                  name="commissionStructure"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Investissement Initial (MAD)</FormLabel>
+                      <FormLabel>Structure des Commissions</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="100000" {...field} />
+                        <Input placeholder="ex: 0.5% par transaction" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="annualReturnRate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Taux de Rendement Annuel (%)</FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="8" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="investmentPeriod"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Période d'Investissement (Années)</FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="10" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="bankFees"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Frais Bancaires Annuels (MAD)</FormLabel>
-                      <FormControl>
-                        <Input type="number" placeholder="500" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="commissionStructure"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Structure des Commissions</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ex: 0.5% par transaction" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={loading} className="w-full">
-                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Calculer l'Impact
+              </fieldset>
+              <Button type="submit" disabled={true} className="w-full">
+                Calculer l'Impact (Désactivé)
               </Button>
             </form>
           </Form>
@@ -238,11 +249,9 @@ export default function FeeSimulator() {
                 </Alert>
               </div>
             )}
-            {!result && !loading && (
-                 <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                    <p>Entrez les détails de votre investissement pour voir les résultats de la simulation ici.</p>
-                 </div>
-            )}
+            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+              <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+            </div>
           </CardContent>
         </Card>
         <Card>

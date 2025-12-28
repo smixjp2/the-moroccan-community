@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { calculateDividendYield, type DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
+// import { calculateDividendYield, type DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -15,6 +15,16 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, Percent, HandCoins, PiggyBank } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
+
+// Mock type for DividendYieldOutput
+type DividendYieldOutput = {
+  dividendYield: number;
+  numberOfShares: number;
+  annualDividendIncome: number;
+  analysis: string;
+  recommendation: string;
+};
+
 
 const formSchema = z.object({
   stockPrice: z.coerce.number().min(0.01, "Le prix doit être positif"),
@@ -41,16 +51,17 @@ export default function DividendYieldCalculatorPage() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setResult(null);
-    setError(null);
-    try {
-      const response = await calculateDividendYield(values);
-      setResult(response);
-    } catch (e) {
-      setError("Une erreur est survenue lors du calcul. Veuillez réessayer.");
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setLoading(false);
+    // try {
+    //   const response = await calculateDividendYield(values);
+    //   setResult(response);
+    // } catch (e) {
+    //   setError("Une erreur est survenue lors du calcul. Veuillez réessayer.");
+    //   console.error(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
 
   const chartData = result ? [
@@ -85,47 +96,49 @@ export default function DividendYieldCalculatorPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="stockPrice"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Prix de l'Action (MAD)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="250" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="annualDividendPerShare"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Dividende Annuel par Action (MAD)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="12" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="investmentAmount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Montant de l'Investissement (MAD)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="50000" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={loading} className="w-full">
-                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Calculer le Rendement'}
+              <fieldset disabled>
+                <FormField
+                  control={form.control}
+                  name="stockPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Prix de l'Action (MAD)</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="250" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="annualDividendPerShare"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Dividende Annuel par Action (MAD)</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="12" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="investmentAmount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Montant de l'Investissement (MAD)</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="50000" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </fieldset>
+              <Button type="submit" disabled={true} className="w-full">
+                {'Calculer le Rendement (Désactivé)'}
               </Button>
             </form>
           </Form>
@@ -206,7 +219,9 @@ export default function DividendYieldCalculatorPage() {
                 </Alert>
               </div>
             )}
-            {!result && !loading && <div className="text-center text-muted-foreground h-48 flex items-center justify-center"><p>Vos résultats apparaîtront ici.</p></div>}
+             <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+             </div>
           </CardContent>
         </Card>
          <Card>

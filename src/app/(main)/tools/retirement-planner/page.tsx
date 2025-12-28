@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { planRetirement, type RetirementPlannerOutput } from "@/ai/flows/retirement-planner";
+// import { planRetirement, type RetirementPlannerOutput } from "@/ai/flows/retirement-planner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -15,6 +15,16 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, TrendingUp, PiggyBank, Target } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
+
+// Mock type for RetirementPlannerOutput
+type RetirementPlannerOutput = {
+  finalSavings: number;
+  totalContributions: number;
+  totalInterest: number;
+  yearlyBreakdown: { year: number; value: number }[];
+  analysis: string;
+  recommendation: string;
+};
 
 const formSchema = z.object({
   currentAge: z.coerce.number().int().min(18, "L'âge doit être d'au moins 18 ans"),
@@ -45,16 +55,17 @@ export default function RetirementPlannerPage() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setResult(null);
-    setError(null);
-    try {
-      const response = await planRetirement(values);
-      setResult(response);
-    } catch (e) {
-      setError("Une erreur est survenue lors de la simulation. Veuillez réessayer.");
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setLoading(false);
+    // try {
+    //   const response = await planRetirement(values);
+    //   setResult(response);
+    // } catch (e) {
+    //   setError("Une erreur est survenue lors de la simulation. Veuillez réessayer.");
+    //   console.error(e);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
   
   const chartConfig = {
@@ -80,25 +91,27 @@ export default function RetirementPlannerPage() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                    <FormField control={form.control} name="currentAge" render={({ field }) => (
-                        <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                    <FormField control={form.control} name="retirementAge" render={({ field }) => (
-                        <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                </div>
-                <FormField control={form.control} name="initialSavings" render={({ field }) => (
-                    <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
-                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Planifier ma Retraite"}
+                <fieldset disabled>
+                  <div className="grid grid-cols-2 gap-4">
+                      <FormField control={form.control} name="currentAge" render={({ field }) => (
+                          <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                      )} />
+                      <FormField control={form.control} name="retirementAge" render={({ field }) => (
+                          <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                      )} />
+                  </div>
+                  <FormField control={form.control} name="initialSavings" render={({ field }) => (
+                      <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
+                      <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
+                      <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                </fieldset>
+                <Button type="submit" disabled={true} className="w-full">
+                  Planifier ma Retraite (Désactivé)
                 </Button>
               </form>
             </Form>
@@ -154,7 +167,9 @@ export default function RetirementPlannerPage() {
                   <Alert><Info className="h-4 w-4" /><AlertTitle className="font-headline">Recommandation</AlertTitle><AlertDescription>{result.recommendation}</AlertDescription></Alert>
                 </div>
               )}
-              {!result && !loading && <div className="text-center text-muted-foreground h-96 flex items-center justify-center"><p>Vos résultats de planification apparaîtront ici.</p></div>}
+               <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
+                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+              </div>
             </CardContent>
           </Card>
            <Card>
