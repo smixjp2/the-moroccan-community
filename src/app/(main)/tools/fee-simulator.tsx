@@ -221,7 +221,7 @@ export default function FeeSimulator() {
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
                         <YAxis tickFormatter={(value) => formatCurrency(value as number).replace('MAD', '').trim()} />
-                        <Tooltip content={<ChartTooltipContent />} />
+                        <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
                         <Legend />
                         <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={4} />
                         <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={4} />

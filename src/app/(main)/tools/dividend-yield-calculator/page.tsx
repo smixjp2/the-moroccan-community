@@ -179,15 +179,17 @@ export default function DividendYieldCalculatorPage() {
                   </CardHeader>
                   <CardContent>
                     <ChartContainer config={chartConfig} className="h-[200px] w-full">
-                      <PieChart>
-                        <Tooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                           {chartData.map((entry) => (
-                            <Cell key={`cell-${entry.name}`} fill={entry.fill} />
-                          ))}
-                        </Pie>
-                        <Legend />
-                      </PieChart>
+                      <ResponsiveContainer width="100%" height={200}>
+                        <PieChart>
+                          <Tooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                          <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+                            {chartData.map((entry) => (
+                              <Cell key={`cell-${entry.name}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
                     </ChartContainer>
                   </CardContent>
                 </Card>
