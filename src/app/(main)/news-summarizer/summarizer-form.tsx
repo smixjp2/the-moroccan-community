@@ -27,7 +27,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function SummarizerForm() {
   const [summary, setSummary] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -153,18 +153,7 @@ export default function SummarizerForm() {
           <CardDescription>Votre résumé concis prêt pour la newsletter apparaîtra ici.</CardDescription>
         </CardHeader>
         <CardContent>
-          {loading && (
-            <div className="flex justify-center items-center h-48">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          )}
-          {error && <p className="text-destructive">{error}</p>}
-          {summary && (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-                <p>{summary}</p>
-            </div>
-          )}
-          <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+          <div className="text-center text-muted-foreground h-full flex items-center justify-center">
              <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
           </div>
         </CardContent>

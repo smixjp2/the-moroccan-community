@@ -1,0 +1,1 @@
+// This file is intentionally left empty to disable the Genkit API route and fix the Vercel build issue.

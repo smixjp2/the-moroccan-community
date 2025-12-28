@@ -36,7 +36,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function DividendYieldCalculatorPage() {
   const [result, setResult] = useState<DividendYieldOutput | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -152,7 +152,13 @@ export default function DividendYieldCalculatorPage() {
           </CardHeader>
           <CardContent>
             {loading && <div className="flex justify-center items-center h-48"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
-            {error && <p className="text-destructive">{error}</p>}
+            
+            {(error || !result) && (
+              <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+                 <p>{error || "Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension."}</p>
+              </div>
+            )}
+            
             {result && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-center">
@@ -219,9 +225,6 @@ export default function DividendYieldCalculatorPage() {
                 </Alert>
               </div>
             )}
-             <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
-             </div>
           </CardContent>
         </Card>
          <Card>

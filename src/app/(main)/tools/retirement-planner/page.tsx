@@ -38,7 +38,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function RetirementPlannerPage() {
   const [result, setResult] = useState<RetirementPlannerOutput | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -125,7 +125,13 @@ export default function RetirementPlannerPage() {
             </CardHeader>
             <CardContent>
               {loading && <div className="flex justify-center items-center h-96"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
-              {error && <p className="text-destructive">{error}</p>}
+              
+              {(error || !result) && (
+                <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
+                  <p>{error || "Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension."}</p>
+                </div>
+              )}
+
               {result && (
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 gap-4 text-center">
@@ -167,9 +173,6 @@ export default function RetirementPlannerPage() {
                   <Alert><Info className="h-4 w-4" /><AlertTitle className="font-headline">Recommandation</AlertTitle><AlertDescription>{result.recommendation}</AlertDescription></Alert>
                 </div>
               )}
-               <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
-                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
-              </div>
             </CardContent>
           </Card>
            <Card>
