@@ -12,7 +12,6 @@ export interface Article {
   excerpt: string;
   imageUrl: string;
   imageHint: string;
-  author: string;
   date: string;
 }
 

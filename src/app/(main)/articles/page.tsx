@@ -8,33 +8,57 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 const articles: Article[] = [
   {
     id: "1",
-    title: "Analyse du MASI : Tendances du T3 et Perspectives",
+    title: "MASI 2025 : Analyse des perspectives post-budgétaires et impact des taux",
     category: "Analyse de Marché",
-    excerpt: "Une analyse approfondie de la performance de l'indice Moroccan All Shares au troisième trimestre et les prévisions à venir.",
-    author: "Fatima Zahra",
-    date: "2023-10-15",
+    excerpt: "Une analyse approfondie de la trajectoire attendue de l'indice MASI en 2025, en tenant compte des nouvelles mesures budgétaires et de la politique monétaire de Bank Al-Maghrib.",
+    date: "2025-01-20",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-1')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-1')?.imageHint || ''
   },
   {
     id: "2",
-    title: "Analyse du Secteur Bancaire : Quelle Action Bancaire Marocaine Acheter ?",
-    category: "Analyse d'Actions",
-    excerpt: "Nous comparons les principales banques cotées à la Bourse de Casablanca pour identifier les opportunités d'investissement les plus prometteuses.",
-    author: "Youssef Alaoui",
-    date: "2023-10-12",
+    title: "Secteur Bancaire Marocain 2025 : Marges, Digitalisation et Nouveaux Risques",
+    category: "Analyse Sectorielle",
+    excerpt: "Comparaison des grandes valeurs bancaires (Attijariwafa, BCP, BMCE) face aux défis de la digitalisation, à l'évolution des marges d'intérêt et aux nouvelles réglementations prudentielles.",
+    date: "2025-01-18",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-2')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-2')?.imageHint || ''
   },
   {
     id: "3",
-    title: "L'Impact des Tendances Immobilières sur les Actions du BTP",
+    title: "Immobilier et BTP : Les valeurs à surveiller après la relance du crédit",
     category: "Analyse Sectorielle",
-    excerpt: "Le marché immobilier marocain est en pleine évolution. Découvrez comment ces changements affectent la valorisation des grandes entreprises de construction.",
-    author: "Amina Saadi",
-    date: "2023-10-10",
+    excerpt: "Le marché immobilier montre des signes de reprise. Découvrez quelles actions (Addoha, Alliances, TGCC) sont les mieux positionnées pour bénéficier de cette nouvelle dynamique.",
+    date: "2025-01-15",
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-3')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-3')?.imageHint || ''
+  },
+  {
+    id: "4",
+    title: "Énergies Renouvelables : Taqa Morocco et Nareva, qui mène la course en 2025 ?",
+    category: "Analyse d'Actions",
+    excerpt: "Analyse comparative des stratégies d'investissement, des rendements et des perspectives de croissance pour les leaders marocains de l'énergie verte dans un contexte de transition énergétique.",
+    date: "2025-01-12",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'article-4')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'article-4')?.imageHint || ''
+  },
+  {
+    id: "5",
+    title: "Technologie : HPS et la dynamique des paiements digitaux en Afrique",
+    category: "Analyse d'Actions",
+    excerpt: "Focus sur HPS, sa position sur le marché africain des solutions de paiement et les catalyseurs potentiels pour son action en 2025, face à une concurrence accrue.",
+    date: "2025-01-10",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'article-5')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'article-5')?.imageHint || ''
+  },
+  {
+    id: "6",
+    title: "Tourisme : Risma profite-t-elle pleinement du rebond post-pandémique ?",
+    category: "Analyse Sectorielle",
+    excerpt: "Évaluation de la performance des actifs hôteliers de Risma, de son taux d'occupation et de sa stratégie de gestion de la dette pour l'année 2025.",
+    date: "2025-01-08",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'article-6')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'article-6')?.imageHint || ''
   },
 ];
 
@@ -71,7 +95,7 @@ export default function ArticlesPage() {
                 </h2>
                 <p className="text-muted-foreground text-sm mb-4">{article.excerpt}</p>
                 <div className="text-xs text-muted-foreground">
-                  Par {article.author} le {new Date(article.date).toLocaleDateString('fr-FR')}
+                  Publié le {new Date(article.date).toLocaleDateString('fr-FR')}
                 </div>
               </CardContent>
             </Card>
