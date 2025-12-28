@@ -52,13 +52,13 @@ export default function CoursesPage() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
         {courses.map((course) => (
           <Card key={course.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            {(course.id === "3" || course.id === "4") && (
+            {(course.id === "3" || course.id === "4") && course.imageUrl && (
                 <Badge className="absolute top-4 right-4 flex items-center gap-1 z-10 bg-yellow-400 text-yellow-900">
                     <Star className="h-4 w-4" /> NOUVEAU
                 </Badge>
             )}
             <CardHeader className="p-0">
-                <Link href={course.href} className="block aspect-video overflow-hidden group">
+                {course.imageUrl && <Link href={course.href} className="block aspect-video overflow-hidden group">
                     <Image
                         src={course.imageUrl}
                         alt={course.title}
@@ -67,7 +67,7 @@ export default function CoursesPage() {
                         height={400}
                         className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
-                </Link>
+                </Link>}
             </CardHeader>
             <CardContent className="p-6 flex flex-col flex-1">
                 <CardTitle className="font-headline text-2xl mb-2">{course.title}</CardTitle>
