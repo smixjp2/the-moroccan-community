@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -67,7 +66,7 @@ export default function ResourcesPage() {
               <div className="flex justify-between items-center mt-4">
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
                 <Button asChild className="font-bold">
-                  <Link href={resource.href} target="_blank" rel="noopener noreferrer">
+                  <Link href={resource.href} target={resource.price === 'Gratuit' ? '_blank' : '_self'} rel="noopener noreferrer">
                     {resource.price === 'Gratuit' ? 'Télécharger' : 'Obtenir'} <Download className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
