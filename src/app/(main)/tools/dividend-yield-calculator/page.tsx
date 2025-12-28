@@ -54,11 +54,9 @@ export default function DividendYieldCalculatorPage() {
   }
 
   const chartData = result ? [
-    { name: 'Investissement Initial', value: form.getValues('investmentAmount') },
-    { name: 'Revenu Annuel Dividendes', value: result.annualDividendIncome },
+    { name: 'Investissement Initial', value: form.getValues('investmentAmount'), fill: 'var(--color-investment)' },
+    { name: 'Revenu Annuel Dividendes', value: result.annualDividendIncome, fill: 'var(--color-income)' },
   ] : [];
-
-  const COLORS = ["hsl(var(--muted))", "hsl(var(--primary))"];
 
   const chartConfig = {
     investment: {
@@ -179,18 +177,18 @@ export default function DividendYieldCalculatorPage() {
                   <CardHeader>
                     <CardTitle>Composition du Revenu</CardTitle>
                   </CardHeader>
-                  <CardContent className="h-[200px]">
-                    <ResponsiveContainer width="100%" height="100%">
+                  <CardContent>
+                    <ChartContainer config={chartConfig} className="h-[200px] w-full">
                       <PieChart>
                         <Tooltip content={<ChartTooltipContent hideLabel />} />
                         <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                          {chartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                           {chartData.map((entry) => (
+                            <Cell key={`cell-${entry.name}`} fill={entry.fill} />
                           ))}
                         </Pie>
                         <Legend />
                       </PieChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                   </CardContent>
                 </Card>
 
