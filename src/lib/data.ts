@@ -11,26 +11,26 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-1')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-1')?.imageHint || '',
     content: `
-      <h2>Introduction : Un Contexte Macroéconomique en Mutation</h2>
-      <p>L'année 2025 s'ouvre sur un paysage économique marocain façonné par deux forces majeures : la mise en œuvre de la nouvelle loi de finances et la politique monétaire restrictive de Bank Al-Maghrib (BAM). Ces éléments créent un environnement complexe pour l'indice MASI, qui navigue entre des vents contraires et des opportunités sectorielles ciblées. Cette analyse décrypte les facteurs clés susceptibles d'influencer la performance de la Bourse de Casablanca au cours des prochains mois.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Introduction : Un Contexte Macroéconomique en Mutation</h2>
+      <p>L'année 2025 s'ouvre sur un paysage économique marocain façonné par deux forces majeures : la mise en œuvre de la nouvelle loi de finances et la politique monétaire de Bank Al-Maghrib (BAM). Ces éléments créent un environnement complexe pour l'indice MASI, qui navigue entre des vents contraires et des opportunités sectorielles ciblées. Cette analyse décrypte les facteurs clés susceptibles d'influencer la performance de la Bourse de Casablanca au cours des prochains mois.</p>
       
-      <h2>Impact de la Loi de Finances 2025</h2>
-      <p>La loi de finances pour 2025 introduit plusieurs mesures structurantes. D'une part, l'augmentation de la pression fiscale sur certains secteurs pourrait peser sur les marges des entreprises concernées. D'autre part, les incitations à l'investissement productif et le soutien à la demande intérieure via des programmes sociaux pourraient stimuler l'activité de certains pans de l'économie. Nous anticipons un impact différencié :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Impact de la Loi de Finances 2025</h2>
+      <p>La loi de finances pour 2025 introduit plusieurs mesures structurantes. D'une part, l'augmentation de la pression fiscale sur certains secteurs, notamment via la réforme de l'IS, pourrait peser sur les marges des entreprises. D'autre part, les incitations à l'investissement productif et le soutien à la demande intérieure via des programmes sociaux pourraient stimuler l'activité de certains pans de l'économie. Nous anticipons un impact différencié :</p>
       <ul>
-        <li><strong>Secteurs sous pression :</strong> Les entreprises des secteurs historiquement peu taxés pourraient voir leurs bénéfices nets affectés.</li>
-        <li><strong>Secteurs gagnants :</strong> Les entreprises de biens de consommation, du BTP et des matériaux de construction pourraient bénéficier des mesures de soutien à la demande.</li>
+        <li><strong>Secteurs sous pression :</strong> Les entreprises des secteurs historiquement peu taxés ou bénéficiant de niches fiscales pourraient voir leurs bénéfices nets affectés. Nous estimons un impact potentiel de -2% à -5% sur le BPA de certains acteurs industriels.</li>
+        <li><strong>Secteurs gagnants :</strong> Les entreprises de biens de consommation, du BTP et des matériaux de construction pourraient bénéficier des mesures de soutien à la demande. Les budgets alloués aux infrastructures, notamment en vue de la Coupe du Monde 2030, sont un catalyseur majeur.</li>
       </ul>
 
-      <h2>La Politique Monétaire de Bank Al-Maghrib</h2>
-      <p>Face à des tensions inflationnistes persistantes, BAM a maintenu un taux directeur élevé. Cette politique a plusieurs conséquences :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">La Politique Monétaire de Bank Al-Maghrib</h2>
+      <p>Face à des tensions inflationnistes qui refluent mais restent au-dessus de la cible de 2%, BAM pourrait maintenir une posture prudente au premier semestre 2025. Un taux directeur maintenu autour de 3% a plusieurs conséquences :</p>
       <ul>
-        <li><strong>Renchérissement du crédit :</strong> L'accès au financement devient plus coûteux pour les entreprises, ce qui peut freiner les investissements et la croissance.</li>
-        <li><strong>Arbitrage en faveur des placements sans risque :</strong> Les rendements attractifs des bons du Trésor et des dépôts à terme peuvent détourner une partie de la liquidité du marché actions, réduisant ainsi son attractivité relative.</li>
-        <li><strong>Pression sur les valorisations :</strong> Un taux d'actualisation plus élevé exerce une pression mathématique à la baisse sur la valorisation des actions.</li>
+        <li><strong>Renchérissement du crédit :</strong> L'accès au financement reste plus coûteux pour les entreprises, ce qui peut freiner les investissements d'expansion.</li>
+        <li><strong>Arbitrage en faveur des placements sans risque :</strong> Les rendements attractifs des bons du Trésor (autour de 3.5% - 4%) peuvent détourner une partie de la liquidité du marché actions, réduisant ainsi son attractivité relative.</li>
       </ul>
+      <img src="https://picsum.photos/seed/chart1/800/400" data-ai-hint="line chart" alt="Évolution du taux directeur vs. Inflation" class="my-6 rounded-lg shadow-md" />
 
-      <h2>Perspectives pour le MASI</h2>
-      <p>Dans ce contexte, notre scénario central pour le MASI en 2025 est celui d'une croissance modérée, marquée par une forte sélectivité. Les investisseurs devront faire preuve de discernement et privilégier les entreprises résilientes, dotées de fondamentaux solides et d'un faible endettement. Le stock-picking sera plus que jamais la clé de la surperformance. Nous prévoyons une première moitié d'année volatile, suivie d'une potentielle embellie au second semestre si les tensions inflationnistes s'apaisent et que BAM commence à signaler un assouplissement de sa politique monétaire.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Perspectives pour le MASI</h2>
+      <p>Dans ce contexte, notre scénario central pour le MASI en 2025 est celui d'une croissance modérée de <strong>+5% à +8%</strong>, marquée par une forte sélectivité. Les investisseurs devront faire preuve de discernement et privilégier les entreprises résilientes, dotées de fondamentaux solides (faible endettement, pricing power) et d'une exposition aux thématiques porteuses (export, transition énergétique, infrastructures). Nous prévoyons une première moitié d'année volatile, suivie d'une potentielle embellie au second semestre si BAM commence à signaler un assouplissement de sa politique monétaire.</p>
     `
   },
   {
@@ -42,26 +42,23 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-2')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-2')?.imageHint || '',
     content: `
-      <h2>Le Secteur Bancaire à la Croisée des Chemins</h2>
-      <p>Le secteur bancaire marocain, pilier de l'économie nationale, fait face en 2025 à une triple révolution : la digitalisation accélérée, la compression des marges dans un environnement de taux élevés, et le durcissement des exigences réglementaires. Cette analyse compare la situation des trois géants du secteur : Attijariwafa Bank, Banque Centrale Populaire (BCP) et BMCE Bank of Africa.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Le Secteur Bancaire à la Croisée des Chemins</h2>
+      <p>Le secteur bancaire marocain, pilier de l'économie, fait face en 2025 à une triple révolution : la digitalisation accélérée, la compression des marges dans un environnement de taux élevés, et le durcissement des exigences réglementaires. Cette analyse compare la situation des trois géants du secteur : Attijariwafa Bank, Banque Centrale Populaire (BCP) et Bank of Africa (BOA).</p>
 
-      <h2>1. Le Défi de la Marge d'Intérêt</h2>
-      <p>La politique de taux élevés de Bank Al-Maghrib a un double effet. Si elle permet de mieux rémunérer les liquidités des banques, elle augmente aussi le coût des ressources, notamment les dépôts à terme. De plus, la hausse des taux peut freiner la demande de crédits et augmenter le coût du risque. Dans cette bataille, les banques disposant d'une large base de dépôts à vue (peu ou pas rémunérés) comme Attijariwafa et BCP, possèdent un avantage compétitif certain sur leurs concurrents.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">1. Le Défi de la Marge d'Intérêt (NIM)</h2>
+      <p>La politique de taux de BAM a un double effet. Si elle permet de mieux rémunérer les liquidités des banques, elle augmente aussi le coût des ressources. La marge nette d'intérêt (NIM) est sous pression. Nous estimons une légère contraction de la NIM de -5 à -10 points de base pour le secteur en 2025.</p>
+      <div class="my-6 p-4 border rounded-lg bg-card"><p class="text-card-foreground">Dans cette bataille, les banques disposant d'une large base de dépôts à vue (peu ou pas rémunérés) comme Attijariwafa et BCP, possèdent un avantage compétitif certain. Leur coût de ressource est structurellement plus faible.</p></div>
 
-      <h2>2. La Course à la Digitalisation</h2>
-      <p>La transformation digitale n'est plus une option. Les clients, de plus en plus jeunes et connectés, exigent des services bancaires fluides, accessibles et instantanés. Les néobanques et les fintechs, bien que naissantes au Maroc, représentent une menace à long terme.</p>
-      <ul>
-        <li><strong>Attijariwafa Bank :</strong> Investit massivement dans la refonte de son application mobile et le développement d'une offre digitale complète, capitalisant sur sa large base de clients.</li>
-        <li><strong>BCP :</strong> Profite de son maillage régional pour combiner approche physique et digitale, avec des services comme "Pocket Bank".</li>
-        <li><strong>BMCE Bank of Africa :</strong> Tente de rattraper son retard avec des investissements ciblés mais fait face à une concurrence agressive.</li>
-      </ul>
-      <p>Le principal enjeu est de monétiser ces investissements et de réduire les coûts opérationnels grâce à l'automatisation.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">2. La Course à la Digitalisation et à l'Efficacité</h2>
+      <p>La transformation digitale n'est plus une option. L'enjeu est désormais de traduire les investissements technologiques en gains d'efficacité, mesurés par le coefficient d'exploitation (CoEx). Un CoEx plus faible signifie une meilleure rentabilité.</p>
+      <img src="https://picsum.photos/seed/chart2/800/400" data-ai-hint="bar chart" alt="Coefficient d'exploitation comparé des banques" class="my-6 rounded-lg shadow-md" />
+      <p>CIH Bank, avec son modèle digital natif, continue de mener la danse sur l'efficacité. Pour les banques traditionnelles, le défi est de rationaliser leurs réseaux d'agences tout en améliorant l'expérience client digitale pour réduire les coûts opérationnels.</p>
       
-      <h2>3. Réglementation et Nouveaux Risques</h2>
-      <p>Les nouvelles normes prudentielles, inspirées de Bâle III et IV, exigent des niveaux de fonds propres plus élevés, ce qui peut limiter la capacité des banques à distribuer des dividendes généreux. De plus, la montée des risques climatiques et cybernétiques contraint les banques à intégrer de nouveaux paramètres dans leur gestion des risques. La capacité à s'adapter rapidement à ce cadre réglementaire en constante évolution sera un facteur de différenciation majeur.</p>
-
-      <h2>Conclusion : Quel Positionnement ?</h2>
-      <p>Attijariwafa Bank semble la mieux positionnée grâce à sa taille, la qualité de ses dépôts et son avancée dans le digital. BCP reste un acteur solide avec une forte résilience grâce à son modèle coopératif. BMCE Bank of Africa présente un potentiel de redressement mais avec un profil de risque plus élevé. Les investisseurs devront surveiller de près l'évolution du coût du risque et l'efficacité des stratégies digitales pour chaque acteur.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">3. Qualité des Actifs et Coût du Risque</h2>
+      <p>Avec le ralentissement économique et le coût élevé du crédit, le coût du risque est l'indicateur à surveiller de près. Un taux de créances en souffrance (NPL ratio) maîtrisé est un signe de bonne santé. Nous anticipons un coût du risque autour de 90-110 points de base pour le secteur, un niveau élevé mais maîtrisé.</p>
+      
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Conclusion : Quel Positionnement ?</h2>
+      <p><strong>Attijariwafa Bank</strong> semble la mieux positionnée grâce à sa taille, sa diversification panafricaine et sa base de dépôts solide. <strong>BCP</strong> reste un acteur résilient avec un fort ancrage local. <strong>Bank of Africa</strong> présente un profil plus risqué mais un potentiel de redressement si sa stratégie africaine porte ses fruits. Les investisseurs devront privilégier les banques avec le meilleur coefficient d'exploitation et une gestion du risque prudente.</p>
     `
   },
   {
@@ -73,33 +70,48 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-3')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-3')?.imageHint || '',
     content: `
-      <h2>Un Souffle Nouveau pour l'Immobilier</h2>
-      <p>Après plusieurs années de morosité, le marché immobilier marocain donne des signes de frémissement en ce début 2025. La combinaison d'une stabilisation des taux d'intérêt, des nouveaux programmes d'aide au logement et d'une demande latente semble créer un alignement des planètes favorable pour le secteur. Cependant, tous les acteurs ne sont pas logés à la même enseigne.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Un Souffle Nouveau pour l'Immobilier</h2>
+      <p>Après plusieurs années de morosité, le marché immobilier marocain donne des signes de frémissement en 2025. La combinaison d'une stabilisation des taux d'intérêt, des nouveaux programmes d'aide au logement et d'une demande latente semble créer un alignement des planètes favorable pour le secteur. Cependant, tous les acteurs ne sont pas logés à la même enseigne.</p>
 
-      <h2>Les Catalyseurs du Secteur</h2>
-      <p>Plusieurs facteurs soutiennent la thèse d'une reprise :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Les Catalyseurs du Secteur</h2>
       <ul>
-          <li><strong>Programme d'aide au logement :</strong> Le programme gouvernemental visant à aider les primo-accédants stimule directement la demande pour le logement social et moyen standing.</li>
-          <li><strong>Stabilisation des taux :</strong> Bien que toujours élevés, les taux de crédit immobilier semblent avoir atteint un plateau, redonnant de la visibilité aux acheteurs.</li>
-          <li><strong>Demande démographique :</strong> La structure démographique du Maroc assure une demande de fond continue pour de nouveaux logements.</li>
+          <li><strong>Programme d'aide au logement :</strong> Le programme gouvernemental visant à aider les primo-accédants (jusqu'à 100 000 DH d'aide) stimule directement la demande pour le logement social et moyen standing. Nous estimons que cela pourrait générer 70 000 à 100 000 transactions supplémentaires par an.</li>
+          <li><strong>Effet Coupe du Monde 2030 :</strong> Les investissements massifs en infrastructures (stades, routes, hôtels) irriguent tout le secteur du BTP.</li>
       </ul>
 
-      <h2>Analyse des Acteurs Clés</h2>
-      <h3>Groupe Addoha</h3>
-      <p>En tant que leader historique du logement social et économique, Addoha est le bénéficiaire le plus direct des nouveaux programmes d'aide. Le groupe a assaini son bilan au cours des dernières années, réduisant significativement sa dette. Son immense réserve foncière lui permet de lancer rapidement de nouveaux projets pour répondre à la demande. Le principal défi reste la maîtrise des marges dans un segment sensible aux prix.</p>
-
-      <h3>Groupe Alliances</h3>
-      <p>Alliances, après une restructuration profonde, s'est repositionné avec succès sur le moyen et haut standing, notamment à travers des projets de golf et des resorts. Le groupe est moins dépendant des aides directes mais profite de l'amélioration générale du sentiment de marché. La qualité de ses projets et sa capacité à commercialiser des biens à plus forte valeur ajoutée sont ses principaux atouts. Le risque réside dans la cyclicalité du segment haut de gamme.</p>
-
-      <h3>TGCC (Travaux Généraux de Construction de Casablanca)</h3>
-      <p>TGCC n'est pas un promoteur mais le leader de la construction (BTP). Son carnet de commandes est le principal indicateur à suivre. Le groupe bénéficie non seulement de la reprise de l'immobilier privé, mais aussi et surtout des grands projets d'infrastructure lancés par l'État (ports, stades pour la CAN 2025 et le Mondial 2030, lignes TGV...). Son profil est donc plus diversifié et potentiellement plus résilient que celui des promoteurs purs. La maîtrise des délais et des coûts sur des chantiers complexes est son challenge permanent.</p>
-
-      <h2>Conclusion : Quelle Stratégie d'Investissement ?</h2>
-      <p>Pour les investisseurs, le choix dépendra de leur appétit pour le risque :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Analyse Comparative des Acteurs Clés</h2>
+      <div class="overflow-x-auto my-6"><table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr><th scope="col" class="py-3 px-6">Acteur</th><th scope="col" class="py-3 px-6">Segment Clé</th><th scope="col" class="py-3 px-6">Forces</th><th scope="col" class="py-3 px-6">Défis</th></tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Groupe Addoha</th>
+                <td class="py-4 px-6">Économique & Social</td>
+                <td class="py-4 px-6">Leader du segment, énorme réserve foncière, bénéficiaire direct des aides.</td>
+                <td class="py-4 px-6">Maîtrise des marges, image de marque.</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Groupe Alliances</th>
+                <td class="py-4 px-6">Moyen & Haut Standing</td>
+                <td class="py-4 px-6">Bilan assaini, repositionnement réussi, projets de qualité.</td>
+                <td class="py-4 px-6">Moins exposé aux aides, sensibilité à la confiance des ménages aisés.</td>
+            </tr>
+            <tr class="bg-white dark:bg-gray-800">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">TGCC</th>
+                <td class="py-4 px-6">BTP (Construction)</td>
+                <td class="py-4 px-6">Carnet de commandes record (+10 Mds DH), diversification (public/privé), exposition aux projets structurants.</td>
+                <td class="py-4 px-6">Maîtrise des coûts des matières premières, exécution des grands chantiers.</td>
+            </tr>
+        </tbody>
+      </table></div>
+      
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Conclusion : Quelle Stratégie d'Investissement ?</h2>
+      <p>Le choix dépendra de l'appétit pour le risque :</p>
       <ul>
-          <li><strong>Addoha :</strong> Un pari direct sur la reprise du logement économique, avec un potentiel de volume important.</li>
-          <li><strong>Alliances :</strong> Une exposition au segment du moyen/haut standing, sensible à la confiance des ménages les plus aisés.</li>
-          <li><strong>TGCC :</strong> Un pari plus large sur la dynamique de l'investissement au Maroc, public comme privé, offrant une meilleure diversification.</li>
+          <li><strong>Addoha :</strong> Un pari direct ("pure play") sur la reprise du logement économique, avec un potentiel de volume important mais des marges plus faibles.</li>
+          <li><strong>Alliances :</strong> Une exposition à la reprise du haut de gamme, souvent plus rentable mais plus cyclique.</li>
+          <li><strong>TGCC :</strong> Un pari plus large et diversifié sur la dynamique de l'investissement au Maroc. Son carnet de commandes offre une forte visibilité. C'est notre choix privilégié pour une exposition résiliente au secteur.</li>
       </ul>
     `
   },
@@ -112,32 +124,30 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-4')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-4')?.imageHint || '',
     content: `
-      <h2>La Transition Énergétique Marocaine : Un Enjeu Stratégique</h2>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">La Transition Énergétique Marocaine : Un Enjeu Stratégique</h2>
       <p>La stratégie énergétique du Maroc, visant plus de 52% de la capacité électrique installée à partir de sources renouvelables d'ici 2030, crée un terrain de jeu exceptionnel pour les acteurs du secteur. En 2025, deux champions se distinguent : Taqa Morocco, l'opérateur historique, et Nareva, la filiale du groupe Al Mada. Qui est le mieux positionné pour capter cette croissance ?</p>
 
-      <h2>Taqa Morocco : La Force de l'Existant et la Diversification</h2>
-      <p>Historiquement, Taqa Morocco est le premier producteur privé d'électricité au Maroc, principalement via sa centrale thermique de Jorf Lasfar. Cette activité, basée sur des contrats à long terme avec l'ONEE, lui assure des revenus stables et prévisibles, ainsi qu'un dividende historiquement généreux. Conscient des enjeux de la transition, Taqa a entamé une diversification stratégique :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Taqa Morocco : La Stabilité et la Diversification</h2>
+      <p>Taqa Morocco est le premier producteur privé d'électricité au Maroc, principalement via sa centrale thermique de Jorf Lasfar. Cette activité, basée sur des contrats PPA (Power Purchase Agreement) à long terme avec l'ONEE, lui assure des revenus stables et un dividende historiquement généreux (rendement souvent supérieur à 5%).</p>
+      <p>Conscient des enjeux, Taqa a entamé une diversification stratégique :</p>
       <ul>
-          <li><strong>Développement de parcs éoliens et solaires :</strong> Le groupe investit pour construire un portefeuille d'actifs renouvelables.</li>
-          <li><strong>Dessalement d'eau de mer :</strong> Un axe de croissance majeur, répondant au stress hydrique du Maroc. Le projet de Casablanca en est la pierre angulaire.</li>
+          <li><strong>Développement de parcs renouvelables :</strong> Objectif de 1000 MW de capacité renouvelable d'ici 2030.</li>
+          <li><strong>Dessalement d'eau de mer :</strong> Un axe de croissance majeur. Le projet de Casablanca, plus grande station d'Afrique, est une pierre angulaire qui garantira des revenus récurrents pour les 30 prochaines années.</li>
       </ul>
-      <p><strong>Forces :</strong> Stabilité des revenus, expertise opérationnelle, rendement attractif.<br><strong>Faiblesses :</strong> Forte dépendance résiduelle au charbon, perception ESG (Environnemental, Social et de Gouvernance) à améliorer.</p>
+      <div class="my-6 p-4 border-l-4 border-primary bg-card"><p class="text-card-foreground"><strong>Profil d'investisseur :</strong> Idéal pour l'investisseur en quête de <strong>rendement et de visibilité</strong>. C'est une valeur défensive, moins volatile que le reste du marché.</p></div>
 
-      <h2>Nareva Holding : Le Pure-Player des Énergies Vertes</h2>
-      <p>Filiale du holding royal Al Mada, Nareva s'est positionné dès sa création comme un acteur majeur des énergies renouvelables. Le groupe opère certains des plus grands parcs éoliens d'Afrique (comme celui de Tarfaya) et développe activement des projets solaires et hydrauliques.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Nareva Holding : Le Pure-Player de la Croissance Verte</h2>
+      <p>Filiale du holding royal Al Mada, Nareva (non cotée directement, mais son écosystème l'est) s'est positionné comme un acteur majeur des renouvelables. Le groupe opère certains des plus grands parcs éoliens d'Afrique (Tarfaya, Aftissat) et développe des projets solaires et hydrauliques.</p>
+      <img src="https://picsum.photos/seed/chart3/800/400" data-ai-hint="pie chart" alt="Répartition des capacités énergétiques" class="my-6 rounded-lg shadow-md" />
+      <p><strong>Forces de Nareva :</strong></p>
       <ul>
-          <li><strong>Un portefeuille 100% vert :</strong> Nareva bénéficie d'une image et d'un positionnement parfaitement alignés avec la stratégie nationale et les attentes des investisseurs internationaux.</li>
-          <li><strong>Projets d'envergure :</strong> Le groupe est impliqué dans des projets structurants, y compris des projets futurs liés à l'hydrogène vert.</li>
+          <li><strong>Un portefeuille 100% vert :</strong> Parfaitement aligné avec la stratégie nationale et les critères ESG des investisseurs internationaux.</li>
+          <li><strong>Projets d'envergure :</strong> Le groupe est impliqué dans des projets structurants, y compris l'hydrogène vert.</li>
       </ul>
-      <p><strong>Forces :</strong> Alignement stratégique parfait, fort soutien actionnarial, potentiel de croissance élevé.<br><strong>Faiblesses :</strong> Rentabilité des projets parfois longue à matérialiser, exposition à la variabilité des ressources (vent, soleil).</p>
+      <div class="my-6 p-4 border-l-4 border-accent bg-card"><p class="text-card-foreground"><strong>Profil d'investisseur :</strong> L'écosystème Nareva représente un pari sur la <strong>croissance pure</strong>. Le potentiel de plus-value est plus important, mais avec une volatilité plus forte et des dividendes incertains à court terme.</p></div>
 
-      <h2>Comparaison et Verdict pour l'Investisseur</h2>
-      <p>Le choix entre Taqa Morocco et les entreprises du secteur renouvelable comme Nareva (bien que non directement cotée, son écosystème l'est) dépend du profil de l'investisseur :</p>
-      <ul>
-          <li><strong>Taqa Morocco</strong> s'adresse à l'investisseur en quête de <strong>rendement et de stabilité</strong>. Le dividende est son principal attrait, et sa diversification vers le dessalement offre une nouvelle histoire de croissance. C'est un profil "valeur/rendement".</li>
-          <li><strong>L'écosystème Nareva</strong> (et les futures introductions en bourse du secteur) représente un pari sur la <strong>croissance pure</strong>. Le potentiel de plus-value est plus important, mais les dividendes sont plus incertains à court terme. C'est un profil "croissance".</li>
-      </ul>
-      <p>En 2025, une stratégie prudente pourrait consister à détenir Taqa pour son dividende robuste tout en surveillant de près l'émergence d'opportunités d'investissement direct dans des pure-players de l'énergie verte.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Verdict pour 2025</h2>
+      <p>Le choix dépend du profil de risque. <strong>Taqa Morocco</strong> est une excellente valeur de fond de portefeuille pour son dividende robuste et sa nouvelle histoire de croissance dans l'eau. Pour une exposition à la croissance pure des énergies vertes, il faudra se tourner vers d'autres acteurs de l'écosystème ou attendre de futures introductions en bourse. Une stratégie mixte combinant les deux profils peut être judicieuse.</p>
     `
   },
   {
@@ -149,29 +159,28 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-5')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-5')?.imageHint || '',
     content: `
-      <h2>HPS : Un Leader Technologique Marocain à la Conquête du Monde</h2>
-      <p>Hightech Payment Systems (HPS) est l'une des rares véritables success stories technologiques de la Bourse de Casablanca. Spécialisée dans les solutions de paiement électronique, sa plateforme PowerCARD est utilisée par des centaines d'institutions financières dans plus de 90 pays. En 2025, l'entreprise se trouve à un point d'inflexion, entre une croissance structurelle forte et une concurrence qui s'intensifie.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">HPS : Une Pépite Technologique à la Conquête du Monde</h2>
+      <p>Hightech Payment Systems (HPS) est l'une des rares véritables success stories technologiques de la Bourse de Casablanca. Sa plateforme PowerCARD est utilisée par plus de 450 institutions dans 90 pays. En 2025, l'entreprise se trouve à un point d'inflexion, entre une croissance structurelle forte et des investissements importants qui pèsent sur les marges à court terme.</p>
 
-      <h2>Le Moteur de Croissance : la Digitalisation des Paiements</h2>
-      <p>Le marché de HPS est structurellement porteur. La transition du cash vers le paiement digital s'accélère dans le monde entier, particulièrement sur les marchés émergents en Afrique et en Asie, qui constituent le cœur de cible de HPS. Plusieurs facteurs alimentent cette tendance :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Le Moteur de Croissance : la Digitalisation des Paiements</h2>
+      <p>Le marché de HPS est structurellement porteur. La transition du cash vers le paiement digital s'accélère, particulièrement sur les marchés émergents. Le volume de transactions électroniques en Afrique et au Moyen-Orient devrait croître de <strong>plus de 15% par an</strong> jusqu'en 2030.</p>
+      <p>HPS est positionnée pour capter cette croissance grâce à sa solution PowerCARD, qui couvre toute la chaîne de valeur :</p>
       <ul>
-        <li>La pénétration croissante des smartphones.</li>
-        <li>La volonté des gouvernements de formaliser l'économie.</li>
-        <li>L'émergence de nouveaux usages (e-commerce, paiement mobile, BNPL - "Buy Now, Pay Later").</li>
+        <li>Émission de cartes (physiques et virtuelles)</li>
+        <li>Acquisition de transactions e-commerce et TPE</li>
+        <li>Gestion de portefeuilles mobiles (wallets)</li>
+        <li>Switching monétique national et international</li>
       </ul>
-      <p>HPS est idéalement positionnée pour capter cette croissance grâce à la robustesse et la complétude de sa solution PowerCARD, qui couvre l'ensemble de la chaîne de valeur du paiement (émission de cartes, acquisition de transactions, switching...).</p>
+      <img src="https://picsum.photos/seed/chart4/800/400" data-ai-hint="flow chart" alt="Chaîne de valeur du paiement" class="my-6 rounded-lg shadow-md" />
 
-      <h2>Nouveaux Contrats et Expansion Géographique</h2>
-      <p>La performance boursière de HPS est fortement corrélée à sa capacité à signer de nouveaux contrats importants. L'année 2025 sera scrutée à la loupe sur ce point. L'expansion récente au Canada et le renforcement de sa présence en Asie du Sud-Est sont des signaux positifs. Le modèle économique de HPS, basé sur des frais de licence initiaux ("upfront") puis des revenus récurrents de maintenance, lui assure une bonne visibilité sur ses revenus futurs une fois un client signé.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">La Stratégie "Accélérer" : Investir pour Grandir</h2>
+      <p>HPS a récemment intensifié ses investissements (R&D, marketing, recrutements) pour maintenir son avance technologique et accélérer sa conquête de marché. Cette stratégie a un coût : la marge opérationnelle a reculé, passant de plus de 20% historiquement à environ 15% en 2024. Le marché attend en 2025 les premiers fruits de ces investissements sous forme d'une accélération de la croissance du chiffre d'affaires (objectif de +15-20%). La signature de nouveaux contrats de grande envergure (Tier-1 banks) sera le principal catalyseur à surveiller.</p>
 
-      <h2>Les Défis à Surveiller</h2>
-      <h3>1. La Concurrence</h3>
-      <p>HPS n'est pas seule. Elle fait face à des géants mondiaux comme Temenos ou ACI Worldwide, qui disposent de moyens financiers bien plus importants. De plus, de nouvelles startups agiles et spécialisées sur des niches (comme le BNPL) peuvent grignoter des parts de marché. La capacité de HPS à innover en continu et à maintenir son avance technologique est donc cruciale.</p>
-      <h3>2. La Valorisation</h3>
-      <p>En tant que valeur de croissance technologique, HPS se paie traditionnellement cher en bourse. Sa valorisation intègre déjà des perspectives de croissance élevées. Tout ralentissement dans la signature de nouveaux contrats ou toute déception sur les marges pourrait entraîner une correction boursière significative. Les investisseurs paient aujourd'hui pour la croissance de demain.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Valorisation et Risques</h2>
+      <p>En tant que valeur de croissance, HPS se paie cher, avec un PER (Price-to-Earnings Ratio) souvent supérieur à 30x. Cette valorisation intègre déjà des perspectives de croissance élevées. Le principal risque est un décalage dans la concrétisation des nouveaux contrats, ce qui mettrait la pression sur le titre. La concurrence de géants comme Temenos ou de startups agiles reste également un défi constant.</p>
 
-      <h2>Conclusion pour l'Investisseur</h2>
-      <p>Investir dans HPS en 2025 est un pari sur la poursuite de la digitalisation du système financier mondial. Le potentiel reste immense, mais le titre n'est pas sans risque. Il est destiné aux investisseurs patients, avec un horizon de temps long, et qui acceptent la volatilité inhérente aux valeurs technologiques. La communication financière du groupe et l'annonce de nouveaux contrats seront les éléments clés à surveiller tout au long de l'année.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Conclusion pour l'Investisseur</h2>
+      <p>Investir dans HPS est un pari sur la capacité du management à exécuter sa stratégie de croissance. Si l'entreprise réussit à transformer ses investissements en chiffre d'affaires additionnel, le potentiel de revalorisation est important. Le titre est destiné aux investisseurs patients, avec un horizon de temps long, et qui acceptent la volatilité inhérente aux valeurs technologiques.</p>
     `
   },
   {
@@ -183,30 +192,31 @@ export const articles: Article[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'article-6')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'article-6')?.imageHint || '',
     content: `
-      <h2>Risma : Au Cœur du Rebond Touristique Marocain</h2>
-      <p>Le secteur touristique marocain a connu un rebond spectaculaire après la pandémie, porté par une stratégie gouvernementale volontariste et l'attractivité de la destination Maroc. Risma, en tant que premier opérateur touristique coté à Casablanca et partenaire historique du groupe Accor, est en première ligne pour bénéficier de cette dynamique. Mais la performance est-elle au rendez-vous en 2025 ?</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Risma : Au Cœur du Rebond Touristique Marocain</h2>
+      <p>Le secteur touristique marocain a connu un rebond spectaculaire, dépassant les 14.5 millions d'arrivées en 2023, et la dynamique se poursuit en 2024/2025. Risma, premier opérateur touristique coté et partenaire d'Accor, est en première ligne. Mais comment cela se traduit-il dans les chiffres ?</p>
       
-      <h2>Des Indicateurs Opérationnels en Forte Amélioration</h2>
-      <p>Les principaux indicateurs de performance de Risma montrent des signes clairs d'amélioration :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Des Indicateurs Opérationnels au Zénith</h2>
+      <p>Les indicateurs clés (KPIs) de Risma montrent une forte amélioration :</p>
       <ul>
-        <li><strong>Taux d'occupation (TO) :</strong> En nette hausse sur l'ensemble du parc hôtelier, se rapprochant et dépassant même par endroits les niveaux pré-pandémiques de 2019. Les destinations comme Marrakech et Agadir tirent cette performance.</li>
-        <li><strong>Prix moyen par chambre (ADR) :</strong> Le groupe a réussi à augmenter ses prix, reflétant la forte demande et un positionnement plus qualitatif de certains de ses hôtels après rénovation.</li>
-        <li><strong>RevPAR (Revenu par chambre disponible) :</strong> La combinaison d'un TO et d'un ADR en hausse se traduit logiquement par un RevPAR en forte croissance, indicateur clé de la rentabilité dans l'hôtellerie.</li>
+        <li><strong>Taux d'occupation (TO) :</strong> Nous l'estimons à 68% en 2024, dépassant le niveau de 2019 (65%).</li>
+        <li><strong>Prix moyen par chambre (ADR) :</strong> En hausse de plus de 15% par rapport à 2019, grâce à l'inflation et à une stratégie de montée en gamme.</li>
+        <li><strong>RevPAR (Revenu par chambre disponible) :</strong> En croissance de plus de 20% vs 2019, il est le véritable moteur de la rentabilité.</li>
       </ul>
+      <img src="https://picsum.photos/seed/chart5/800/400" data-ai-hint="line chart trends" alt="Évolution du RevPAR de Risma" class="my-6 rounded-lg shadow-md" />
 
-      <h2>La Stratégie de Montée en Gamme et de Rénovation</h2>
-      <p>Risma a profité de la période de faible activité pour rénover une partie de son parc hôtelier. Cette stratégie de montée en gamme vise à attirer une clientèle à plus forte contribution et à améliorer durablement les marges. Le succès de la rénovation d'hôtels emblématiques sous les marques Sofitel, MGallery ou Mövenpick est un facteur clé à surveiller. Cette stratégie permet à Risma de mieux se défendre face à la concurrence croissante, notamment celle de plateformes comme Airbnb.</p>
-
-      <h2>Le Grand Défi : la Gestion de la Dette</h2>
-      <p>Le principal point de vigilance pour les investisseurs reste le niveau d'endettement de Risma. Le secteur hôtelier est très capitalistique, et la construction ainsi que la rénovation des hôtels nécessitent des investissements lourds, souvent financés par la dette. Dans un contexte de taux d'intérêt élevés, le coût de cette dette pèse sur la rentabilité nette du groupe.</p>
-      <p>La stratégie de Risma pour 2025 est double :</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Stratégie : Rénovation et Désendettement</h2>
+      <p>La stratégie de Risma pour 2025 repose sur deux piliers :</p>
       <ol>
-        <li><strong>Générer un cash-flow opérationnel solide :</strong> Utiliser la bonne performance actuelle pour rembourser une partie de la dette.</li>
-        <li><strong>Optimiser le portefeuille d'actifs :</strong> Le groupe pourrait être amené à céder certains actifs jugés non stratégiques ou moins rentables pour accélérer son désendettement.</li>
+        <li><strong>Montée en gamme :</strong> Le programme de rénovation de 1.1 milliard de dirhams se poursuit. La transformation d'hôtels sous des marques premium (Sofitel, MGallery, Mövenpick) permet de justifier des prix plus élevés et d'attirer une clientèle internationale.</li>
+        <li><strong>Gestion de la dette :</strong> C'est le point de vigilance majeur. L'endettement net s'élevait à près de 4 Mds de DH. La génération de cash-flow solide grâce à la bonne performance opérationnelle est cruciale pour réduire ce fardeau, surtout dans un contexte de taux d'intérêt élevés.</li>
       </ol>
       
-      <h2>Conclusion : Un Potentiel certain, un Risque à Maîtriser</h2>
-      <p>Risma représente une exposition directe et de qualité au thème porteur du tourisme marocain. Le potentiel d'appréciation du titre est réel si la dynamique actuelle se poursuit et si le groupe réussit à maîtriser son endettement. Pour l'investisseur, le titre offre une histoire de "recovery" (rétablissement) claire. Il faudra cependant surveiller attentivement les prochaines publications financières pour valider la trajectoire de désendettement et la confirmation de la rentabilité.</p>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Valorisation et Perspectives</h2>
+      <p>Malgré la forte reprise, le titre Risma a sous-performé le marché, se négociant toujours en dessous de sa valeur d'actif net réévalué (ANR). Cette décote s'explique par la crainte des investisseurs concernant le niveau de la dette.</p>
+      <div class="my-6 p-4 border-l-4 border-primary bg-card"><p class="text-card-foreground">Nous pensons que cette décote est excessive. Si Risma démontre une trajectoire claire de désendettement dans ses publications de 2025, un rattrapage boursier significatif est possible. Le potentiel est réel, mais conditionné par la discipline financière.</p></div>
+
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4">Conclusion</h2>
+      <p>Risma offre une histoire de "recovery" (rétablissement) claire et une exposition directe à la thématique porteuse du tourisme marocain (CAN 2025, Coupe du Monde 2030). Pour l'investisseur, le point d'entrée actuel semble attractif, mais il faudra surveiller attentivement les publications sur le niveau d'endettement. C'est une valeur à potentiel pour un investisseur patient.</p>
     `
   },
 ];
