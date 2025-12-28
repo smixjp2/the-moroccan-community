@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,15 @@ import type { Resource } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const resources: Resource[] = [
+  {
+    id: "3",
+    title: "Simulateur d'Intérêts Composés (Excel)",
+    description: "Un fichier Excel gratuit pour simuler la croissance de votre épargne sur le long terme grâce à la magie des intérêts composés. Essentiel pour planifier votre retraite.",
+    price: "Gratuit",
+    href: "https://docs.google.com/spreadsheets/d/10hXt59mH8YaJixCOHUZaGyYCKszxtc_Q/export?format=xlsx",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-3')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'resource-3')?.imageHint || '',
+  },
   {
     id: "1",
     title: "Simulateur de Frais de Courtage et Commissions",
@@ -33,10 +43,10 @@ export default function ResourcesPage() {
       <div className="text-center max-w-3xl mx-auto mb-12">
         <h1 className="font-headline text-4xl font-bold md:text-5xl">Outils et Ressources Numériques</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Accélérez votre analyse et votre prise de décision avec nos produits numériques téléchargeables.
+          Accélérez votre analyse et votre prise de décision avec nos produits numériques téléchargeables, gratuits et payants.
         </p>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {resources.map((resource) => (
           <Card key={resource.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">
              <CardHeader className="p-0">
@@ -58,7 +68,7 @@ export default function ResourcesPage() {
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
                 <Button asChild className="font-bold">
                   <Link href={resource.href}>
-                    Obtenir <Download className="ml-2 h-4 w-4" />
+                    {resource.price === 'Gratuit' ? 'Télécharger' : 'Obtenir'} <Download className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>

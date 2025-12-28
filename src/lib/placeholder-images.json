@@ -27,7 +27,7 @@
     {
       "id": "article-4",
       "description": "Image for an article about the energy sector.",
-      "imageUrl": "https://images.unsplash.com/photo-1765962003875-67ea07337b37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlbmVyZ3klMjBzZWN0b3J8ZW58MHx8fHwxNzY2OTE4MDA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765962003875-67ea07337b37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlbmVyZ3klMjBzZWN0b3J8ZW58MHx8fHwxNzY2OTE4MDA0fDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "energy sector"
     },
     {
@@ -51,7 +51,7 @@
     {
       "id": "course-casablanca-bourse",
       "description": "Image for a course about Casablanca stock exchange.",
-      "imageUrl": "https://images.unsplash.com/photo-1617294255092-2b6e15490a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDYXNhYmxhbmNhJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzE4NzQ3ODU5fDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617294255092-2b6e15490a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDYXNhYmxhbmNhJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzE4NzQ3ODU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "Casablanca building"
     },
     {
@@ -63,31 +63,37 @@
     {
       "id": "resource-1",
       "description": "Image for a digital product, a fee simulator.",
-      "imageUrl": "https://images.unsplash.com/photo-1716799323871-d82962608d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWxjdWxhdG9yJTIwbW9uZXl8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1716799323871-d82962608d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWxjdWxhdG9yJTIwbW9uZXl8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "calculator money"
     },
     {
       "id": "resource-2",
       "description": "Image for a digital product, a comparison list.",
-      "imageUrl": "https://images.unsplash.com/photo-1554224155-cfa08c2a758f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjaGVja2xpc3QlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1554224155-cfa08c2a758f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjaGVja2xpc3QlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "checklist document"
+    },
+    {
+      "id": "resource-3",
+      "description": "Image for a free compound interest simulator.",
+      "imageUrl": "https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxleGNlbCUyMHNoZWV0fGVufDB8fHx8MTcyMjAwOTY3NHww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "excel sheet"
     },
     {
       "id": "feature-articles",
       "description": "Image for the articles feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1734080512636-2741e9e3a2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXdzcGFwZXIlMjByZWFkaW5nfGVufDB8fHx8fDE3NjY2NjE3Njh8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1734080512636-2741e9e3a2bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXdzcGFwZXIlMjByZWFkaW5nfGVufDB8fHx8fDE3NjY2NjE3Njh8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "newspaper reading"
     },
     {
       "id": "feature-tools",
       "description": "Image for the tools feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1581166418878-11f0dde922c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VhcnMlMjB0b29sc3xlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1581166418878-11f0dde922c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VhcnMlMjB0b29sc3xlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "gears tools"
     },
     {
       "id": "feature-courses",
       "description": "Image for the courses feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1610484826967-09c5720778c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NjY2NzI0ODh8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1610484826967-09c5720778c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZ3xlbnwwfHx8fDE3NjY2NzI0ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "online learning"
     },
     {
