@@ -13,6 +13,7 @@ export interface Article {
   imageUrl: string;
   imageHint: string;
   date: string;
+  content: string;
 }
 
 export interface Course {
