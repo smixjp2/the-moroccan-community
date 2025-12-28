@@ -33,20 +33,26 @@
     {
       "id": "article-5",
       "description": "Image for an article about the technology sector.",
-      "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0ZWNobm9sb2d5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzY2OTE3NTE1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0ZWNobm9sb2d5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzY2OTE3NTE1fDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "technology abstract"
     },
     {
       "id": "article-6",
       "description": "Image for an article about the tourism sector.",
-      "imageUrl": "https://images.unsplash.com/photo-1597115793997-06eb0c3cfe24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b3VyaXNtJTIwdHJhdmVsfGVufDB8fHx8MTc2NjkxODAwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1597115793997-06eb0c3cfe24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b3VyaXNtJTIwdHJhdmVsfGVufDB8fHx8MTc2NjkxODAwM3ww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "tourism travel"
     },
     {
       "id": "course-1",
       "description": "Image for a course on how to invest your first salary.",
-      "imageUrl": "https://images.unsplash.com/photo-1573496799515-eebbb63814f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx5b3VuZyUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1573496799515-eebbb63814f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx5b3VuZyUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "young professional"
+    },
+    {
+      "id": "course-casablanca-bourse",
+      "description": "Image for a course about Casablanca stock exchange.",
+      "imageUrl": "https://images.unsplash.com/photo-1617294255092-2b6e15490a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDYXNhYmxhbmNhJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzE4NzQ3ODU5fDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageHint": "Casablanca building"
     },
     {
       "id": "course-excel-power-bi",
@@ -57,7 +63,7 @@
     {
       "id": "resource-1",
       "description": "Image for a digital product, a fee simulator.",
-      "imageUrl": "https://images.unsplash.com/photo-1716799323871-d82962608d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWxjdWxhdG9yJTIwbW9uZXl8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1716799323871-d82962608d7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjYWxjdWxhdG9yJTIwbW9uZXl8ZW58MHx8fHwxNzY2NzA0OTczfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "calculator money"
     },
     {
@@ -89,12 +95,6 @@
       "description": "Image for the private community section.",
       "imageUrl": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzY2NzEzMjQyfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract background"
-    },
-    {
-      "id": "course-casablanca-bourse",
-      "description": "Image for a course about Casablanca stock exchange.",
-      "imageUrl": "https://images.unsplash.com/photo-1617294255092-2b6e15490a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDYXNhYmxhbmNhJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzE4NzQ3ODU5fDA&ixlib-rb-4.1.0&q=80&w=1080",
-      "imageHint": "Casablanca building"
     }
   ]
 }
