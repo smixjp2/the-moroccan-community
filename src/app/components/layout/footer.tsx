@@ -1,9 +1,47 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Scaling, Instagram, Youtube } from "lucide-react";
+import { Scaling, Instagram, Youtube, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { subscribeToNewsletter } from "@/app/actions/newsletter";
+
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <Button type="submit" variant="default" disabled={pending}>
+            {pending ? <Loader2 className="animate-spin" /> : "S'abonner"}
+        </Button>
+    );
+}
 
 export function Footer() {
+  const { toast } = useToast();
+  const [state, formAction] = useFormState(subscribeToNewsletter, {
+    message: "",
+    status: "",
+  });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state.status === "success") {
+      toast({
+        title: "Inscription réussie !",
+        description: state.message,
+      });
+      formRef.current?.reset();
+    } else if (state.status === "error") {
+      toast({
+        title: "Erreur d'inscription",
+        description: state.message,
+        variant: "destructive",
+      });
+    }
+  }, [state, toast]);
+
   return (
     <footer className="border-t bg-card">
       <div className="container py-12">
@@ -33,11 +71,9 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">
                 Recevez chaque semaine des informations sur le marché, des offres promotionnelles et des mises à jour sur les nouveaux services directement dans votre boîte de réception.
             </p>
-            <form className="flex w-full max-w-md items-center space-x-2">
-              <Input type="email" placeholder="Entrez votre email" className="flex-1" />
-              <Button type="submit" variant="default">
-                S'abonner
-              </Button>
+            <form ref={formRef} action={formAction} className="flex w-full max-w-md items-center space-x-2">
+              <Input name="email" type="email" placeholder="Entrez votre email" className="flex-1" required />
+              <SubmitButton />
             </form>
           </div>
         </div>

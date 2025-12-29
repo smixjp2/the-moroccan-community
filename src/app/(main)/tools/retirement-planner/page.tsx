@@ -81,8 +81,7 @@ export default function RetirementPlannerPage() {
             currentSavings = (currentSavings + annualContribution) * (1 + rate);
         }
         
-        // Final savings is the last calculated value before loop ends, which is for the retirement year.
-        const finalSavings = yearlyBreakdown[yearlyBreakdown.length-1].value;
+        const finalSavings = yearlyBreakdown[yearlyBreakdown.length-1]?.value || initialSavings;
         const totalContributions = initialSavings + (annualContribution * yearsToGrow);
         const totalInterest = finalSavings - totalContributions;
 
@@ -157,7 +156,7 @@ export default function RetirementPlannerPage() {
                         <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></Item>
                     )} />
                     <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                        <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></Item>
                     )} />
                     <Button type="submit" disabled={loading} className="w-full">
                     {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}

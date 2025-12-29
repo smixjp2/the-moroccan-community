@@ -1,11 +1,17 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, Newspaper, Wrench, GraduationCap, Crown } from "lucide-react";
+import { ArrowRight, Newspaper, Wrench, GraduationCap, Crown, Loader2 } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
 const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
 const featureImages = {
@@ -62,7 +68,39 @@ const faqItems = [
     }
 ]
 
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <Button type="submit" size="lg" disabled={pending}>
+            {pending ? <Loader2 className="animate-spin" /> : "S'abonner"}
+        </Button>
+    );
+}
+
 export default function Home() {
+  const { toast } = useToast();
+  const [state, formAction] = useFormState(subscribeToNewsletter, {
+    message: "",
+    status: "",
+  });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state.status === "success") {
+      toast({
+        title: "Inscription réussie !",
+        description: state.message,
+      });
+      formRef.current?.reset();
+    } else if (state.status === "error") {
+      toast({
+        title: "Erreur d'inscription",
+        description: state.message,
+        variant: "destructive",
+      });
+    }
+  }, [state, toast]);
+
   return (
     <>
       <section className="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center text-center text-white">
@@ -200,9 +238,9 @@ export default function Home() {
                     Abonnez-vous à notre newsletter hebdomadaire gratuite pour recevoir les dernières actualités du marché, des analyses et des offres exclusives.
                 </p>
             </div>
-            <form className="flex w-full max-w-md items-center space-x-2 mx-auto">
-              <Input type="email" placeholder="Votre meilleure adresse e-mail" className="flex-1 py-6" />
-              <Button type="submit" size="lg">S'abonner</Button>
+            <form ref={formRef} action={formAction} className="flex w-full max-w-md items-center space-x-2 mx-auto">
+              <Input name="email" type="email" placeholder="Votre meilleure adresse e-mail" className="flex-1 py-6" required />
+              <SubmitButton />
             </form>
         </div>
       </section>
