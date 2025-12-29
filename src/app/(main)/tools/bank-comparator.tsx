@@ -1,14 +1,14 @@
 import type { Bank } from "@/lib/types";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Landmark } from "lucide-react";
+import { Landmark, Check, X } from "lucide-react";
 
 const banks: Bank[] = [
-    { name: "Attijariwafa Bank", fees: "Standard", accessibility: "Excellente", logo: <Landmark className="text-yellow-500" /> },
-    { name: "BMCE Bank of Africa", fees: "Compétitifs", accessibility: "Bonne", logo: <Landmark className="text-blue-600" /> },
-    { name: "Banque Populaire", fees: "Bas", accessibility: "Très Bonne", logo: <Landmark className="text-purple-600" /> },
-    { name: "CIH Bank", fees: "Très Bas (Digital)", accessibility: "Excellente (Digitale)", logo: <Landmark className="text-pink-500" /> },
-    { name: "Société Générale Maroc", fees: "Élevés", accessibility: "Bonne", logo: <Landmark className="text-red-600" /> },
+    { name: "Attijariwafa Bank", fees: "Standard", accessibility: "Excellente", youngOffer: true, logo: <Landmark className="text-yellow-500" /> },
+    { name: "BMCE Bank of Africa", fees: "Compétitifs", accessibility: "Bonne", youngOffer: true, logo: <Landmark className="text-blue-600" /> },
+    { name: "Banque Populaire", fees: "Bas", accessibility: "Très Bonne", youngOffer: true, logo: <Landmark className="text-purple-600" /> },
+    { name: "CIH Bank", fees: "Très Bas (Digital)", accessibility: "Excellente (Digitale)", youngOffer: true, logo: <Landmark className="text-pink-500" /> },
+    { name: "Société Générale Maroc", fees: "Élevés", accessibility: "Bonne", youngOffer: false, logo: <Landmark className="text-red-600" /> },
 ];
 
 export function BankComparator() {
@@ -25,6 +25,7 @@ export function BankComparator() {
               <TableHead className="w-[250px]">Banque</TableHead>
               <TableHead>Frais Annuels</TableHead>
               <TableHead>Accessibilité (Agence & Digitale)</TableHead>
+              <TableHead>Offre Jeunes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -38,6 +39,13 @@ export function BankComparator() {
                 </TableCell>
                 <TableCell>{bank.fees}</TableCell>
                 <TableCell>{bank.accessibility}</TableCell>
+                <TableCell>
+                  {bank.youngOffer ? (
+                    <Check className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <X className="h-5 w-5 text-red-500" />
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

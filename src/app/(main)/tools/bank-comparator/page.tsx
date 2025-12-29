@@ -24,6 +24,7 @@ export default function BankComparatorPage() {
             <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Frais Annuels :</strong> Indique le niveau général des frais pour la tenue de compte et les services de base. "Standard", "Compétitifs", et "Bas" vous donnent une idée relative des coûts. Les banques digitales comme CIH ont souvent les frais les plus bas.</li>
                 <li><strong>Accessibilité :</strong> Évalue la facilité d'accès aux services, que ce soit via un large réseau d'agences physiques ou des plateformes digitales performantes.</li>
+                <li><strong>Offre Jeunes :</strong> Mentionne si la banque propose des packages spécifiques et avantageux pour les jeunes (généralement moins de 30 ans), souvent avec des frais réduits ou gratuits.</li>
             </ul>
             <p><strong>Commentaire :</strong> Pour une utilisation principalement digitale avec des frais minimaux, <strong>CIH Bank</strong> est souvent un excellent choix. Pour un service complet avec un grand réseau d'agences, <strong>Attijariwafa Bank</strong> et <strong>Banque Populaire</strong> sont des options solides, bien que leurs frais puissent être plus élevés.</p>
         </CardContent>

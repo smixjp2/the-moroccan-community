@@ -40,6 +40,7 @@ export interface Bank {
   fees: string;
   accessibility: string;
   logo: React.ReactNode;
+  youngOffer?: boolean;
 }
 
 export interface Brokerage {
