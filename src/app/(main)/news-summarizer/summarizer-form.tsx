@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, PlusCircle, Trash2, Sparkles, Info } from "lucide-react";
+import { PlusCircle, Trash2, Sparkles, Info } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 
@@ -113,7 +113,7 @@ export default function SummarizerForm() {
         <CardHeader>
           <CardTitle className="font-headline flex items-center gap-2">
             <Sparkles className="text-accent" />
-            Résumé Généré par IA
+            Résumé Généré
           </CardTitle>
           <CardDescription>Votre résumé concis prêt pour la newsletter apparaîtra ici.</CardDescription>
         </CardHeader>
@@ -126,3 +126,5 @@ export default function SummarizerForm() {
     </div>
   );
 }
+
+    

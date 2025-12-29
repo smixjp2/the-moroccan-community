@@ -33,10 +33,10 @@ export type RetirementPlannerOutput = {
 
 const formSchema = z.object({
   currentAge: z.coerce.number().int().min(18, "L'âge doit être d'au moins 18 ans"),
-  retirementAge: z.coerce.number().int().min(40, "L'âge de la retraite doit être supérieur à l'âge actuel"),
+  retirementAge: z.coerce.number().int().min(19, "L'âge de la retraite doit être supérieur à l'âge actuel"),
   initialSavings: z.coerce.number().min(0, "L'épargne ne peut être négative"),
   monthlyContribution: z.coerce.number().min(0, "La contribution doit être positive"),
-  annualReturnRate: z.coerce.number().min(0).max(100),
+  annualReturnRate: z.coerce.number().min(0).max(100, "Le taux doit être entre 0 et 100"),
 }).refine(data => data.retirementAge > data.currentAge, {
     message: "L'âge de la retraite doit être supérieur à l'âge actuel.",
     path: ["retirementAge"],
@@ -77,11 +77,12 @@ export default function RetirementPlannerPage() {
 
         for (let i = 0; i <= yearsToGrow; i++) {
             yearlyBreakdown.push({ year: startYear + i, value: Math.round(currentSavings) });
-            currentSavings = (currentSavings + annualContribution) * (1 + rate);
+            if (i < yearsToGrow) { // Only add contributions and interest if not the last year
+               currentSavings = (currentSavings + annualContribution) * (1 + rate);
+            }
         }
         
-        const finalSavings = currentSavings;
-        if(finalSavings < 0) finalSavings = 0;
+        const finalSavings = yearlyBreakdown[yearlyBreakdown.length - 1].value;
 
         const totalContributions = initialSavings + (annualContribution * yearsToGrow);
         const totalInterest = finalSavings - totalContributions;
@@ -127,111 +128,115 @@ export default function RetirementPlannerPage() {
 
   return (
     <>
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <h1 className="font-headline text-4xl font-bold md:text-5xl">Planificateur de Retraite</h1>
-        <p className="mt-4 text-muted-foreground md:text-lg">
-          Visualisez la croissance de votre épargne retraite et déterminez si vous êtes sur la bonne voie pour atteindre vos objectifs financiers.
-        </p>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-headline">Vos Informations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                    <FormField control={form.control} name="currentAge" render={({ field }) => (
-                        <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                    <FormField control={form.control} name="retirementAge" render={({ field }) => (
-                        <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                    )} />
-                </div>
-                <FormField control={form.control} name="initialSavings" render={({ field }) => (
-                    <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></Item>
-                )} />
-                <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
-                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-8">
-          <Card>
+      <div className="container py-12 md:py-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+            <h1 className="font-headline text-4xl font-bold md:text-5xl">Planificateur de Retraite</h1>
+            <p className="mt-4 text-muted-foreground md:text-lg">
+            Visualisez la croissance de votre épargne retraite et déterminez si vous êtes sur la bonne voie pour atteindre vos objectifs financiers.
+            </p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Projection de votre Retraite</CardTitle>
+                <CardTitle className="font-headline">Vos Informations</CardTitle>
             </CardHeader>
-            <CardContent className="min-h-[500px]">
-              {loading && <div className="flex justify-center items-center h-96"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
-              {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
-              {result && (
-                <div className="space-y-6">
-                  <div className="h-[250px]">
-                     <ChartContainer config={chartConfig} className="h-full w-full">
-                        <LineChart data={result.yearlyBreakdown} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
-                          <CartesianGrid vertical={false} />
-                          <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
-                          <YAxis width={80} tickFormatter={(value) => formatCurrency(value as number).replace(',00', '')} />
-                          <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" formatter={(value) => formatCurrency(value as number)} />} />
-                          <Line dataKey="value" type="monotone" stroke="var(--color-value)" strokeWidth={2} dot={false} name="Épargne Totale" />
-                        </LineChart>
-                      </ChartContainer>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                    <div className="p-4 bg-secondary rounded-lg">
-                      <p className="text-sm text-muted-foreground">Épargne Finale</p>
-                      <p className="text-xl font-bold font-headline text-primary">{formatCurrency(result.finalSavings)}</p>
+            <CardContent>
+                <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                        <FormField control={form.control} name="currentAge" render={({ field }) => (
+                            <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                        )} />
+                        <FormField control={form.control} name="retirementAge" render={({ field }) => (
+                            <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                        )} />
                     </div>
-                    <div className="p-4 bg-secondary rounded-lg">
-                      <p className="text-sm text-muted-foreground">Total Contributions</p>
-                      <p className="text-xl font-bold font-headline">{formatCurrency(result.totalContributions)}</p>
-                    </div>
-                    <div className="p-4 bg-secondary rounded-lg">
-                      <p className="text-sm text-muted-foreground">Total Intérêts</p>
-                      <p className="text-xl font-bold font-headline">{formatCurrency(result.totalInterest)}</p>
-                    </div>
-                  </div>
-                   <Alert>
-                      <Info className="h-4 w-4" />
-                      <AlertTitle className="font-headline">Analyse Automatique</AlertTitle>
-                      <AlertDescription>
-                        <p className="font-semibold">{result.analysis}</p>
-                        <p className="mt-2">{result.recommendation}</p>
-                      </AlertDescription>
-                    </Alert>
-                </div>
-              )}
-               {!loading && !result && !error && (
-                <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
-                  <p>Votre projection de retraite apparaîtra ici.</p>
-                </div>
-              )}
+                    <FormField control={form.control} name="initialSavings" render={({ field }) => (
+                        <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></Item>
+                    )} />
+                    <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
+                        <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
+                        <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <Button type="submit" disabled={loading} className="w-full">
+                    {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}
+                    </Button>
+                </form>
+                </Form>
             </CardContent>
-          </Card>
-           <Card>
-            <CardHeader><CardTitle className="flex items-center gap-2 font-headline"><HelpCircle className="h-6 w-6 text-primary"/>Guide d'Utilisation</CardTitle></CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
-                <p>La magie de l'investissement pour la retraite réside dans les intérêts composés. Cet outil vous aide à visualiser cet effet.</p>
-                <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Âge Actuel & de Retraite :</strong> Définit votre horizon de temps d'investissement. Plus il est long, plus les intérêts composés sont puissants.</li>
-                    <li><strong>Contribution Mensuelle :</strong> La régularité de vos cotisations est la clé de la croissance.</li>
-                    <li><strong>Taux de Rendement Annuel (%) :</strong> Le moteur de votre croissance. Un portefeuille diversifié en actions peut historiquement viser 7-10% par an, mais ce rendement n'est pas garanti.</li>
-                </ul>
-                <p><strong>Analyse :</strong> Le graphique illustre comment votre épargne s'accélère avec le temps. La différence entre votre épargne finale et le total de vos contributions représente les gains générés par vos investissements.</p>
-            </CardContent>
-        </Card>
+            </Card>
+
+            <div className="space-y-8">
+            <Card>
+                <CardHeader>
+                <CardTitle className="font-headline">Projection de votre Retraite</CardTitle>
+                </CardHeader>
+                <CardContent className="min-h-[500px]">
+                {loading && <div className="flex justify-center items-center h-96"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
+                {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+                {result && (
+                    <div className="space-y-6">
+                    <div className="h-[250px]">
+                        <ChartContainer config={chartConfig} className="h-full w-full">
+                            <LineChart data={result.yearlyBreakdown} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
+                            <CartesianGrid vertical={false} />
+                            <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} type="number" domain={['dataMin', 'dataMax']} />
+                            <YAxis width={80} tickFormatter={(value) => formatCurrency(value as number).replace(',00\u00A0MAD', 'k').replace(/\s/g, '')} />
+                            <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" formatter={(value) => formatCurrency(value as number)} />} />
+                            <Line dataKey="value" type="monotone" stroke="var(--color-value)" strokeWidth={2} dot={false} name="Épargne Totale" />
+                            </LineChart>
+                        </ChartContainer>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                        <div className="p-4 bg-secondary rounded-lg">
+                        <p className="text-sm text-muted-foreground">Épargne Finale</p>
+                        <p className="text-xl font-bold font-headline text-primary">{formatCurrency(result.finalSavings)}</p>
+                        </div>
+                        <div className="p-4 bg-secondary rounded-lg">
+                        <p className="text-sm text-muted-foreground">Total Contributions</p>
+                        <p className="text-xl font-bold font-headline">{formatCurrency(result.totalContributions)}</p>
+                        </div>
+                        <div className="p-4 bg-secondary rounded-lg">
+                        <p className="text-sm text-muted-foreground">Total Intérêts</p>
+                        <p className="text-xl font-bold font-headline">{formatCurrency(result.totalInterest)}</p>
+                        </div>
+                    </div>
+                    <Alert>
+                        <Info className="h-4 w-4" />
+                        <AlertTitle className="font-headline">Analyse Automatique</AlertTitle>
+                        <AlertDescription>
+                            <p className="font-semibold">{result.analysis}</p>
+                            <p className="mt-2">{result.recommendation}</p>
+                        </AlertDescription>
+                        </Alert>
+                    </div>
+                )}
+                {!loading && !result && !error && (
+                    <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
+                    <p>Votre projection de retraite apparaîtra ici.</p>
+                    </div>
+                )}
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader><CardTitle className="flex items-center gap-2 font-headline"><HelpCircle className="h-6 w-6 text-primary"/>Guide d'Utilisation</CardTitle></CardHeader>
+                <CardContent className="space-y-4 text-muted-foreground">
+                    <p>La magie de l'investissement pour la retraite réside dans les intérêts composés. Cet outil vous aide à visualiser cet effet.</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                        <li><strong>Âge Actuel & de Retraite :</strong> Définit votre horizon de temps d'investissement. Plus il est long, plus les intérêts composés sont puissants.</li>
+                        <li><strong>Contribution Mensuelle :</strong> La régularité de vos cotisations est la clé de la croissance.</li>
+                        <li><strong>Taux de Rendement Annuel (%) :</strong> Le moteur de votre croissance. Un portefeuille diversifié en actions peut historiquement viser 7-10% par an, mais ce rendement n'est pas garanti.</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> Le graphique illustre comment votre épargne s'accélère avec le temps. La différence entre votre épargne finale et le total de vos contributions représente les gains générés par vos investissements.</p>
+                </CardContent>
+            </Card>
+            </div>
         </div>
       </div>
     </>
   );
 }
+
+    
