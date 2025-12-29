@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Calculator, Landmark, Briefcase, Percent, ShieldCheck } from "lucide-react";
+import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag } from "lucide-react";
 
 const simulators = [
   {
@@ -32,6 +32,18 @@ const simulators = [
     icon: <Briefcase className="h-8 w-8 text-primary" />,
     title: "Comparateur de Courtiers",
     description: "Comparez les courtiers en bourse en fonction des frais et des services.",
+  },
+  {
+    href: "/tools/mortgage-comparator",
+    icon: <Home className="h-8 w-8 text-primary" />,
+    title: "Comparateur de Crédit Immobilier",
+    description: "Trouvez le meilleur taux pour votre prêt immobilier au Maroc.",
+  },
+  {
+    href: "/tools/consumer-loan-comparator",
+    icon: <ShoppingBag className="h-8 w-8 text-primary" />,
+    title: "Comparateur de Crédit Consommation",
+    description: "Comparez les offres de prêt personnel et crédit à la consommation.",
   },
 ];
 
