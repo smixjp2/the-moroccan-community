@@ -96,10 +96,10 @@ export default function RetirementPlannerPage() {
                     <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
-                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormMessage>
                 )} />
                 <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormMessage>
                 )} />
                 <Button type="submit" disabled={loading} className="w-full">
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}
