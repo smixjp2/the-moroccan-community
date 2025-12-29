@@ -1,4 +1,4 @@
-import type { Article } from "@/lib/types";
+import type { Article, Opcvm } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export const articles: Article[] = [
@@ -219,4 +219,104 @@ export const articles: Article[] = [
       <p>Risma offre une histoire de "recovery" (rétablissement) claire et une exposition directe à la thématique porteuse du tourisme marocain (CAN 2025, Coupe du Monde 2030). Pour l'investisseur, le point d'entrée actuel semble attractif, mais il faudra surveiller attentivement les publications sur le niveau d'endettement. C'est une valeur à potentiel pour un investisseur patient.</p>
     `
   },
+];
+
+export const opcvmData: Opcvm[] = [
+    { 
+        id: "1",
+        name: "FCP AVENIR ACTIONS",
+        managementCompany: "ATTIJARIWAFA GESTION", 
+        category: "Actions", 
+        nav: 142.75, 
+        perf1w: 0.25, 
+        perf1m: 1.5, 
+        perfYTD: 8.5, 
+        perf1y: 15.2,
+        details: {
+            classification: "Actions",
+            creationDate: "2005-06-20",
+            initialNav: 100,
+            subscriptionFee: "0% HT",
+            managementFee: "2.2% HT",
+            assetAllocation: [
+                { label: "Actions", value: 95 },
+                { label: "Liquidités", value: 5 },
+            ],
+            historicalPerformance: [
+                { year: 2023, performance: 18.5 },
+                { year: 2022, performance: -12.3 },
+                { year: 2021, performance: 22.1 },
+                { year: 2020, performance: -5.4 },
+            ],
+            historicalNav: [
+                { date: "2024-01-01", value: 131.56 },
+                { date: "2024-02-01", value: 133.20 },
+                { date: "2024-03-01", value: 135.80 },
+                { date: "2024-04-01", value: 138.10 },
+                { date: "2024-05-01", value: 140.50 },
+                { date: "2024-06-01", value: 141.90 },
+                { date: "2024-07-01", value: 142.75 },
+            ]
+        }
+    },
+    { 
+        id: "2",
+        name: "FCP SG ACTIONS", 
+        managementCompany: "SOGECAPITAL GESTION", 
+        category: "Actions", 
+        nav: 180.4, 
+        perf1w: 0.3, 
+        perf1m: 1.8, 
+        perfYTD: 9.1, 
+        perf1y: 16.5,
+        details: { classification: "Actions", creationDate: "2008-01-15", initialNav: 100, subscriptionFee: "0% HT", managementFee: "2.0% HT", assetAllocation: [], historicalPerformance: [], historicalNav: [] } 
+    },
+    { 
+        id: "3",
+        name: "FCP CAP OBLIGATAIRE", 
+        managementCompany: "BMCE CAPITAL GESTION", 
+        category: "Obligataire MT/LT", 
+        nav: 1250.1, 
+        perf1w: 0.05, 
+        perf1m: 0.4, 
+        perfYTD: 3.5, 
+        perf1y: 5.1,
+        details: { classification: "Obligataire Moyen & Long Terme", creationDate: "2012-03-10", initialNav: 1000, subscriptionFee: "0% HT", managementFee: "0.9% HT", assetAllocation: [], historicalPerformance: [], historicalNav: [] } 
+    },
+    { 
+        id: "4",
+        name: "FCP VALOR", 
+        managementCompany: "WAFA GESTION", 
+        category: "Diversifié", 
+        nav: 215.6, 
+        perf1w: 0.15, 
+        perf1m: 0.9, 
+        perfYTD: 6.2, 
+        perf1y: 11.8,
+        details: { classification: "Diversifié", creationDate: "2010-11-25", initialNav: 100, subscriptionFee: "0% HT", managementFee: "1.8% HT", assetAllocation: [], historicalPerformance: [], historicalNav: [] }
+    },
+    { 
+        id: "5",
+        name: "FCP MONETAIRE PLUS", 
+        managementCompany: "Upline Capital Management", 
+        category: "Monétaire", 
+        nav: 105.2, 
+        perf1w: 0.02, 
+        perf1m: 0.2, 
+        perfYTD: 2.8, 
+        perf1y: 3.1,
+        details: { classification: "Monétaire", creationDate: "2015-09-01", initialNav: 100, subscriptionFee: "0% HT", managementFee: "0.5% HT", assetAllocation: [], historicalPerformance: [], historicalNav: [] } 
+    },
+    { 
+        id: "6",
+        name: "FCP SHORT TERM PLUS", 
+        managementCompany: "CDG CAPITAL GESTION", 
+        category: "Obligataire CT", 
+        nav: 112.8, 
+        perf1w: 0.03, 
+        perf1m: 0.3, 
+        perfYTD: 3.0, 
+        perf1y: 3.8,
+        details: { classification: "Obligataire Court Terme", creationDate: "2016-07-20", initialNav: 100, subscriptionFee: "0% HT", managementFee: "0.7% HT", assetAllocation: [], historicalPerformance: [], historicalNav: [] } 
+    },
 ];

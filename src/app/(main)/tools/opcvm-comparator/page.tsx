@@ -24,7 +24,7 @@ export default function OpcvmComparatorPage() {
             <p>Un Organisme de Placement Collectif en Valeurs Mobilières (OPCVM) est un portefeuille de titres (actions, obligations, etc.) géré par des professionnels. C'est un excellent moyen de diversifier vos investissements sans avoir à acheter chaque titre individuellement.</p>
             <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Type :</strong> Indique la stratégie du fonds. <strong>Monétaire</strong> et <strong>Obligataire Court Terme (CT)</strong> sont les moins risqués. <strong>Actions</strong> et <strong>Diversifié</strong> présentent un risque plus élevé mais un potentiel de rendement supérieur. <strong>Obligataire Moyen/Long Terme (MT/LT)</strong> est un compromis.</li>
-                <li><strong>VL (Valeur Liquidative) :</strong> C'est le prix d'une part du fonds. Son évolution reflète la performance du portefeuille.</li>
+                <li><strong>VL (Valeur Liquidative) :</strong> C'est le prix d'une part du fonds. Son évolution reflète la performance du portefeuille. Cliquez sur un fonds pour voir son analyse détaillée.</li>
                 <li><strong>Perf. (Performance) :</strong> Indique le gain ou la perte du fonds sur différentes périodes (YTD = Year-to-Date, depuis le 1er janvier). Comparez les fonds de même type pour une analyse pertinente.</li>
             </ul>
              <p><strong>Commentaire :</strong> Pour débuter, les fonds monétaires ou obligataires sont une option prudente. Pour viser une performance plus élevée sur le long terme, les fonds actions sont incontournables, à condition d'accepter une plus grande volatilité. Ne vous fiez pas uniquement aux performances passées, elles ne garantissent pas les performances futures.</p>
