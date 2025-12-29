@@ -125,6 +125,17 @@ export default function FeeSimulatorPage() {
     { name: "Valeur Finale", "Sans Frais": result.finalValueWithoutFees, "Avec Frais": result.finalValueWithFees },
   ] : [];
 
+  const chartConfig = {
+    "Sans Frais": {
+      label: "Sans Frais",
+      color: "hsl(var(--chart-2))",
+    },
+    "Avec Frais": {
+      label: "Avec Frais",
+      color: "hsl(var(--chart-1))",
+    },
+  };
+
   return (
     <>
     <div className="container py-12 md:py-16">
@@ -189,16 +200,16 @@ export default function FeeSimulatorPage() {
               {result && (
                 <div className="space-y-6">
                   <div className="h-[200px]">
-                      <ResponsiveContainer width="100%" height="100%">
+                      <ChartContainer config={chartConfig} className="w-full h-full">
                           <BarChart data={chartData} layout="vertical" margin={{left: 10, right: 10}}>
                               <XAxis type="number" hide />
                               <YAxis type="category" dataKey="name" hide />
                               <Tooltip cursor={{ fill: 'transparent' }} content={<ChartTooltipContent formatter={(value) => formatCurrency(value as number)} />} />
                               <Legend />
-                              <Bar dataKey="Sans Frais" fill="hsl(var(--chart-2))" radius={[4, 4, 4, 4]} />
-                              <Bar dataKey="Avec Frais" fill="hsl(var(--chart-1))" radius={[4, 4, 4, 4]} />
+                              <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={[4, 4, 4, 4]} />
+                              <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={[4, 4, 4, 4]} />
                           </BarChart>
-                      </ResponsiveContainer>
+                      </ChartContainer>
                   </div>
                   <div className="grid grid-cols-2 gap-4 text-center">
                       <div className="p-4 bg-secondary rounded-lg">
