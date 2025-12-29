@@ -5,6 +5,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "The Moroccan Community",
   description: "Débloquez le potentiel du marché marocain.",
+  icons: {
+    icon: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='hsl(221, 83%, 53%)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21.25 21.25 3.75 3.75'/><path d='M3.75 21.25 12 12'/><path d='M21.25 3.75 12 12'/></svg>`,
+  },
 };
 
 export default function RootLayout({
