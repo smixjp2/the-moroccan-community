@@ -79,164 +79,165 @@ export default function FeeSimulatorPage() {
             Voyez comment les frais bancaires et les commissions affectent vos rendements d'investissement dans le temps.
         </p>
       </div>
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline">Paramètres de Simulation</CardTitle>
-          <CardDescription>
-            Entrez les détails de votre investissement pour simuler l'impact des frais.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="initialInvestment"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Investissement Initial (MAD)</FormLabel>
-                        <FormControl>
-                          <Input type="number" placeholder="100000" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="annualReturnRate"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Taux de Rendement Annuel (%)</FormLabel>
-                        <FormControl>
-                          <Input type="number" placeholder="8" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="investmentPeriod"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Période d'Investissement (Années)</FormLabel>
-                        <FormControl>
-                          <Input type="number" placeholder="10" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="bankFees"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Frais Bancaires Annuels (MAD)</FormLabel>
-                        <FormControl>
-                          <Input type="number" placeholder="500" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="commissionStructure"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Structure des Commissions</FormLabel>
-                      <FormControl>
-                        <Input placeholder="ex: 0.5% par transaction" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              <Button type="submit" disabled={loading} className="w-full">
-                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Calculer l'Impact"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-
-      <div className="space-y-8">
-        <Card className="flex-1 min-h-[500px]">
-          <CardHeader>
-            <CardTitle className="font-headline">Résultats de la Simulation</CardTitle>
-            <CardDescription>L'impact calculé des frais sur votre investissement.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {loading && (
-                <div className="flex justify-center items-center h-full">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-            )}
-             {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
-            {result && (
-              <div className="space-y-6">
-                <div className="h-[200px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={chartData} layout="vertical" barSize={30}>
-                            <XAxis type="number" hide />
-                            <YAxis type="category" dataKey="name" hide />
-                            <Tooltip cursor={{ fill: 'transparent' }} content={<ChartTooltipContent />} />
-                            <Legend />
-                            <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={[0, 4, 4, 0]} />
-                            <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={[0, 4, 4, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-4 bg-secondary rounded-lg">
-                        <p className="text-sm text-muted-foreground">Frais Totaux Payés</p>
-                        <p className="text-lg font-bold text-destructive">{formatCurrency(result.totalFeesPaid)}</p>
-                    </div>
-                     <div className="p-4 bg-secondary rounded-lg">
-                        <p className="text-sm text-muted-foreground">Impact des Frais</p>
-                        <p className="text-lg font-bold text-destructive">{result.feeImpactPercentage.toFixed(2)}%</p>
-                    </div>
-                </div>
-                 <Alert>
-                    <Info className="h-4 w-4" />
-                    <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
-                    <AlertDescription>
-                        {result.recommendation}
-                    </AlertDescription>
-                </Alert>
-              </div>
-            )}
-            {!loading && !result && !error && (
-                <div className="text-center text-muted-foreground h-full flex items-center justify-center">
-                    <p>Les résultats de la simulation apparaîtront ici.</p>
-                </div>
-            )}
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <HelpCircle className="h-6 w-6 text-primary" />
-              Guide d'Utilisation du Simulateur
-            </CardTitle>
+            <CardTitle className="font-headline">Paramètres de Simulation</CardTitle>
+            <CardDescription>
+              Entrez les détails de votre investissement pour simuler l'impact des frais.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4 text-muted-foreground">
-            <p>Cet outil, alimenté par l'IA, est conçu pour vous montrer l'impact réel des frais sur le long terme.</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Investissement Initial :</strong> La somme que vous investissez au départ.</li>
-              <li><strong>Taux de Rendement Annuel (%) :</strong> Votre gain annuel estimé avant déduction des frais. Soyez réaliste ; un rendement moyen de 8 à 10 % est une attente commune pour les marchés actions.</li>
-              <li><strong>Période d'Investissement (Années) :</strong> La durée pendant laquelle vous prévoyez de laisser votre argent investi. L'impact des frais est plus visible sur de longues périodes.</li>
-              <li><strong>Frais Bancaires Annuels :</strong> Ce sont les frais fixes, comme les droits de garde, que votre banque prélève chaque année.</li>
-              <li><strong>Structure des Commissions :</strong> Décrivez ici les frais variables, comme les commissions sur les transactions (achat/vente). Soyez aussi précis que possible. L'IA utilisera cette information pour estimer les coûts.</li>
-            </ul>
-            <p><strong>Analyse des Résultats :</strong> Le graphique et les chiffres clés vous montrent la différence entre ce que vous auriez pu gagner (valeur sans frais) et ce qu'il vous reste réellement (valeur avec frais). La "Recommandation de l'IA" vous donne une interprétation de ces résultats pour vous aider à décider si la structure de frais est acceptable.</p>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="initialInvestment"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Investissement Initial (MAD)</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="100000" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="annualReturnRate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Taux de Rendement Annuel (%)</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="8" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="investmentPeriod"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Période d'Investissement (Années)</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="10" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="bankFees"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Frais Bancaires Annuels (MAD)</FormLabel>
+                          <FormControl>
+                            <Input type="number" placeholder="500" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="commissionStructure"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Structure des Commissions</FormLabel>
+                        <FormControl>
+                          <Input placeholder="ex: 0.5% par transaction" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Calculer l'Impact"}
+                </Button>
+              </form>
+            </Form>
           </CardContent>
         </Card>
+
+        <div className="space-y-8">
+          <Card className="flex-1 min-h-[500px]">
+            <CardHeader>
+              <CardTitle className="font-headline">Résultats de la Simulation</CardTitle>
+              <CardDescription>L'impact calculé des frais sur votre investissement.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {loading && (
+                  <div className="flex justify-center items-center h-full">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+              )}
+               {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+              {result && (
+                <div className="space-y-6">
+                  <div className="h-[200px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={chartData} layout="vertical" barSize={30}>
+                              <XAxis type="number" hide />
+                              <YAxis type="category" dataKey="name" hide />
+                              <Tooltip cursor={{ fill: 'transparent' }} content={<ChartTooltipContent />} />
+                              <Legend />
+                              <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={[0, 4, 4, 0]} />
+                              <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={[0, 4, 4, 0]} />
+                          </BarChart>
+                      </ResponsiveContainer>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                      <div className="p-4 bg-secondary rounded-lg">
+                          <p className="text-sm text-muted-foreground">Frais Totaux Payés</p>
+                          <p className="text-lg font-bold text-destructive">{formatCurrency(result.totalFeesPaid)}</p>
+                      </div>
+                       <div className="p-4 bg-secondary rounded-lg">
+                          <p className="text-sm text-muted-foreground">Impact des Frais</p>
+                          <p className="text-lg font-bold text-destructive">{result.feeImpactPercentage.toFixed(2)}%</p>
+                      </div>
+                  </div>
+                   <Alert>
+                      <Info className="h-4 w-4" />
+                      <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
+                      <AlertDescription>
+                          {result.recommendation}
+                      </AlertDescription>
+                  </Alert>
+                </div>
+              )}
+              {!loading && !result && !error && (
+                  <div className="text-center text-muted-foreground h-full flex items-center justify-center">
+                      <p>Les résultats de la simulation apparaîtront ici.</p>
+                  </div>
+              )}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-headline">
+                <HelpCircle className="h-6 w-6 text-primary" />
+                Guide d'Utilisation du Simulateur
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-muted-foreground">
+              <p>Cet outil, alimenté par l'IA, est conçu pour vous montrer l'impact réel des frais sur le long terme.</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Investissement Initial :</strong> La somme que vous investissez au départ.</li>
+                <li><strong>Taux de Rendement Annuel (%) :</strong> Votre gain annuel estimé avant déduction des frais. Soyez réaliste ; un rendement moyen de 8 à 10 % est une attente commune pour les marchés actions.</li>
+                <li><strong>Période d'Investissement (Années) :</strong> La durée pendant laquelle vous prévoyez de laisser votre argent investi. L'impact des frais est plus visible sur de longues périodes.</li>
+                <li><strong>Frais Bancaires Annuels :</strong> Ce sont les frais fixes, comme les droits de garde, que votre banque prélève chaque année.</li>
+                <li><strong>Structure des Commissions :</strong> Décrivez ici les frais variables, comme les commissions sur les transactions (achat/vente). Soyez aussi précis que possible. L'IA utilisera cette information pour estimer les coûts.</li>
+              </ul>
+              <p><strong>Analyse des Résultats :</strong> Le graphique et les chiffres clés vous montrent la différence entre ce que vous auriez pu gagner (valeur sans frais) et ce qu'il vous reste réellement (valeur avec frais). La "Recommandation de l'IA" vous donne une interprétation de ces résultats pour vous aider à décider si la structure de frais est acceptable.</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
