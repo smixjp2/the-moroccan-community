@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { feeSimulator, type FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -56,15 +55,6 @@ export default function FeeSimulator() {
     setResult(null);
     setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
     setLoading(false);
-    // try {
-    //   const response = await feeSimulator(values);
-    //   setResult(response);
-    // } catch (e) {
-    //   setError("Une erreur est survenue lors de l'exécution de la simulation. Veuillez réessayer.");
-    //   console.error(e);
-    // } finally {
-    //   setLoading(false);
-    // }
   }
   
   const chartData = result ? [

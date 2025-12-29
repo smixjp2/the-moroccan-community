@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { calculateDividendYield, type DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -53,15 +52,6 @@ export default function DividendYieldCalculatorPage() {
     setResult(null);
     setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
     setLoading(false);
-    // try {
-    //   const response = await calculateDividendYield(values);
-    //   setResult(response);
-    // } catch (e) {
-    //   setError("Une erreur est survenue lors du calcul. Veuillez réessayer.");
-    //   console.error(e);
-    // } finally {
-    //   setLoading(false);
-    // }
   }
 
   const chartData = result ? [

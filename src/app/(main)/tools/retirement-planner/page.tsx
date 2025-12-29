@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { planRetirement, type RetirementPlannerOutput } from "@/ai/flows/retirement-planner";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -57,15 +56,6 @@ export default function RetirementPlannerPage() {
     setResult(null);
     setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
     setLoading(false);
-    // try {
-    //   const response = await planRetirement(values);
-    //   setResult(response);
-    // } catch (e) {
-    //   setError("Une erreur est survenue lors de la simulation. Veuillez réessayer.");
-    //   console.error(e);
-    // } finally {
-    //   setLoading(false);
-    // }
   }
   
   const chartConfig = {

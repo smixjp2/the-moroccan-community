@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { summarizeInvestmentNews } from "@/ai/flows/investment-news-summarizer";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,15 +47,6 @@ export default function SummarizerForm() {
     setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
     setSummary(null);
     setLoading(false);
-    // try {
-    //   const response = await summarizeInvestmentNews(values);
-    //   setSummary(response.summary);
-    // } catch (e) {
-    //   setError("Une erreur est survenue lors de la génération du résumé. Veuillez réessayer.");
-    //   console.error(e);
-    // } finally {
-    //   setLoading(false);
-    // }
   }
 
   return (
