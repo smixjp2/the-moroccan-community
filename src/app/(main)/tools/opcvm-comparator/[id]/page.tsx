@@ -9,6 +9,12 @@ import { formatCurrency } from '@/lib/utils';
 import { Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend, Cell } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
+export function generateStaticParams() {
+  return opcvmData.map((opcvm) => ({
+    id: opcvm.id,
+  }));
+}
+
 const getPerfClass = (perf: number) => {
     if (perf > 0) return "text-green-600";
     if (perf < 0) return "text-red-600";
