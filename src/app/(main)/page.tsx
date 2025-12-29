@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useRef, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,7 +79,7 @@ function SubmitButton() {
 
 export default function Home() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(subscribeToNewsletter, {
+  const [state, formAction] = useActionState(subscribeToNewsletter, {
     message: "",
     status: "",
   });
