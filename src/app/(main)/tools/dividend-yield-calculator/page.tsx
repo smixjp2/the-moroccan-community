@@ -14,7 +14,15 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, Percent, HandCoins, PiggyBank } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-import type { DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
+
+// This type is now defined locally to remove AI dependency.
+type DividendYieldOutput = {
+  dividendYield: number;
+  numberOfShares: number;
+  annualDividendIncome: number;
+  analysis: string;
+  recommendation: string;
+};
 
 
 const formSchema = z.object({
@@ -44,13 +52,13 @@ export default function DividendYieldCalculatorPage() {
     setResult(null);
     setError(null);
     try {
-        // --- Calculs en local ---
+        // --- All calculations are now done locally ---
         const { stockPrice, annualDividendPerShare, investmentAmount } = values;
         const dividendYield = (annualDividendPerShare / stockPrice) * 100;
         const numberOfShares = investmentAmount / stockPrice;
         const annualDividendIncome = numberOfShares * annualDividendPerShare;
 
-        // --- Analyse pré-programmée ---
+        // --- Pre-programmed analysis replaces the AI ---
         let analysis = "";
         let recommendation = "";
 
@@ -72,7 +80,7 @@ export default function DividendYieldCalculatorPage() {
             analysis,
             recommendation
         };
-        // Simuler un court délai pour l'expérience utilisateur
+        // Simulate a short delay for better user experience
         await new Promise(resolve => setTimeout(resolve, 500));
         setResult(response);
     } catch (e: any) {

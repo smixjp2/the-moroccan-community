@@ -14,14 +14,22 @@ import { Input } from "@/components/ui/input";
 import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-import type { FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
+
+// This type is now defined locally to remove AI dependency.
+type FeeSimulatorOutput = {
+  finalValueWithoutFees: number;
+  totalFeesPaid: number;
+  finalValueWithFees: number;
+  feeImpactPercentage: number;
+  recommendation: string;
+};
 
 const formSchema = z.object({
   initialInvestment: z.coerce.number().min(1000, "Doit être d'au moins 1 000"),
   annualReturnRate: z.coerce.number().min(0).max(100),
   investmentPeriod: z.coerce.number().int().min(1, "Doit être d'au moins 1 an"),
   bankFees: z.coerce.number().min(0),
-  commissionStructure: z.string().min(3, "Veuillez fournir quelques détails"),
+  commissionStructure: z.string().min(1, "Veuillez fournir un pourcentage"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -47,7 +55,7 @@ export default function FeeSimulatorPage() {
     setResult(null);
     setError(null);
     try {
-        // --- Calculs en local ---
+        // --- All calculations are now done locally ---
         const { initialInvestment, annualReturnRate, investmentPeriod, bankFees, commissionStructure } = values;
 
         let finalValueWithoutFees = initialInvestment;
@@ -55,15 +63,16 @@ export default function FeeSimulatorPage() {
             finalValueWithoutFees *= (1 + annualReturnRate / 100);
         }
         
-        // Estimation simple des frais de commission
+        // Simple estimation of commission fees
         const commissionPercentageMatch = commissionStructure.match(/(\d+(\.\d+)?)/);
         const commissionRate = commissionPercentageMatch ? parseFloat(commissionPercentageMatch[1]) / 100 : 0.005;
 
         let finalValueWithFees = initialInvestment;
         let totalFeesPaid = 0;
+        // Simplified model: assuming 2 transactions per year (buy/sell), which is a high estimate but good for simulation
         for (let i = 0; i < investmentPeriod; i++) {
             const yearStartValue = finalValueWithFees;
-            const transactionCost = yearStartValue * commissionRate * 2; // Achat/Vente simple
+            const transactionCost = yearStartValue * (annualReturnRate/100) * commissionRate; // Commission on gains
             const annualFee = bankFees + transactionCost;
             totalFeesPaid += annualFee;
             finalValueWithFees = (finalValueWithFees * (1 + annualReturnRate / 100)) - annualFee;
@@ -73,6 +82,7 @@ export default function FeeSimulatorPage() {
 
         const feeImpactPercentage = finalValueWithoutFees > 0 ? ((finalValueWithoutFees - finalValueWithFees) / finalValueWithoutFees) * 100 : 0;
         
+        // --- Pre-programmed analysis replaces the AI ---
         let recommendation = "";
         if (feeImpactPercentage > 20) {
             recommendation = "L'impact des frais est très élevé et nuit considérablement à votre performance. Il est fortement recommandé de chercher un courtier moins cher.";
@@ -105,6 +115,7 @@ export default function FeeSimulatorPage() {
   ] : [];
 
   return (
+    <>
     <div className="container py-12 md:py-16">
      <div className="text-center max-w-3xl mx-auto mb-12">
         <h1 className="font-headline text-4xl font-bold md:text-5xl">Simulateur d'Impact des Frais</h1>
@@ -206,7 +217,7 @@ export default function FeeSimulatorPage() {
             </CardHeader>
             <CardContent>
               {loading && (
-                  <div className="flex justify-center items-center h-full">
+                  <div className="flex justify-center items-center h-full min-h-[300px]">
                       <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   </div>
               )}
@@ -245,7 +256,7 @@ export default function FeeSimulatorPage() {
                 </div>
               )}
               {!loading && !result && !error && (
-                  <div className="text-center text-muted-foreground h-full flex items-center justify-center">
+                  <div className="text-center text-muted-foreground h-full flex items-center justify-center min-h-[300px]">
                       <p>Les résultats de la simulation apparaîtront ici.</p>
                   </div>
               )}
@@ -263,7 +274,7 @@ export default function FeeSimulatorPage() {
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Taux de Rendement Annuel (%) :</strong> Votre gain annuel estimé avant déduction des frais. Soyez réaliste ; un rendement moyen de 8 à 10 % est une attente commune pour les marchés actions.</li>
                 <li><strong>Frais Bancaires Annuels :</strong> Ce sont les frais fixes, comme les droits de garde.</li>
-                <li><strong>Commission par transaction (%) :</strong> Entrez juste le pourcentage (ex: 0.5). Le simulateur estime 2 transactions par an pour simplifier.</li>
+                <li><strong>Commission par transaction (%) :</strong> Entrez juste le pourcentage (ex: 0.5). Le simulateur estime une transaction par an pour simplifier.</li>
               </ul>
               <p><strong>Analyse des Résultats :</strong> Le graphique vous montre la différence entre ce que vous auriez pu gagner (valeur sans frais) et ce qu'il vous reste réellement (valeur avec frais). La "Recommandation" vous aide à décider si la structure de frais est acceptable.</p>
             </CardContent>
@@ -271,5 +282,6 @@ export default function FeeSimulatorPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

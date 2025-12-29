@@ -32,6 +32,11 @@ export default function SummarizerForm() {
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "articles",
+  });
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       <Card>
@@ -43,21 +48,55 @@ export default function SummarizerForm() {
           <Form {...form}>
             <form className="space-y-8">
               <div className="space-y-6">
-                <Card className="p-4 relative">
-                  <div className="space-y-4">
-                     <Alert>
-                        <Info className="h-4 w-4" />
-                        <AlertTitle>Fonctionnalité en maintenance</AlertTitle>
-                        <AlertDescription>
-                            Le résumé par IA est temporairement désactivé pour maintenance. Merci de votre compréhension.
-                        </AlertDescription>
-                    </Alert>
-                  </div>
-                </Card>
+                <Alert>
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Fonctionnalité en maintenance</AlertTitle>
+                    <AlertDescription>
+                        Le résumé par IA est temporairement désactivé pour maintenance. Merci de votre compréhension.
+                    </AlertDescription>
+                </Alert>
+                {fields.map((field, index) => (
+                  <Card key={field.id} className="p-4 relative">
+                    <div className="space-y-4">
+                      <Input
+                        {...form.register(`articles.${index}.title`)}
+                        placeholder="Titre de l'article"
+                        disabled
+                      />
+                      <Textarea
+                        {...form.register(`articles.${index}.content`)}
+                        placeholder="Contenu de l'article"
+                        disabled
+                      />
+                      <Input
+                        {...form.register(`articles.${index}.source`)}
+                        placeholder="Source (ex: Le Matin)"
+                        disabled
+                      />
+                    </div>
+                    {fields.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2"
+                        onClick={() => remove(index)}
+                        disabled
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </Card>
+                ))}
               </div>
 
               <div className="flex justify-between items-center">
-                <Button type="button" variant="outline" disabled>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => append({ title: "", content: "", source: "" })}
+                  disabled
+                >
                   <PlusCircle className="mr-2 h-4 w-4" />
                   Ajouter un Article
                 </Button>

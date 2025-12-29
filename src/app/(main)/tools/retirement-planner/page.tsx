@@ -14,7 +14,21 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-import type { RetirementPlannerOutput, YearData } from "@/ai/flows/retirement-planner";
+
+// These types are now defined locally to remove AI dependency.
+export type YearData = {
+  year: number;
+  value: number;
+};
+
+export type RetirementPlannerOutput = {
+  finalSavings: number;
+  totalContributions: number;
+  totalInterest: number;
+  yearlyBreakdown: YearData[];
+  analysis: string;
+  recommendation: string;
+};
 
 
 const formSchema = z.object({
@@ -51,27 +65,28 @@ export default function RetirementPlannerPage() {
     setResult(null);
     setError(null);
     try {
-        // --- Calculs en local ---
+        // --- All calculations are now done locally ---
         const { currentAge, retirementAge, initialSavings, monthlyContribution, annualReturnRate } = values;
         const yearsToGrow = retirementAge - currentAge;
         const annualContribution = monthlyContribution * 12;
         const rate = annualReturnRate / 100;
 
-        let finalSavings = initialSavings;
+        let currentSavings = initialSavings;
         const yearlyBreakdown: YearData[] = [];
-        const currentYear = new Date().getFullYear();
+        const startYear = new Date().getFullYear();
 
         for (let i = 0; i <= yearsToGrow; i++) {
-            yearlyBreakdown.push({ year: currentYear + i, value: Math.round(finalSavings) });
-            finalSavings = (finalSavings + annualContribution) * (1 + rate);
+            yearlyBreakdown.push({ year: startYear + i, value: Math.round(currentSavings) });
+            currentSavings = (currentSavings + annualContribution) * (1 + rate);
         }
         
+        const finalSavings = currentSavings;
         if(finalSavings < 0) finalSavings = 0;
 
         const totalContributions = initialSavings + (annualContribution * yearsToGrow);
         const totalInterest = finalSavings - totalContributions;
 
-        // --- Analyse pré-programmée ---
+        // --- Pre-programmed analysis replaces the AI ---
         let analysis = "";
         let recommendation = "";
 
