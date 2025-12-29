@@ -177,7 +177,7 @@ export default function RetirementPlannerPage() {
                 {result && (
                     <div className="space-y-6">
                     <div className="h-[250px]">
-                        <ChartContainer config={chartConfig} className="h-full w-full">
+                        <ChartContainer config={chartConfig} className="w-full h-full">
                             <LineChart data={result.yearlyBreakdown} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
                             <CartesianGrid vertical={false} />
                             <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} type="number" domain={['dataMin', 'dataMax']} />
