@@ -235,7 +235,7 @@ export default function Home() {
             <div>
                 <h2 className="font-headline text-3xl font-bold md:text-4xl">Restez à l'Avant-Garde du Marché</h2>
                 <p className="mt-4 text-muted-foreground md:text-lg">
-                    Abonnez-vous à notre newsletter hebdomadaire gratuite pour recevoir les dernières actualités du marché, des analyses et des offres exclusives.
+                    Abonnez-vous à notre newsletter mensuelle gratuite pour recevoir les dernières actualités du marché, des analyses et des offres exclusives.
                 </p>
             </div>
             <form ref={formRef} action={formAction} className="flex w-full max-w-md items-center space-x-2 mx-auto">
