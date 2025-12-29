@@ -38,9 +38,11 @@ export interface Resource {
 export interface Bank {
   name: string;
   fees: string;
-  accessibility: string;
+  digitalPlatform: string;
+  agencyNetwork: string;
+  youngOffer: boolean;
+  card: string;
   logo: React.ReactNode;
-  youngOffer?: boolean;
 }
 
 export interface Brokerage {
