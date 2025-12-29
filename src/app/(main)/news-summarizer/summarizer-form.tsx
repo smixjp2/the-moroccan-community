@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, PlusCircle, Trash2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { summarizeInvestmentNews, type SummarizeInvestmentNewsOutput } from "@/ai/flows/investment-news-summarizer";
+
 
 const articleSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
@@ -27,7 +29,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function SummarizerForm() {
   const [summary, setSummary] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -44,8 +46,15 @@ export default function SummarizerForm() {
 
   async function onSubmit(values: FormValues) {
     setLoading(true);
-    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setError(null);
     setSummary(null);
+    try {
+      const result: SummarizeInvestmentNewsOutput = await summarizeInvestmentNews(values);
+      setSummary(result.summary);
+    } catch (e: any) {
+      setError("Une erreur est survenue lors de la génération du résumé. Veuillez réessayer.");
+      console.error(e);
+    }
     setLoading(false);
   }
 
@@ -59,75 +68,72 @@ export default function SummarizerForm() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-             <fieldset disabled>
-                <div className="space-y-6">
-                  {fields.map((field, index) => (
-                    <Card key={field.id} className="p-4 relative">
-                      <div className="space-y-4">
-                        <FormField
-                          control={form.control}
-                          name={`articles.${index}.source`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Source</FormLabel>
-                              <FormControl>
-                                <Input placeholder="ex: Le Matin" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`articles.${index}.title`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Titre</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Titre de l'article" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`articles.${index}.content`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Contenu</FormLabel>
-                              <FormControl>
-                                <Textarea placeholder="Collez le contenu de l'article ici..." {...field} rows={5} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      {fields.length > 1 && (
-                          <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon"
-                              className="absolute top-2 right-2 text-muted-foreground hover:text-destructive"
-                              onClick={() => remove(index)}
-                          >
-                              <Trash2 className="h-4 w-4" />
-                          </Button>
-                      )}
-                    </Card>
-                  ))}
-                </div>
-              </fieldset>
+              <div className="space-y-6">
+                {fields.map((field, index) => (
+                  <Card key={field.id} className="p-4 relative">
+                    <div className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name={`articles.${index}.source`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Source</FormLabel>
+                            <FormControl>
+                              <Input placeholder="ex: Le Matin" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`articles.${index}.title`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Titre</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Titre de l'article" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`articles.${index}.content`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Contenu</FormLabel>
+                            <FormControl>
+                              <Textarea placeholder="Collez le contenu de l'article ici..." {...field} rows={5} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    {fields.length > 1 && (
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-muted-foreground hover:text-destructive"
+                            onClick={() => remove(index)}
+                        >
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                    )}
+                  </Card>
+                ))}
+              </div>
 
               <div className="flex justify-between items-center">
-                <Button type="button" variant="outline" onClick={() => append({ title: "", content: "", source: "" })} disabled>
+                <Button type="button" variant="outline" onClick={() => append({ title: "", content: "", source: "" })} disabled={loading}>
                   <PlusCircle className="mr-2 h-4 w-4" />
                   Ajouter un Article
                 </Button>
-                <Button type="submit" disabled={true}>
-                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Résumer (Désactivé)
+                <Button type="submit" disabled={loading}>
+                  {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Résumer'}
                 </Button>
               </div>
             </form>
@@ -143,10 +149,19 @@ export default function SummarizerForm() {
           </CardTitle>
           <CardDescription>Votre résumé concis prêt pour la newsletter apparaîtra ici.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="text-center text-muted-foreground h-full flex items-center justify-center">
-             <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+        <CardContent className="min-h-[300px]">
+          {loading && <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
+          {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+          {summary && (
+            <div className="prose prose-sm dark:prose-invert max-w-none">
+              <p>{summary}</p>
+            </div>
+          )}
+          {!loading && !summary && !error && (
+            <div className="text-center text-muted-foreground h-full flex items-center justify-center">
+             <p>Le résumé généré apparaîtra ici.</p>
           </div>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -14,15 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, Percent, HandCoins, PiggyBank } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-
-// Mock type for DividendYieldOutput
-type DividendYieldOutput = {
-  dividendYield: number;
-  numberOfShares: number;
-  annualDividendIncome: number;
-  analysis: string;
-  recommendation: string;
-};
+import { calculateDividendYield, type DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
 
 
 const formSchema = z.object({
@@ -35,7 +27,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function DividendYieldCalculatorPage() {
   const [result, setResult] = useState<DividendYieldOutput | null>(null);
-  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -50,7 +42,14 @@ export default function DividendYieldCalculatorPage() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setResult(null);
-    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setError(null);
+    try {
+        const response = await calculateDividendYield(values);
+        setResult(response);
+    } catch (e: any) {
+        setError("Une erreur est survenue lors du calcul. Veuillez réessayer.");
+        console.error(e);
+    }
     setLoading(false);
   }
 
@@ -86,7 +85,6 @@ export default function DividendYieldCalculatorPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <fieldset disabled>
                 <FormField
                   control={form.control}
                   name="stockPrice"
@@ -126,9 +124,8 @@ export default function DividendYieldCalculatorPage() {
                     </FormItem>
                   )}
                 />
-              </fieldset>
-              <Button type="submit" disabled={true} className="w-full">
-                {'Calculer le Rendement (Désactivé)'}
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Calculer le Rendement'}
               </Button>
             </form>
           </Form>
@@ -140,12 +137,40 @@ export default function DividendYieldCalculatorPage() {
           <CardHeader>
             <CardTitle className="font-headline">Résultats du Calcul</CardTitle>
           </CardHeader>
-          <CardContent>
-            {loading && <div className="flex justify-center items-center h-48"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
-            
-            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
-            </div>
+          <CardContent className="min-h-[500px]">
+            {loading && <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
+            {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+            {result && (
+                <div className="space-y-6">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div className="p-4 bg-secondary rounded-lg">
+                            <p className="text-sm text-muted-foreground flex items-center justify-center gap-1"><Percent className="h-4 w-4"/>Rendement Dividende</p>
+                            <p className="text-2xl font-bold font-headline text-primary">{result.dividendYield.toFixed(2)}%</p>
+                        </div>
+                        <div className="p-4 bg-secondary rounded-lg">
+                           <p className="text-sm text-muted-foreground flex items-center justify-center gap-1"><HandCoins className="h-4 w-4"/>Revenu Annuel Estimé</p>
+                           <p className="text-2xl font-bold font-headline text-primary">{formatCurrency(result.annualDividendIncome)}</p>
+                        </div>
+                         <div className="p-4 bg-secondary rounded-lg col-span-1 sm:col-span-2">
+                           <p className="text-sm text-muted-foreground flex items-center justify-center gap-1"><PiggyBank className="h-4 w-4"/>Actions Achetées</p>
+                           <p className="text-2xl font-bold font-headline">{result.numberOfShares.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <Alert>
+                        <Info className="h-4 w-4" />
+                        <AlertTitle className="font-headline">Analyse de l'IA</AlertTitle>
+                        <AlertDescription>
+                          <p className="font-semibold">{result.analysis}</p>
+                          <p className="mt-2">{result.recommendation}</p>
+                        </AlertDescription>
+                    </Alert>
+                </div>
+            )}
+            {!loading && !result && !error && (
+                <div className="text-center text-muted-foreground h-full flex items-center justify-center">
+                    <p>Les résultats de votre calcul apparaîtront ici.</p>
+                </div>
+            )}
           </CardContent>
         </Card>
          <Card>

@@ -14,16 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, TrendingUp, PiggyBank, Target } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
+import { planRetirement, type RetirementPlannerOutput } from "@/ai/flows/retirement-planner";
 
-// Mock type for RetirementPlannerOutput
-type RetirementPlannerOutput = {
-  finalSavings: number;
-  totalContributions: number;
-  totalInterest: number;
-  yearlyBreakdown: { year: number; value: number }[];
-  analysis: string;
-  recommendation: string;
-};
 
 const formSchema = z.object({
   currentAge: z.coerce.number().int().min(18, "L'âge doit être d'au moins 18 ans"),
@@ -37,7 +29,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function RetirementPlannerPage() {
   const [result, setResult] = useState<RetirementPlannerOutput | null>(null);
-  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -52,9 +44,20 @@ export default function RetirementPlannerPage() {
   });
 
   async function onSubmit(values: FormValues) {
+    if (values.currentAge >= values.retirementAge) {
+      form.setError("retirementAge", { message: "L'âge de la retraite doit être supérieur à l'âge actuel." });
+      return;
+    }
     setLoading(true);
     setResult(null);
-    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setError(null);
+    try {
+      const response = await planRetirement(values);
+      setResult(response);
+    } catch (e: any) {
+      setError("Une erreur est survenue lors de la planification. Veuillez réessayer.");
+      console.error(e);
+    }
     setLoading(false);
   }
   
@@ -81,27 +84,25 @@ export default function RetirementPlannerPage() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <fieldset disabled>
-                  <div className="grid grid-cols-2 gap-4">
-                      <FormField control={form.control} name="currentAge" render={({ field }) => (
-                          <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                      )} />
-                      <FormField control={form.control} name="retirementAge" render={({ field }) => (
-                          <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                      )} />
-                  </div>
-                  <FormField control={form.control} name="initialSavings" render={({ field }) => (
-                      <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
-                  <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
-                      <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
-                  <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                      <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                  )} />
-                </fieldset>
-                <Button type="submit" disabled={true} className="w-full">
-                  Planifier ma Retraite (Désactivé)
+                <div className="grid grid-cols-2 gap-4">
+                    <FormField control={form.control} name="currentAge" render={({ field }) => (
+                        <FormItem><FormLabel>Âge Actuel</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <FormField control={form.control} name="retirementAge" render={({ field }) => (
+                        <FormItem><FormLabel>Âge de Retraite</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                </div>
+                <FormField control={form.control} name="initialSavings" render={({ field }) => (
+                    <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
+                <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
+                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
+                <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
+                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}
                 </Button>
               </form>
             </Form>
@@ -113,12 +114,52 @@ export default function RetirementPlannerPage() {
             <CardHeader>
               <CardTitle className="font-headline">Projection de votre Retraite</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="min-h-[500px]">
               {loading && <div className="flex justify-center items-center h-96"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
-              
-              <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
-                  <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
-              </div>
+              {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+              {result && (
+                <div className="space-y-6">
+                  <div className="h-[250px]">
+                     <ChartContainer config={chartConfig} className="h-full w-full">
+                        <LineChart data={result.yearlyBreakdown} margin={{ top: 20, right: 20, left: 20, bottom: 5 }}>
+                          <CartesianGrid vertical={false} />
+                          <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
+                          <YAxis width={80} tickFormatter={(value) => formatCurrency(value as number).replace(',00', '')} />
+                          <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" formatter={(value) => formatCurrency(value as number)} />} />
+                          <Legend />
+                          <Line dataKey="value" type="monotone" stroke="var(--color-value)" strokeWidth={2} dot={false} name="Épargne Totale" />
+                        </LineChart>
+                      </ChartContainer>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div className="p-4 bg-secondary rounded-lg">
+                      <p className="text-sm text-muted-foreground">Épargne Finale</p>
+                      <p className="text-xl font-bold font-headline text-primary">{formatCurrency(result.finalSavings)}</p>
+                    </div>
+                    <div className="p-4 bg-secondary rounded-lg">
+                      <p className="text-sm text-muted-foreground">Total Contributions</p>
+                      <p className="text-xl font-bold font-headline">{formatCurrency(result.totalContributions)}</p>
+                    </div>
+                    <div className="p-4 bg-secondary rounded-lg">
+                      <p className="text-sm text-muted-foreground">Total Intérêts</p>
+                      <p className="text-xl font-bold font-headline">{formatCurrency(result.totalInterest)}</p>
+                    </div>
+                  </div>
+                   <Alert>
+                      <Info className="h-4 w-4" />
+                      <AlertTitle className="font-headline">Analyse de l'IA</AlertTitle>
+                      <AlertDescription>
+                        <p className="font-semibold">{result.analysis}</p>
+                        <p className="mt-2">{result.recommendation}</p>
+                      </AlertDescription>
+                    </Alert>
+                </div>
+              )}
+               {!loading && !result && !error && (
+                <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
+                  <p>Votre projection de retraite apparaîtra ici.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
            <Card>

@@ -1,4 +1,4 @@
-import FeeSimulator from "../fee-simulator";
+import FeeSimulator from "./fee-simulator-client";
 
 export default function FeeSimulatorPage() {
   return (

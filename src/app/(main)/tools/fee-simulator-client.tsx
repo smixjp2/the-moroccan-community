@@ -14,15 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, TrendingUp, TrendingDown, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-
-// Mock type for FeeSimulatorOutput
-type FeeSimulatorOutput = {
-  finalValueWithoutFees: number;
-  totalFeesPaid: number;
-  finalValueWithFees: number;
-  feeImpactPercentage: number;
-  recommendation: string;
-};
+import { feeSimulator, type FeeSimulatorOutput } from "@/ai/flows/fee-simulator-tool";
 
 const formSchema = z.object({
   initialInvestment: z.coerce.number().min(1000, "Doit être d'au moins 1 000"),
@@ -36,7 +28,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function FeeSimulator() {
   const [result, setResult] = useState<FeeSimulatorOutput | null>(null);
-  const [error, setError] = useState<string | null>("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<FormValues>({
@@ -53,7 +45,14 @@ export default function FeeSimulator() {
   async function onSubmit(values: FormValues) {
     setLoading(true);
     setResult(null);
-    setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setError(null);
+    try {
+        const response = await feeSimulator(values);
+        setResult(response);
+    } catch (e: any) {
+        setError("Une erreur est survenue lors de la simulation. Veuillez réessayer.");
+        console.error(e);
+    }
     setLoading(false);
   }
   
@@ -91,7 +90,6 @@ export default function FeeSimulator() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <fieldset disabled>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -159,9 +157,8 @@ export default function FeeSimulator() {
                     </FormItem>
                   )}
                 />
-              </fieldset>
-              <Button type="submit" disabled={true} className="w-full">
-                Calculer l'Impact (Désactivé)
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Calculer l'Impact"}
               </Button>
             </form>
           </Form>
@@ -169,21 +166,56 @@ export default function FeeSimulator() {
       </Card>
 
       <div className="space-y-8">
-        <Card className="flex-1">
+        <Card className="flex-1 min-h-[500px]">
           <CardHeader>
             <CardTitle className="font-headline">Résultats de la Simulation</CardTitle>
             <CardDescription>L'impact calculé des frais sur votre investissement.</CardDescription>
           </CardHeader>
           <CardContent>
             {loading && (
-                <div className="flex justify-center items-center h-48">
+                <div className="flex justify-center items-center h-full">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             )}
-            
-            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
-            </div>
+             {error && <Alert variant="destructive"><AlertTitle>Erreur</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+            {result && (
+              <div className="space-y-6">
+                <div className="h-[200px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={chartData} layout="vertical" barSize={30}>
+                            <XAxis type="number" hide />
+                            <YAxis type="category" dataKey="name" hide />
+                            <Tooltip cursor={{ fill: 'transparent' }} content={<ChartTooltipContent />} />
+                            <Legend />
+                            <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={[0, 4, 4, 0]} />
+                            <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="p-4 bg-secondary rounded-lg">
+                        <p className="text-sm text-muted-foreground">Frais Totaux Payés</p>
+                        <p className="text-lg font-bold text-destructive">{formatCurrency(result.totalFeesPaid)}</p>
+                    </div>
+                     <div className="p-4 bg-secondary rounded-lg">
+                        <p className="text-sm text-muted-foreground">Impact des Frais</p>
+                        <p className="text-lg font-bold text-destructive">{result.feeImpactPercentage.toFixed(2)}%</p>
+                    </div>
+                </div>
+                 <Alert>
+                    <Info className="h-4 w-4" />
+                    <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
+                    <AlertDescription>
+                        {result.recommendation}
+                    </AlertDescription>
+                </Alert>
+              </div>
+            )}
+            {!loading && !result && !error && (
+                <div className="text-center text-muted-foreground h-full flex items-center justify-center">
+                    <p>Les résultats de la simulation apparaîtront ici.</p>
+                </div>
+            )}
           </CardContent>
         </Card>
         <Card>
