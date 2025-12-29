@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Info, HelpCircle, Percent, HandCoins, PiggyBank } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-import { calculateDividendYield, type DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
+import type { DividendYieldOutput } from "@/ai/flows/dividend-yield-calculator";
 
 
 const formSchema = z.object({
@@ -44,7 +44,36 @@ export default function DividendYieldCalculatorPage() {
     setResult(null);
     setError(null);
     try {
-        const response = await calculateDividendYield(values);
+        // --- Calculs en local ---
+        const { stockPrice, annualDividendPerShare, investmentAmount } = values;
+        const dividendYield = (annualDividendPerShare / stockPrice) * 100;
+        const numberOfShares = investmentAmount / stockPrice;
+        const annualDividendIncome = numberOfShares * annualDividendPerShare;
+
+        // --- Analyse pré-programmée ---
+        let analysis = "";
+        let recommendation = "";
+
+        if (dividendYield > 5) {
+            analysis = "Le rendement du dividende est élevé.";
+            recommendation = "Un rendement élevé peut être très attractif, mais assurez-vous que le dividende est soutenable par l'entreprise et qu'il ne cache pas une baisse récente et importante du prix de l'action.";
+        } else if (dividendYield > 2) {
+            analysis = "Le rendement du dividende est modéré.";
+            recommendation = "Ce niveau de rendement est souvent un bon équilibre entre un revenu régulier et un potentiel de croissance du capital. C'est typique des entreprises stables et matures.";
+        } else {
+            analysis = "Le rendement du dividende est faible.";
+            recommendation = "Un rendement faible peut indiquer que l'entreprise réinvestit massivement ses bénéfices pour la croissance (bon signe) ou qu'elle a une politique de dividende limitée. Privilégiez ce type d'action pour la croissance du capital plutôt que pour le revenu.";
+        }
+
+        const response: DividendYieldOutput = {
+            dividendYield,
+            numberOfShares,
+            annualDividendIncome,
+            analysis,
+            recommendation
+        };
+        // Simuler un court délai pour l'expérience utilisateur
+        await new Promise(resolve => setTimeout(resolve, 500));
         setResult(response);
     } catch (e: any) {
         setError("Une erreur est survenue lors du calcul. Veuillez réessayer.");
@@ -52,22 +81,6 @@ export default function DividendYieldCalculatorPage() {
     }
     setLoading(false);
   }
-
-  const chartData = result ? [
-    { name: 'Investissement Initial', value: form.getValues('investmentAmount'), fill: 'var(--color-investment)' },
-    { name: 'Revenu Annuel Dividendes', value: result.annualDividendIncome, fill: 'var(--color-income)' },
-  ] : [];
-
-  const chartConfig = {
-    investment: {
-      label: "Investissement",
-      color: "hsl(var(--muted))",
-    },
-    income: {
-      label: "Revenu",
-      color: "hsl(var(--primary))",
-    },
-  };
 
   return (
      <>
@@ -158,7 +171,7 @@ export default function DividendYieldCalculatorPage() {
                     </div>
                     <Alert>
                         <Info className="h-4 w-4" />
-                        <AlertTitle className="font-headline">Analyse de l'IA</AlertTitle>
+                        <AlertTitle className="font-headline">Analyse Automatique</AlertTitle>
                         <AlertDescription>
                           <p className="font-semibold">{result.analysis}</p>
                           <p className="mt-2">{result.recommendation}</p>
@@ -184,7 +197,7 @@ export default function DividendYieldCalculatorPage() {
                     <li><strong>Dividende Annuel par Action :</strong> Le total des dividendes versés par l'entreprise pour une action sur une année. Vous pouvez le trouver dans les rapports financiers ou sur les sites de cotation.</li>
                     <li><strong>Montant de l'Investissement :</strong> La somme totale que vous souhaitez investir dans cette action.</li>
                 </ul>
-                <p><strong>Analyse :</strong> Un rendement élevé peut être attractif, mais il peut aussi indiquer un risque plus élevé (par exemple, si le prix de l'action a chuté). Comparez toujours le rendement à celui d'entreprises similaires dans le même secteur. L'analyse de l'IA vous donne un contexte pour le marché marocain.</p>
+                <p><strong>Analyse :</strong> Un rendement élevé peut être attractif, mais il peut aussi indiquer un risque plus élevé (par exemple, si le prix de l'action a chuté). Comparez toujours le rendement à celui d'entreprises similaires dans le même secteur. L'analyse automatique vous donne un premier niveau d'interprétation.</p>
             </CardContent>
         </Card>
       </div>

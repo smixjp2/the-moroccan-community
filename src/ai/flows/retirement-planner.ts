@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 /**
  * @fileOverview Simulates retirement savings plan.
@@ -8,8 +8,7 @@
  * - RetirementPlannerOutput - The return type for the planRetirement function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {z} from 'zod';
 
 const RetirementPlannerInputSchema = z.object({
   currentAge: z.number().int().min(18).describe('Your current age.'),
@@ -24,6 +23,8 @@ const YearDataSchema = z.object({
   year: z.number(),
   value: z.number(),
 });
+export type YearData = z.infer<typeof YearDataSchema>;
+
 
 const RetirementPlannerOutputSchema = z.object({
   finalSavings: z.number().describe('The total estimated savings at retirement age.'),
@@ -34,45 +35,3 @@ const RetirementPlannerOutputSchema = z.object({
   recommendation: z.string().describe('A recommendation to improve the plan.')
 });
 export type RetirementPlannerOutput = z.infer<typeof RetirementPlannerOutputSchema>;
-
-export async function planRetirement(input: RetirementPlannerInput): Promise<RetirementPlannerOutput> {
-  return retirementPlannerFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'retirementPlannerPrompt',
-  input: {schema: RetirementPlannerInputSchema},
-  output: {schema: RetirementPlannerOutputSchema},
-  prompt: `You are a Moroccan financial advisor specializing in retirement planning.
-
-Your task is to create a retirement savings projection and provide analysis.
-
-Input Data:
-- Current Age: {{{currentAge}}}
-- Retirement Age: {{{retirementAge}}}
-- Initial Savings: {{{initialSavings}}} MAD
-- Monthly Contribution: {{{monthlyContribution}}} MAD
-- Annual Return Rate: {{{annualReturnRate}}}%
-
-Calculations:
-1.  Calculate the final savings value at retirement using compound interest.
-2.  Provide a year-by-year breakdown of the savings growth. The breakdown should start from the current year.
-3.  Calculate total contributions and total interest earned.
-4.  Provide a concise analysis of the projection.
-5.  Offer a clear, actionable recommendation for the user.
-
-Output in JSON format, including the 'yearlyBreakdown' array.
-`,
-});
-
-const retirementPlannerFlow = ai.defineFlow(
-  {
-    name: 'retirementPlannerFlow',
-    inputSchema: RetirementPlannerInputSchema,
-    outputSchema: RetirementPlannerOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);

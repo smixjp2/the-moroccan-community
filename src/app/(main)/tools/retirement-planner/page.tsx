@@ -11,18 +11,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, Info, HelpCircle, TrendingUp, PiggyBank, Target } from "lucide-react";
+import { Loader2, Info, HelpCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { formatCurrency } from "@/lib/utils";
-import { planRetirement, type RetirementPlannerOutput } from "@/ai/flows/retirement-planner";
+import type { RetirementPlannerOutput, YearData } from "@/ai/flows/retirement-planner";
 
 
 const formSchema = z.object({
   currentAge: z.coerce.number().int().min(18, "L'âge doit être d'au moins 18 ans"),
-  retirementAge: z.coerce.number().int().min(40, "L'âge de la retraite doit être d'au moins 40 ans"),
+  retirementAge: z.coerce.number().int().min(40, "L'âge de la retraite doit être supérieur à l'âge actuel"),
   initialSavings: z.coerce.number().min(0, "L'épargne ne peut être négative"),
   monthlyContribution: z.coerce.number().min(0, "La contribution doit être positive"),
   annualReturnRate: z.coerce.number().min(0).max(100),
+}).refine(data => data.retirementAge > data.currentAge, {
+    message: "L'âge de la retraite doit être supérieur à l'âge actuel.",
+    path: ["retirementAge"],
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -44,16 +47,55 @@ export default function RetirementPlannerPage() {
   });
 
   async function onSubmit(values: FormValues) {
-    if (values.currentAge >= values.retirementAge) {
-      form.setError("retirementAge", { message: "L'âge de la retraite doit être supérieur à l'âge actuel." });
-      return;
-    }
     setLoading(true);
     setResult(null);
     setError(null);
     try {
-      const response = await planRetirement(values);
-      setResult(response);
+        // --- Calculs en local ---
+        const { currentAge, retirementAge, initialSavings, monthlyContribution, annualReturnRate } = values;
+        const yearsToGrow = retirementAge - currentAge;
+        const annualContribution = monthlyContribution * 12;
+        const rate = annualReturnRate / 100;
+
+        let finalSavings = initialSavings;
+        const yearlyBreakdown: YearData[] = [];
+        const currentYear = new Date().getFullYear();
+
+        for (let i = 0; i <= yearsToGrow; i++) {
+            yearlyBreakdown.push({ year: currentYear + i, value: Math.round(finalSavings) });
+            finalSavings = (finalSavings + annualContribution) * (1 + rate);
+        }
+        
+        if(finalSavings < 0) finalSavings = 0;
+
+        const totalContributions = initialSavings + (annualContribution * yearsToGrow);
+        const totalInterest = finalSavings - totalContributions;
+
+        // --- Analyse pré-programmée ---
+        let analysis = "";
+        let recommendation = "";
+
+        if (finalSavings > 5000000) {
+            analysis = "Votre plan de retraite est excellent et vous mène vers une indépendance financière confortable.";
+            recommendation = "Continuez sur cette voie ! Vous pourriez envisager de diversifier davantage vos investissements ou d'optimiser votre fiscalité pour préserver votre capital.";
+        } else if (finalSavings > 2000000) {
+            analysis = "Vous êtes sur une très bonne trajectoire pour vous constituer un capital retraite solide.";
+            recommendation = "Pour accélérer, voyez s'il est possible d'augmenter légèrement votre contribution mensuelle, même de quelques centaines de dirhams. Chaque dirham compte sur le long terme.";
+        } else {
+            analysis = "C'est un bon début, mais il y a un risque que ce capital ne soit pas suffisant pour maintenir votre niveau de vie à la retraite.";
+            recommendation = "Il est crucial d'essayer d'augmenter votre effort d'épargne. Envisagez aussi de revoir votre allocation d'actifs pour viser un rendement potentiellement plus élevé, si votre profil de risque le permet.";
+        }
+
+        const response: RetirementPlannerOutput = {
+            finalSavings,
+            totalContributions,
+            totalInterest,
+            yearlyBreakdown,
+            analysis,
+            recommendation
+        };
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setResult(response);
     } catch (e: any) {
       setError("Une erreur est survenue lors de la planification. Veuillez réessayer.");
       console.error(e);
@@ -93,13 +135,13 @@ export default function RetirementPlannerPage() {
                     )} />
                 </div>
                 <FormField control={form.control} name="initialSavings" render={({ field }) => (
-                    <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Épargne Actuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></Item>
                 )} />
                 <FormField control={form.control} name="monthlyContribution" render={({ field }) => (
-                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormMessage>
+                    <FormItem><FormLabel>Contribution Mensuelle (MAD)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="annualReturnRate" render={({ field }) => (
-                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormMessage>
+                    <FormItem><FormLabel>Taux de Rendement Annuel (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <Button type="submit" disabled={loading} className="w-full">
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Planifier ma Retraite'}
@@ -126,7 +168,6 @@ export default function RetirementPlannerPage() {
                           <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
                           <YAxis width={80} tickFormatter={(value) => formatCurrency(value as number).replace(',00', '')} />
                           <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" formatter={(value) => formatCurrency(value as number)} />} />
-                          <Legend />
                           <Line dataKey="value" type="monotone" stroke="var(--color-value)" strokeWidth={2} dot={false} name="Épargne Totale" />
                         </LineChart>
                       </ChartContainer>
@@ -147,7 +188,7 @@ export default function RetirementPlannerPage() {
                   </div>
                    <Alert>
                       <Info className="h-4 w-4" />
-                      <AlertTitle className="font-headline">Analyse de l'IA</AlertTitle>
+                      <AlertTitle className="font-headline">Analyse Automatique</AlertTitle>
                       <AlertDescription>
                         <p className="font-semibold">{result.analysis}</p>
                         <p className="mt-2">{result.recommendation}</p>
@@ -168,11 +209,10 @@ export default function RetirementPlannerPage() {
                 <p>La magie de l'investissement pour la retraite réside dans les intérêts composés. Cet outil vous aide à visualiser cet effet.</p>
                 <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Âge Actuel & de Retraite :</strong> Définit votre horizon de temps d'investissement. Plus il est long, plus les intérêts composés sont puissants.</li>
-                    <li><strong>Épargne Actuelle :</strong> Votre point de départ.</li>
                     <li><strong>Contribution Mensuelle :</strong> La régularité de vos cotisations est la clé de la croissance.</li>
                     <li><strong>Taux de Rendement Annuel (%) :</strong> Le moteur de votre croissance. Un portefeuille diversifié en actions peut historiquement viser 7-10% par an, mais ce rendement n'est pas garanti.</li>
                 </ul>
-                <p><strong>Analyse :</strong> Le graphique illustre comment votre épargne (ligne bleue) s'accélère avec le temps. La différence entre votre épargne finale et le total de vos contributions représente les gains générés par vos investissements. L'IA vous donnera des pistes pour savoir si votre plan est réaliste et comment l'améliorer.</p>
+                <p><strong>Analyse :</strong> Le graphique illustre comment votre épargne s'accélère avec le temps. La différence entre votre épargne finale et le total de vos contributions représente les gains générés par vos investissements.</p>
             </CardContent>
         </Card>
         </div>
