@@ -1,6 +1,7 @@
+
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag } from "lucide-react";
+import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag, BarChart3 } from "lucide-react";
 
 const simulators = [
   {
@@ -44,6 +45,12 @@ const simulators = [
     icon: <ShoppingBag className="h-8 w-8 text-primary" />,
     title: "Comparateur de Crédit Consommation",
     description: "Comparez les offres de prêt personnel et crédit à la consommation.",
+  },
+  {
+    href: "/tools/opcvm-comparator",
+    icon: <BarChart3 className="h-8 w-8 text-primary" />,
+    title: "Comparateur d'OPCVM",
+    description: "Comparez les performances des fonds d'investissement (OPCVM) au Maroc.",
   },
 ];
 
