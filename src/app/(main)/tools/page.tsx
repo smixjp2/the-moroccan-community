@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag, BarChart3 } from "lucide-react";
+import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag, BarChart3, Newspaper } from "lucide-react";
 
 const simulators = [
   {
@@ -21,6 +21,12 @@ const simulators = [
     icon: <ShieldCheck className="h-8 w-8 text-primary" />,
     title: "Planificateur de Retraite",
     description: "Simulez votre épargne retraite pour atteindre vos objectifs financiers.",
+  },
+   {
+    href: "/tools/news-summarizer",
+    icon: <Newspaper className="h-8 w-8 text-primary" />,
+    title: "Résumé d'Actualités par IA",
+    description: "Générez des résumés d'articles de presse (Fonctionnalité en maintenance).",
   },
   {
     href: "/tools/bank-comparator",
