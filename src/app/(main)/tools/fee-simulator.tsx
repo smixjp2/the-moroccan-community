@@ -191,70 +191,9 @@ export default function FeeSimulator() {
                 </div>
             )}
             
-            {(error || !result) && (
-              <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                 <p>{error || "Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension."}</p>
-              </div>
-            )}
-
-            {result && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Valeur Finale (Sans Frais)</CardTitle>
-                            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{formatCurrency(result.finalValueWithoutFees)}</div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Valeur Finale (Avec Frais)</CardTitle>
-                            <TrendingDown className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{formatCurrency(result.finalValueWithFees)}</div>
-                        </CardContent>
-                    </Card>
-                </div>
-                <Card>
-                    <CardHeader className="pb-2">
-                         <CardTitle className="text-lg font-medium">Total des Frais Payés</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold text-destructive">{formatCurrency(result.totalFeesPaid)}</p>
-                        <p className="text-xs text-muted-foreground">Cela représente {result.feeImpactPercentage.toFixed(2)}% de votre valeur potentielle finale.</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Analyse Visuelle</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer config={chartConfig} className="h-[200px] w-full">
-                      <ResponsiveContainer>
-                        <BarChart accessibilityLayer data={chartData}>
-                          <CartesianGrid vertical={false} />
-                          <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
-                          <YAxis tickFormatter={(value) => formatCurrency(value as number).replace('MAD', '').trim()} />
-                          <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                          <Legend />
-                          <Bar dataKey="Sans Frais" fill="var(--color-Sans Frais)" radius={4} />
-                          <Bar dataKey="Avec Frais" fill="var(--color-Avec Frais)" radius={4} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-                 <Alert>
-                    <Info className="h-4 w-4" />
-                    <AlertTitle className="font-headline">Recommandation de l'IA</AlertTitle>
-                    <AlertDescription>{result.recommendation}</AlertDescription>
-                </Alert>
-              </div>
-            )}
+            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+            </div>
           </CardContent>
         </Card>
         <Card>

@@ -153,78 +153,9 @@ export default function DividendYieldCalculatorPage() {
           <CardContent>
             {loading && <div className="flex justify-center items-center h-48"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
             
-            {(error || !result) && (
-              <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
-                 <p>{error || "Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension."}</p>
-              </div>
-            )}
-            
-            {result && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                    <Card>
-                        <CardHeader>
-                            <Percent className="mx-auto h-8 w-8 text-primary mb-2" />
-                            <CardTitle className="text-lg">Rendement du Dividende</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-3xl font-bold">{result.dividendYield.toFixed(2)}%</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <HandCoins className="mx-auto h-8 w-8 text-primary mb-2" />
-                            <CardTitle className="text-lg">Revenu Annuel Estimé</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-3xl font-bold">{formatCurrency(result.annualDividendIncome)}</p>
-                        </CardContent>
-                    </Card>
-                </div>
-                 <Card>
-                    <CardHeader>
-                        <PiggyBank className="mx-auto h-8 w-8 text-primary mb-2" />
-                        <CardTitle className="text-lg text-center">Actions Achetées</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold text-center">{Math.floor(result.numberOfShares)}</p>
-                        <p className="text-xs text-muted-foreground text-center">Nombre approximatif d'actions que vous pouvez acheter.</p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Composition du Revenu</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer config={chartConfig} className="h-[200px] w-full">
-                      <ResponsiveContainer width="100%" height={200}>
-                        <PieChart>
-                          <Tooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(value) => formatCurrency(value as number)} />} />
-                          <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                            {chartData.map((entry) => (
-                              <Cell key={`cell-${entry.name}`} fill={entry.fill} />
-                            ))}
-                          </Pie>
-                          <Legend />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-
-                <Alert>
-                  <Info className="h-4 w-4" />
-                  <AlertTitle className="font-headline">Analyse par l'IA</AlertTitle>
-                  <AlertDescription>{result.analysis}</AlertDescription>
-                </Alert>
-                <Alert variant="default">
-                    <Info className="h-4 w-4" />
-                    <AlertTitle className="font-headline">Recommandation</AlertTitle>
-                    <AlertDescription>{result.recommendation}</AlertDescription>
-                </Alert>
-              </div>
-            )}
+            <div className="text-center text-muted-foreground h-48 flex items-center justify-center">
+                <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+            </div>
           </CardContent>
         </Card>
          <Card>

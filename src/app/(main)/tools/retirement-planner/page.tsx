@@ -126,53 +126,9 @@ export default function RetirementPlannerPage() {
             <CardContent>
               {loading && <div className="flex justify-center items-center h-96"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}
               
-              {(error || !result) && (
-                <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
-                  <p>{error || "Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension."}</p>
-                </div>
-              )}
-
-              {result && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 gap-4 text-center">
-                    <Card>
-                        <CardHeader><Target className="mx-auto h-8 w-8 text-primary mb-2" /><CardTitle className="text-lg">Épargne à la Retraite</CardTitle></CardHeader>
-                        <CardContent><p className="text-3xl font-bold">{formatCurrency(result.finalSavings)}</p></CardContent>
-                    </Card>
-                    <div className="grid grid-cols-2 gap-4">
-                        <Card>
-                            <CardHeader><PiggyBank className="mx-auto h-6 w-6 text-primary mb-1" /><CardTitle className="text-base">Total Contribué</CardTitle></CardHeader>
-                            <CardContent><p className="text-xl font-bold">{formatCurrency(result.totalContributions)}</p></CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader><TrendingUp className="mx-auto h-6 w-6 text-primary mb-1" /><CardTitle className="text-base">Total des Intérêts</CardTitle></CardHeader>
-                            <CardContent><p className="text-xl font-bold">{formatCurrency(result.totalInterest)}</p></CardContent>
-                        </Card>
-                    </div>
-                  </div>
-                  
-                  <Card>
-                    <CardHeader><CardTitle>Croissance de l'Épargne</CardTitle></CardHeader>
-                    <CardContent>
-                      <ChartContainer config={chartConfig} className="h-[250px] w-full">
-                        <ResponsiveContainer>
-                          <LineChart data={result.yearlyBreakdown} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="year" />
-                            <YAxis tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} />
-                            <Tooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(value as number)}/>} />
-                            <Legend />
-                            <Line type="monotone" dataKey="value" stroke="var(--color-value)" strokeWidth={2} dot={false}/>
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
-
-                  <Alert><Info className="h-4 w-4" /><AlertTitle className="font-headline">Analyse par l'IA</AlertTitle><AlertDescription>{result.analysis}</AlertDescription></Alert>
-                  <Alert><Info className="h-4 w-4" /><AlertTitle className="font-headline">Recommandation</AlertTitle><AlertDescription>{result.recommendation}</AlertDescription></Alert>
-                </div>
-              )}
+              <div className="text-center text-muted-foreground h-96 flex items-center justify-center">
+                  <p>Les outils IA sont temporairement désactivés pour maintenance. Merci de votre compréhension.</p>
+              </div>
             </CardContent>
           </Card>
            <Card>

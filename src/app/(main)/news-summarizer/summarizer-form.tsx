@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, PlusCircle, Trash2, Sparkles } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const articleSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
@@ -44,8 +45,8 @@ export default function SummarizerForm() {
 
   async function onSubmit(values: FormValues) {
     setLoading(true);
-    setSummary(null);
     setError("La fonctionnalité IA est temporairement désactivée pour maintenance.");
+    setSummary(null);
     setLoading(false);
     // try {
     //   const response = await summarizeInvestmentNews(values);
