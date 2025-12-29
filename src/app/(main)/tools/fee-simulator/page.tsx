@@ -78,14 +78,16 @@ export default function FeeSimulatorPage() {
         let finalValueWithFees = initialInvestment;
         let totalFeesPaid = 0;
         for (let i = 0; i < investmentPeriod; i++) {
-            // Assume commission is paid on the value of transactions for the year
-            const transactionValue = finalValueWithFees * rate; // Simplified: gains are transacted
-            const commissionsPaid = transactionValue * commission * transactionsPerYear;
+            const annualGrowth = finalValueWithFees * rate;
+            // Simplified: assume commission is paid on the value of new investment + gains for the year
+            const transactionValueForYear = (annualGrowth > 0 ? annualGrowth : 0);
+            const commissionsPaid = transactionValueForYear * commission * transactionsPerYear;
+            
             const totalAnnualFees = annualFixedFees + commissionsPaid;
             totalFeesPaid += totalAnnualFees;
             
-            finalValueWithFees = (finalValueWithFees * (1 + rate)) - totalAnnualFees;
-             if (finalValueWithFees < 0) finalValueWithFees = 0;
+            finalValueWithFees = finalValueWithFees + annualGrowth - totalAnnualFees;
+            if (finalValueWithFees < 0) finalValueWithFees = 0;
         }
 
         const feeImpact = finalValueWithoutFees - finalValueWithFees;
@@ -247,5 +249,3 @@ export default function FeeSimulatorPage() {
     </>
   );
 }
-
-    
