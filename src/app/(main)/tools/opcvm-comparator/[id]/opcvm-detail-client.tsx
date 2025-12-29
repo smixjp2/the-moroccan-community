@@ -20,6 +20,14 @@ export default function OpcvmDetailClient({ opcvm }: { opcvm: Opcvm }) {
   const { name, category, managementCompany, nav, perfYTD, perf1y, details } = opcvm;
 
   const allocationChartData = details.assetAllocation.map(item => ({ name: item.label, value: item.value }));
+  
+  const chartConfig = {
+    value: {
+      label: "VL",
+    },
+    ...Object.fromEntries(allocationChartData.map((item, index) => [item.name, { label: item.name, color: COLORS[index % COLORS.length] }]))
+  };
+
 
   return (
     <div className="container py-12 md:py-16">
@@ -74,7 +82,7 @@ export default function OpcvmDetailClient({ opcvm }: { opcvm: Opcvm }) {
                 <CardTitle className="font-headline">Évolution de la Valeur Liquidative</CardTitle>
                 </CardHeader>
                 <CardContent className="h-[300px] w-full">
-                <ResponsiveContainer>
+                <ChartContainer config={chartConfig} className="h-full w-full">
                     <LineChart data={details.historicalNav} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                         <XAxis dataKey="date" tickFormatter={(str) => new Date(str).toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' })} />
                         <YAxis domain={['dataMin - 5', 'dataMax + 5']} tickFormatter={(val) => formatCurrency(val).replace(",00\u00A0MAD", "")}/>
@@ -83,7 +91,7 @@ export default function OpcvmDetailClient({ opcvm }: { opcvm: Opcvm }) {
                         />
                         <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} name="VL" />
                     </LineChart>
-                </ResponsiveContainer>
+                </ChartContainer>
                 </CardContent>
             </Card>
         </div>
@@ -111,7 +119,7 @@ export default function OpcvmDetailClient({ opcvm }: { opcvm: Opcvm }) {
                     <CardTitle className="font-headline">Allocation d'Actifs</CardTitle>
                     </CardHeader>
                     <CardContent className="h-[200px]">
-                     <ResponsiveContainer width="100%" height="100%">
+                     <ChartContainer config={chartConfig} className="h-full w-full">
                         <PieChart>
                           <Pie
                             data={allocationChartData}
@@ -140,7 +148,7 @@ export default function OpcvmDetailClient({ opcvm }: { opcvm: Opcvm }) {
                           <Tooltip content={<ChartTooltipContent />} />
                           <Legend />
                         </PieChart>
-                      </ResponsiveContainer>
+                      </ChartContainer>
                     </CardContent>
                 </Card>
             )}
