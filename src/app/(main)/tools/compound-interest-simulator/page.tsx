@@ -245,7 +245,7 @@ export default function CompoundInterestSimulatorPage() {
                         <CardHeader>
                             <CardTitle>Analyse des Gains</CardTitle>
                              <CardDescription>La magie des intérêts composés.</CardDescription>
-                        </Header>
+                        </CardHeader>
                         <CardContent className="text-sm text-muted-foreground flex flex-col justify-center h-[250px]">
                             <p>Dans {duration} ans, votre capital pourrait atteindre <strong>{formatCurrency(finalCapital)}</strong>.</p>
                             <p className="mt-4">De ce montant, <strong>{formatCurrency(totalGains)}</strong> (<strong className="text-primary">{gainsPercentage.toFixed(1)}%</strong>) proviendrait uniquement des intérêts générés par vos investissements.</p>
