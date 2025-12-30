@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Download } from "lucide-react";
+import { Download, Clock } from "lucide-react";
 import type { Resource } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
@@ -20,7 +20,7 @@ const resources: Resource[] = [
     id: "1",
     title: "Simulateur de Frais de Courtage et Commissions",
     description: "Un simulateur Excel avancé pour calculer les coûts d'entrée et de sortie pour chaque courtier bancaire marocain. Planifiez vos transactions avec précision.",
-    price: "199 MAD",
+    price: "Bientôt",
     href: "#",
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-1')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'resource-1')?.imageHint || '',
@@ -29,7 +29,7 @@ const resources: Resource[] = [
     id: "2",
     title: "La Liste Comparative Ultime des Courtiers",
     description: "Un PDF complet comparant tous les courtiers bancaires marocains sur les commissions, les frais, les taxes et les fonctionnalités de la plateforme. Faites un choix éclairé.",
-    price: "99 MAD",
+    price: "Bientôt",
     href: "#",
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-2')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'resource-2')?.imageHint || '',
@@ -65,9 +65,9 @@ export default function ResourcesPage() {
               <CardDescription className="mb-4 flex-1">{resource.description}</CardDescription>
               <div className="flex justify-between items-center mt-4">
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
-                <Button asChild className="font-bold">
+                <Button asChild className="font-bold" disabled={resource.price !== 'Gratuit'}>
                   <Link href={resource.href} target={resource.price === 'Gratuit' ? '_blank' : '_self'} rel="noopener noreferrer">
-                    {resource.price === 'Gratuit' ? 'Télécharger' : 'Obtenir'} <Download className="ml-2 h-4 w-4" />
+                    {resource.price === 'Gratuit' ? (<><Download className="mr-2 h-4 w-4" /> Télécharger</>) : (<><Clock className="mr-2 h-4 w-4" /> Bientôt</>)}
                   </Link>
                 </Button>
               </div>
