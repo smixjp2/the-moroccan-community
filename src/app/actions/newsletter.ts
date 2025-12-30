@@ -22,11 +22,11 @@ export async function subscribeToNewsletter(prevState: any, formData: FormData) 
   // For development and preview, we'll simulate success if keys are missing.
   // In production, these variables must be set in the Vercel environment.
   if (!BREVO_API_KEY || !BREVO_LIST_ID) {
-    console.log("Newsletter subscription simulated. No API keys found.");
+    console.warn("Brevo API key or List ID is missing. Simulating newsletter subscription.");
     // Simulate a successful subscription
     await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
     return {
-      message: "Merci pour votre inscription !",
+      message: "Merci pour votre inscription ! (Simulation)",
       status: "success",
     };
   }
@@ -56,7 +56,7 @@ export async function subscribeToNewsletter(prevState: any, formData: FormData) 
     console.error("Brevo API Error:", errorData);
 
     return {
-      message: errorData.message || "Une erreur est survenue.",
+      message: errorData.message || "Une erreur est survenue lors de l'inscription.",
       status: "error",
     };
   } catch (error) {
