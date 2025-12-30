@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, TrendingUp, DollarSign } from 'lucide-react';
+import { Info, TrendingUp, DollarSign, PiggyBank } from 'lucide-react';
 
 export default function DividendYieldCalculatorPage() {
   const [sharePrice, setSharePrice] = useState(100);
@@ -17,9 +17,9 @@ export default function DividendYieldCalculatorPage() {
   const [isCalculated, setIsCalculated] = useState(false);
 
   const { dividendYield, annualIncome, totalInvestment } = useMemo(() => {
-    const price = Number(sharePrice);
-    const dividend = Number(annualDividend);
-    const shares = Number(numberOfShares);
+    const price = Number(sharePrice) || 0;
+    const dividend = Number(annualDividend) || 0;
+    const shares = Number(numberOfShares) || 0;
 
     const yieldValue = price > 0 ? (dividend / price) * 100 : 0;
     const income = dividend * shares;
@@ -104,37 +104,42 @@ export default function DividendYieldCalculatorPage() {
             <div className="space-y-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Résultats du Calcul</CardTitle>
+                  <CardTitle>Résultats et Analyse</CardTitle>
                   <CardDescription>
                     Voici l'analyse basée sur les informations fournies.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div className="p-4 bg-secondary rounded-lg">
-                      <TrendingUp className="h-8 w-8 text-primary mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">Rendement du Dividende</p>
-                      <p className="text-3xl font-bold text-primary">{dividendYield.toFixed(2)}%</p>
-                    </div>
-                    <div className="p-4 bg-secondary rounded-lg">
-                      <DollarSign className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">Revenu Annuel Estimé</p>
-                      <p className="text-3xl font-bold text-green-600">{formatCurrency(annualIncome)}</p>
-                    </div>
-                     <div className="p-4 bg-secondary rounded-lg">
-                      <p className="text-sm text-muted-foreground mt-3">Investissement Total</p>
-                      <p className="text-2xl font-bold">{formatCurrency(totalInvestment)}</p>
-                    </div>
+                    <Card className="p-4 bg-secondary">
+                        <CardHeader className="p-0 items-center">
+                            <div className="p-3 rounded-full bg-primary/10 mb-2">
+                                <TrendingUp className="h-8 w-8 text-primary" />
+                            </div>
+                            <CardTitle className="text-sm text-muted-foreground">Rendement Dividende</CardTitle>
+                            <CardDescription className="text-3xl font-bold text-primary">{dividendYield.toFixed(2)}%</CardDescription>
+                        </CardHeader>
+                    </Card>
+                     <Card className="p-4 bg-secondary">
+                        <CardHeader className="p-0 items-center">
+                            <div className="p-3 rounded-full bg-green-500/10 mb-2">
+                               <DollarSign className="h-8 w-8 text-green-600" />
+                            </div>
+                            <CardTitle className="text-sm text-muted-foreground">Revenu Annuel</CardTitle>
+                            <CardDescription className="text-3xl font-bold text-green-600">{formatCurrency(annualIncome)}</CardDescription>
+                        </CardHeader>
+                    </Card>
+                     <Card className="p-4 bg-secondary">
+                        <CardHeader className="p-0 items-center">
+                             <div className="p-3 rounded-full bg-blue-500/10 mb-2">
+                               <PiggyBank className="h-8 w-8 text-blue-600" />
+                            </div>
+                            <CardTitle className="text-sm text-muted-foreground">Investissement Total</CardTitle>
+                            <CardDescription className="text-3xl font-bold text-blue-600">{formatCurrency(totalInvestment)}</CardDescription>
+                        </CardHeader>
+                    </Card>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                    <CardTitle>Analyse des Résultats</CardTitle>
-                    <CardDescription>Comment interpréter ces chiffres.</CardDescription>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground space-y-4">
+                   <div className="text-sm text-muted-foreground space-y-4 pt-4">
                     <p>
                         Avec un investissement de <strong>{formatCurrency(totalInvestment)}</strong>, vous pourriez vous attendre à recevoir environ <strong>{formatCurrency(annualIncome)}</strong> en dividendes chaque année.
                     </p>
@@ -144,8 +149,10 @@ export default function DividendYieldCalculatorPage() {
                     <p>
                         Il est important de ne pas se baser uniquement sur le rendement. Assurez-vous d'analyser également la santé financière de l'entreprise et sa capacité à maintenir ou augmenter ses dividendes à l'avenir.
                     </p>
+                </div>
                 </CardContent>
               </Card>
+
             </div>
           )}
         </div>
