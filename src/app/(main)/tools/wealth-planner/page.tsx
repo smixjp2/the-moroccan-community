@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -10,6 +11,8 @@ import { formatCurrency } from '@/lib/utils';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Info } from 'lucide-react';
 
 
 type YearlyData = {
@@ -100,11 +103,36 @@ export default function WealthPlannerPage() {
 
   return (
     <div className="container py-12 md:py-16">
-      <div className="text-center max-w-3xl mx-auto mb-12">
+      <div className="text-center max-w-3xl mx-auto mb-8">
         <h1 className="font-headline text-4xl font-bold md:text-5xl">Planificateur de Patrimoine</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
           Simulez la croissance de votre patrimoine sur le long terme. Voyez comment votre épargne et vos investissements peuvent fructifier grâce à la magie des intérêts composés.
         </p>
+      </div>
+
+      <div className="max-w-4xl mx-auto mb-12">
+        <Accordion type="single" collapsible>
+            <AccordionItem value="guide">
+                <AccordionTrigger>
+                    <div className="flex items-center gap-2">
+                        <Info className="h-5 w-5" />
+                        <span className="font-semibold">Guide d'utilisation du simulateur</span>
+                    </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <div className="space-y-4 text-muted-foreground">
+                        <p>Ce simulateur vous aide à visualiser comment votre patrimoine peut évoluer dans le temps. Voici comment remplir les champs :</p>
+                        <ul className="list-disc pl-6 space-y-2">
+                            <li><strong>Capital de départ :</strong> Le montant que vous avez déjà investi ou que vous souhaitez investir au début.</li>
+                            <li><strong>Épargne mensuelle :</strong> Le montant que vous prévoyez d'ajouter à votre investissement chaque mois. La régularité est la clé !</li>
+                            <li><strong>Rendement annuel espéré (%) :</strong> C'est la performance annuelle moyenne que vous attendez de vos investissements. Par exemple, le marché actions a historiquement rapporté entre 8% et 10% par an sur le long terme, mais cette performance n'est pas garantie.</li>
+                            <li><strong>Durée de l'investissement (ans) :</strong> Le nombre d'années pendant lesquelles vous prévoyez de laisser votre argent fructifier. Plus la durée est longue, plus les intérêts composés sont puissants.</li>
+                        </ul>
+                        <p>Une fois les paramètres saisis, cliquez sur "Simuler" pour générer les graphiques et analyses.</p>
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-8">
