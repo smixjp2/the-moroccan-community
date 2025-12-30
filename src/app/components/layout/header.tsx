@@ -13,6 +13,7 @@ const navLinks: NavLink[] = [
   { href: "/", label: "Accueil" },
   { href: "/articles", label: "Articles" },
   { href: "/courses", label: "Cours" },
+  { href: "/tools", label: "Outils" },
   { href: "/resources", label: "Ressources" },
 ];
 
@@ -27,7 +28,9 @@ export function Header() {
           href={link.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary",
-            pathname === link.href ? "text-primary" : "text-muted-foreground"
+            pathname.startsWith(link.href) && link.href !== "/" || pathname === link.href
+              ? "text-primary"
+              : "text-muted-foreground"
           )}
         >
           {link.label}
