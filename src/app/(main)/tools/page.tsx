@@ -13,6 +13,14 @@ const tools: Tool[] = [
     icon: Calculator,
     badge: "Nouveau"
   },
+  {
+    id: "compound-interest-simulator",
+    title: "Simulateur d'Intérêts Composés",
+    description: "Visualisez la puissance des intérêts composés et voyez comment votre capital peut fructifier avec le temps.",
+    href: "/tools/compound-interest-simulator",
+    icon: Calculator,
+    badge: "Nouveau"
+  },
 ];
 
 export default function ToolsPage() {
