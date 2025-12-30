@@ -21,6 +21,14 @@ const tools: Tool[] = [
     icon: Calculator,
     badge: "Nouveau"
   },
+   {
+    id: "dividend-yield-calculator",
+    title: "Calculateur de Rendement de Dividende",
+    description: "Calculez le rendement de vos actions à dividendes et estimez vos revenus annuels.",
+    href: "/tools/dividend-yield-calculator",
+    icon: Calculator,
+    badge: "Nouveau"
+  },
 ];
 
 export default function ToolsPage() {
