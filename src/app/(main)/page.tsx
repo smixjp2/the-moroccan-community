@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, Newspaper, Wrench, GraduationCap, Crown, Loader2 } from "lucide-react";
+import { ArrowRight, Newspaper, GraduationCap, Crown, Loader2, Wrench } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -31,8 +31,8 @@ const features = [
   },
   {
     icon: <Wrench className="h-8 w-8 text-primary" />,
-    title: "Simulateurs Puissants",
-    description: "Comparez les banques, les courtiers et simulez l'impact des frais sur vos investissements avec nos outils alimentés par l'IA.",
+    title: "Outils & Comparateurs",
+    description: "Comparez les banques, les courtiers et les produits financiers pour prendre des décisions éclairées.",
     link: "/tools",
     image: featureImages.tools,
   },
@@ -48,23 +48,23 @@ const features = [
 const faqItems = [
     {
         question: "Quel est le montant minimum pour commencer à investir en bourse au Maroc ?",
-        answer: "Il n'y a pas de minimum légal ! Vous pouvez commencer avec quelques centaines de dirhams pour acheter vos premières actions. L'important est de commencer et d'être régulier. Nos outils peuvent vous aider à simuler des petits investissements."
+        answer: "Il n'y a pas de minimum légal ! Vous pouvez commencer avec quelques centaines de dirhams pour acheter vos premières actions. L'important est de commencer et d'être régulier."
     },
     {
         question: "Comment choisir un bon courtier (société de bourse) au Maroc ?",
-        answer: "Le choix dépend de vos besoins. Les critères clés sont les frais de transaction, la qualité de la plateforme de trading et la réactivité du service client. Utilisez notre comparateur de courtiers pour trouver celui qui vous convient le mieux."
+        answer: "Le choix dépend de vos besoins. Les critères clés sont les frais de transaction, la qualité de la plateforme et le service client. Utilisez nos comparateurs pour vous aider."
     },
     {
         question: "La bourse marocaine est-elle risquée ?",
-        answer: "Tout investissement en actions comporte un risque de perte en capital. Cependant, le marché marocain est généralement moins volatil que de grands marchés internationaux. Une bonne stratégie de diversification, que nous enseignons dans nos cours, est essentielle pour gérer ce risque."
+        answer: "Tout investissement en actions comporte un risque. Cependant, une bonne stratégie de diversification, que nous enseignons dans nos cours, est essentielle pour gérer ce risque."
     },
     {
         question: "Dois-je payer des impôts sur mes gains en bourse ?",
-        answer: "Oui, les plus-values sur les actions sont imposées au Maroc. La fiscalité peut évoluer. Il est recommandé de consulter nos articles ou un conseiller fiscal pour connaître les dernières réglementations et optimiser votre déclaration."
+        answer: "Oui, les plus-values sur les actions sont imposées au Maroc. La fiscalité peut évoluer, il est donc conseillé de se tenir informé."
     },
     {
-        question: "Qu'est-ce que le MASI et pourquoi est-il important ?",
-        answer: "Le MASI (Moroccan All Shares Index) est l'indice principal de la Bourse de Casablanca. Il représente la performance globale de toutes les actions cotées. Le suivre vous donne une idée de la tendance générale du marché, un peu comme le CAC 40 en France ou le S&P 500 aux États-Unis."
+        question: "Qu'est-ce que le MASI ?",
+        answer: "Le MASI (Moroccan All Shares Index) est l'indice principal de la Bourse de Casablanca. Il représente la performance globale du marché."
     }
 ]
 
@@ -103,7 +103,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center text-center text-white">
+      <section className="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center text-center text-primary-foreground">
         {heroImage && (
           <Image
             src={heroImage.imageUrl}
@@ -128,7 +128,7 @@ export default function Home() {
                 <Link href="/articles">Explorer les Analyses <ArrowRight className="ml-2" /></Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="font-bold">
-                <Link href="/tools">Utiliser les Outils</Link>
+                <Link href="/tools">Voir les Outils</Link>
               </Button>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="font-headline text-3xl font-bold md:text-4xl">L'Intelligence pour Chaque Investisseur</h2>
             <p className="mt-4 text-muted-foreground md:text-lg">
-              Que vous soyez débutant ou professionnel chevronné, The Moroccan Community vous apporte la clarté dont vous avez besoin pour naviguer sur le marché marocain.
+              Que vous soyez débutant ou professionnel, The Moroccan Community vous apporte la clarté nécessaire pour naviguer sur le marché marocain.
             </p>
           </div>
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -176,7 +176,7 @@ export default function Home() {
       
       <section className="py-16 md:py-24">
         <div className="container">
-          <div className="relative rounded-lg overflow-hidden p-8 md:p-12 text-center text-white bg-card">
+          <div className="relative rounded-lg overflow-hidden p-8 md:p-12 text-center text-primary-foreground bg-card">
               {privateCommunityImage && (
                 <Image
                   src={privateCommunityImage.imageUrl}
@@ -186,7 +186,7 @@ export default function Home() {
                   className="object-cover"
                 />
               )}
-              <div className="absolute inset-0 bg-primary/80" />
+              <div className="absolute inset-0 bg-primary/90" />
               <div className="relative z-10 max-w-2xl mx-auto">
                   <div className="mb-4">
                       <Crown className="h-12 w-12 mx-auto text-yellow-300" />

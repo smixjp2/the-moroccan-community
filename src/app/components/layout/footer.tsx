@@ -43,7 +43,7 @@ export function Footer() {
   }, [state, toast]);
 
   return (
-    <footer className="border-t bg-card">
+    <footer className="border-t bg-card text-card-foreground">
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
@@ -69,7 +69,7 @@ export function Footer() {
           <div className="md:col-span-2 space-y-4">
             <h3 className="font-headline font-semibold">Abonnez-vous à notre newsletter mensuelle</h3>
             <p className="text-muted-foreground text-sm">
-                Recevez chaque mois des informations sur le marché, des offres promotionnelles et des mises à jour sur les nouveaux services directement dans votre boîte de réception.
+                Recevez chaque mois des informations sur le marché, des offres promotionnelles et des mises à jour sur les nouveaux services.
             </p>
             <form ref={formRef} action={formAction} className="flex w-full max-w-md items-center space-x-2">
               <Input name="email" type="email" placeholder="Entrez votre email" className="flex-1" required />

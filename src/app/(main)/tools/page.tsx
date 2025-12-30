@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Landmark, Briefcase, Home, ShoppingBag, BarChart3 } from "lucide-react";
