@@ -6,5 +6,6 @@ runConfig:
   # more instances in response to increased traffic.
   maxInstances: 1
 
-# Triggering a redeployment.
+# Triggering a redeployment to clear Vercel cache.
 # New trigger.
+# Force redeploy.
