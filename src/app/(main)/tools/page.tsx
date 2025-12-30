@@ -1,33 +1,9 @@
 
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Calculator, Landmark, Briefcase, Percent, ShieldCheck, Home, ShoppingBag, BarChart3, Newspaper } from "lucide-react";
+import { Landmark, Briefcase, Home, ShoppingBag, BarChart3 } from "lucide-react";
 
-const simulators = [
-  {
-    href: "/tools/fee-simulator",
-    icon: <Calculator className="h-8 w-8 text-primary" />,
-    title: "Simulateur d'Impact des Frais",
-    description: "Analysez l'impact des frais bancaires et des commissions sur vos rendements.",
-  },
-  {
-    href: "/tools/dividend-yield-calculator",
-    icon: <Percent className="h-8 w-8 text-primary" />,
-    title: "Calculateur de Rendement des Dividendes",
-    description: "Calculez le rendement de vos investissements en dividendes.",
-  },
-  {
-    href: "/tools/retirement-planner",
-    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
-    title: "Planificateur de Retraite",
-    description: "Simulez votre épargne retraite pour atteindre vos objectifs financiers.",
-  },
-   {
-    href: "/tools/news-summarizer",
-    icon: <Newspaper className="h-8 w-8 text-primary" />,
-    title: "Résumé d'Actualités par IA",
-    description: "Générez des résumés d'articles de presse (Fonctionnalité en maintenance).",
-  },
+const tools = [
   {
     href: "/tools/bank-comparator",
     icon: <Landmark className="h-8 w-8 text-primary" />,
@@ -64,14 +40,14 @@ export default function ToolsPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h1 className="font-headline text-4xl font-bold md:text-5xl">Outils Financiers et Simulateurs</h1>
+        <h1 className="font-headline text-4xl font-bold md:text-5xl">Outils Financiers et Comparateurs</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Prenez des décisions basées sur les données. Explorez nos outils pour analyser, comparer et planifier vos investissements au Maroc.
+          Prenez des décisions basées sur les données. Explorez nos outils pour analyser et comparer les produits financiers au Maroc.
         </p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-        {simulators.map((tool) => (
+        {tools.map((tool) => (
           <Link href={tool.href} key={tool.href}>
             <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-transform duration-300 flex flex-col">
                 <CardHeader>
