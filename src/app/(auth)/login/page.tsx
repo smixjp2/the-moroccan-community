@@ -1,5 +1,5 @@
 'use client';
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
 import { loginWithEmail } from '@/app/actions/auth';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -34,10 +33,12 @@ export default function LoginPage() {
         variant: 'destructive',
       });
     } else if (state?.status === 'success') {
+      // The redirect is now handled by the AuthLayout
       toast({
         title: 'Connexion réussie',
-        description: 'Vous êtes maintenant connecté.',
+        description: 'Vous allez être redirigé...',
       });
+       // router.push is handled by the layout, but we can force it here as well
       router.push('/dashboard');
     }
   }, [state, toast, router]);

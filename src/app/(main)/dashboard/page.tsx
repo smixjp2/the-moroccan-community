@@ -71,11 +71,12 @@ export default function DashboardPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const firestore = getFirestore();
-
+  
   useEffect(() => {
-    // Wait until the loading is finished before checking for the user
+    // We only want to redirect if loading is finished AND there is no user.
+    // The AuthLayout now handles redirecting logged-in users away from /login
     if (!isUserLoading && !user) {
-      router.push('/login');
+      router.replace('/login');
     }
   }, [user, isUserLoading, router]);
 
@@ -92,7 +93,7 @@ export default function DashboardPage() {
   const isLoading = isUserLoading || (user && areEnrollmentsLoading);
 
   // Show a loading state while user auth is being confirmed
-  if (isUserLoading || !user) {
+  if (isLoading || !user) {
     return (
       <div className="container py-12">
         <h1 className="text-3xl font-bold font-headline">Bienvenue...</h1>
