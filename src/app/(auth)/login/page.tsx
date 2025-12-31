@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/firebase';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -24,6 +25,14 @@ export default function LoginPage() {
   const [state, formAction] = useActionState(loginWithEmail, null);
   const { toast } = useToast();
   const router = useRouter();
+  const { user, isUserLoading } = useUser();
+
+  useEffect(() => {
+    // If the user is successfully logged in, redirect to the dashboard.
+    if (user) {
+      router.replace('/dashboard');
+    }
+  }, [user, router]);
 
   useEffect(() => {
     if (state?.status === 'error') {
@@ -37,10 +46,18 @@ export default function LoginPage() {
         title: 'Connexion réussie',
         description: 'Vous allez être redirigé...',
       });
-       // Force the navigation to ensure user gets to the dashboard
-      router.push('/dashboard');
+      // The redirect is handled by the other useEffect when the `user` object becomes available.
     }
-  }, [state, toast, router]);
+  }, [state, toast]);
+
+  // While checking user state or if user is found (and about to be redirected), show a loader.
+  if (isUserLoading || user) {
+     return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
