@@ -38,7 +38,7 @@ export default function LoginPage() {
         title: 'Connexion réussie',
         description: 'Vous êtes maintenant connecté.',
       });
-      router.push('/');
+      router.push('/dashboard');
     }
   }, [state, toast, router]);
 

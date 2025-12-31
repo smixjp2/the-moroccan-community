@@ -1,0 +1,104 @@
+'use client';
+
+import { useUser } from '@/firebase';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { ArrowRight } from 'lucide-react';
+import type { Course } from '@/lib/types';
+
+
+const staticCourses: Course[] = [
+  {
+    id: "formation-bourse-casablanca",
+    title: "De Zéro à Héros : La Formation Complète sur la Bourse de Casablanca",
+    description: "Une formation exhaustive de +12 heures avec des cas pratiques 100% marocains pour maîtriser la Bourse de Casablanca, de l'analyse fondamentale à la construction de portefeuille.",
+    level: "Tous Niveaux",
+    duration: "12-15 Heures",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse')?.imageHint || '',
+    href: "/courses/formation-bourse-casablanca",
+    isNew: true,
+  }
+];
+
+
+function CourseCard({ course }: { course: Course }) {
+  return (
+    <Card className="overflow-hidden">
+      <CardHeader className="p-0">
+        <Link href={course.href}>
+          <Image
+            src={course.imageUrl}
+            alt={course.title}
+            width={600}
+            height={400}
+            className="object-cover w-full aspect-video"
+          />
+        </Link>
+      </CardHeader>
+      <CardContent className="p-6">
+        <CardTitle className="font-headline mb-2">{course.title}</CardTitle>
+        <CardDescription>{course.description}</CardDescription>
+        <Button asChild className="mt-4 w-full md:w-auto">
+          <Link href={course.href}>Commencer la formation <ArrowRight className="ml-2" /></Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+
+export default function DashboardPage() {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
+
+  if (isUserLoading || !user) {
+    return (
+      <div className="container py-12">
+        <Skeleton className="h-8 w-64 mb-4" />
+        <Skeleton className="h-4 w-96 mb-8" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card>
+                <Skeleton className="w-full aspect-video" />
+                <CardContent className="p-6">
+                    <Skeleton className="h-6 w-3/4 mb-4" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-5/6 mb-4" />
+                    <Skeleton className="h-10 w-40" />
+                </CardContent>
+            </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container py-12">
+      <h1 className="text-3xl font-bold font-headline">Bienvenue, {user.email}</h1>
+      <p className="text-muted-foreground mt-2">Prêt à continuer votre apprentissage ? Voici vos formations.</p>
+
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold font-headline mb-4">Mes Formations</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Pour l'instant, on affiche la formation statiquement.
+              Plus tard, on la listera depuis la base de données. */}
+          {staticCourses.map(course => (
+              <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -13,7 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useUser } from '@/firebase';
 import { signOut } from '@/app/actions/auth';
-import { LogOut, User as UserIcon } from 'lucide-react';
+import { LogOut, User as UserIcon, LayoutDashboard } from 'lucide-react';
+import Link from 'next/link';
 
 export function UserNav() {
   const { user } = useUser();
@@ -48,6 +49,12 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+           <DropdownMenuItem asChild>
+             <Link href="/dashboard">
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                <span>Tableau de bord</span>
+             </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profil</span>

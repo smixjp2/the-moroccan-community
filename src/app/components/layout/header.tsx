@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Scaling } from "lucide-react";
+import { Menu, Scaling, LayoutDashboard } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -59,7 +59,15 @@ export function Header() {
           {isUserLoading ? (
              <div className="h-10 w-28 animate-pulse rounded-md bg-muted" />
           ) : user ? (
-            <UserNav />
+            <>
+                <Button asChild variant="ghost" size="sm" className="hidden md:flex">
+                    <Link href="/dashboard">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        Tableau de bord
+                    </Link>
+                </Button>
+                <UserNav />
+            </>
           ) : (
             <div className="hidden md:flex gap-2">
                 <Button variant="ghost" asChild>
@@ -83,7 +91,9 @@ export function Header() {
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
                  <div className="mt-8 flex flex-col space-y-2">
                     {user ? (
-                        <p>Connecté en tant que {user.email}</p>
+                        <Button asChild>
+                            <Link href="/dashboard">Tableau de bord</Link>
+                        </Button>
                     ) : (
                         <>
                             <Button variant="ghost" asChild>
