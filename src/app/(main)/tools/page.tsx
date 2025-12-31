@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calculator, PieChart } from "lucide-react";
+import { ArrowRight, Calculator, PieChart, Home } from "lucide-react";
 import type { Tool } from "@/lib/types";
 
 const tools: Tool[] = [
@@ -26,6 +26,13 @@ const tools: Tool[] = [
     description: "Calculez le rendement de vos actions à dividendes et estimez vos revenus annuels.",
     href: "/tools/dividend-yield-calculator",
     icon: Calculator,
+  },
+  {
+    id: "mortgage-calculator",
+    title: "Calculateur de Crédit Immobilier",
+    description: "Estimez vos mensualités, le coût total des intérêts et visualisez votre plan d'amortissement.",
+    href: "/tools/mortgage-calculator",
+    icon: Home,
   },
 ];
 
