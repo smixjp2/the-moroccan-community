@@ -1,17 +1,12 @@
 'use client';
 
-import { useUser, useCollection, useMemoFirebase } from '@/firebase';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ArrowRight, BookOpen, Loader2 } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import type { Course } from '@/lib/types';
-import { collection, getFirestore } from 'firebase/firestore';
 
 
 const allCourses: Course[] = [
@@ -67,64 +62,17 @@ function CourseCard({ course }: { course: Course }) {
 
 
 export default function DashboardPage() {
-  const { user, isUserLoading } = useUser();
-  const router = useRouter();
-  const firestore = getFirestore();
-  
-  useEffect(() => {
-    // Only redirect if loading is finished AND there is no user.
-    if (!isUserLoading && !user) {
-      router.replace('/login');
-    }
-  }, [user, isUserLoading, router]);
-
-  const enrollmentsQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    return collection(firestore, `users/${user.uid}/courseEnrollments`);
-  }, [user, firestore]);
-  
-  const { data: enrollments, isLoading: areEnrollmentsLoading } = useCollection(enrollmentsQuery);
-
-  const enrolledCourseIds = new Set(enrollments?.map(e => e.courseId));
-  const userCourses = allCourses.filter(course => enrolledCourseIds.has(course.id));
-
-  const isLoading = isUserLoading || (user && areEnrollmentsLoading);
-
-  // Show a loading state while user auth is being confirmed.
-  if (isUserLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
-  // After loading, if there's still no user, this page content will not be rendered
-  // because the useEffect above will have already triggered a redirection.
-  if (!user) {
-    return null; // or a fallback loader, though redirection should be quick
-  }
+  // We assume the user has access to all courses for now.
+  const userCourses = allCourses;
 
   return (
     <div className="container py-12">
-      <h1 className="text-3xl font-bold font-headline">Bienvenue, {user.email}</h1>
-      <p className="text-muted-foreground mt-2">Prêt à continuer votre apprentissage ? Voici vos formations.</p>
+      <h1 className="text-3xl font-bold font-headline">Bienvenue sur votre Tableau de Bord</h1>
+      <p className="text-muted-foreground mt-2">Prêt à commencer votre apprentissage ? Voici vos formations.</p>
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold font-headline mb-4">Mes Formations</h2>
-        {isLoading ? (
-             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <Card>
-                    <Skeleton className="w-full aspect-video" />
-                    <CardContent className="p-6">
-                        <Skeleton className="h-6 w-3/4 mb-4" />
-                        <Skeleton className="h-4 w-full mb-2" />
-                        <Skeleton className="h-4 w-5/6 mb-4" />
-                        <Skeleton className="h-10 w-40" />
-                    </CardContent>
-                </Card>
-            </div>
-        ) : userCourses.length > 0 ? (
+        {userCourses.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {userCourses.map(course => (
                     <CourseCard key={course.id} course={course} />

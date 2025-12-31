@@ -5,13 +5,8 @@ import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, BarChart, Target, Gift, Check, Lock } from "lucide-react";
+import { BookOpen, BarChart, Target, Gift, Check } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
-import { useUser, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, query, where, getFirestore } from "firebase/firestore";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { CourseVideo } from "./course-video";
 
 const courseId = "formation-bourse-casablanca";
@@ -95,61 +90,9 @@ function ProtectedCourseContent() {
     )
 }
 
-function AccessDeniedContent() {
-    return (
-         <section className="py-20 text-center">
-            <div className="container">
-                <Lock className="h-16 w-16 mx-auto text-primary mb-4" />
-                <h2 className="font-headline text-3xl md:text-4xl font-bold">Contenu Réservé aux Membres</h2>
-                <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                    Cette formation est accessible uniquement aux membres inscrits. Pour accéder au contenu, vous devez avoir un compte et avoir acheté cette formation.
-                </p>
-                <div className="mt-8 flex gap-4 justify-center">
-                    <Button asChild size="lg">
-                        <Link href="/login">Se Connecter</Link>
-                    </Button>
-                    <Button variant="secondary" size="lg" disabled>
-                        Acheter cette formation (Bientôt disponible)
-                    </Button>
-                </div>
-            </div>
-      </section>
-    )
-}
-
-function LoadingState() {
-    return (
-        <div className="container py-16">
-            <div className="space-y-4">
-                <Skeleton className="h-8 w-1/3 mx-auto" />
-                <Skeleton className="h-6 w-2/3 mx-auto" />
-            </div>
-             <div className="mt-12 space-y-4">
-                <Skeleton className="h-96 w-full" />
-                <Skeleton className="h-24 w-full" />
-            </div>
-        </div>
-    )
-}
-
 
 export default function FormationBourseCasablancaPage() {
-  const { user, isUserLoading } = useUser();
-  const firestore = getFirestore();
-
-  const enrollmentQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    return query(
-      collection(firestore, `users/${user.uid}/courseEnrollments`),
-      where("courseId", "==", courseId)
-    );
-  }, [user, firestore]);
-
-  const { data: enrollments, isLoading: areEnrollmentsLoading } = useCollection(enrollmentQuery);
-
-  const isLoading = isUserLoading || (user && areEnrollmentsLoading);
-  const hasAccess = !!enrollments && enrollments.length > 0;
-
+ 
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -192,9 +135,8 @@ export default function FormationBourseCasablancaPage() {
           </div>
         </div>
       </section>
-
-      {isLoading ? <LoadingState /> : hasAccess ? <ProtectedCourseContent /> : <AccessDeniedContent />}
       
+      <ProtectedCourseContent />
     </div>
   );
 }

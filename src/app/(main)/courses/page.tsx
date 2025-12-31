@@ -5,11 +5,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, BarChart, Star, CheckCircle } from "lucide-react";
+import { Clock, BarChart, Star } from "lucide-react";
 import type { Course } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { useUser, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, getFirestore } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const staticCourses: Course[] = [
@@ -57,11 +55,6 @@ function CourseCard({ course, isEnrolled }: { course: Course, isEnrolled: boolea
                     <Star className="h-4 w-4" /> NOUVEAU
                 </Badge>
             )}
-             {isEnrolled && (
-                <Badge variant="secondary" className="absolute top-4 left-4 flex items-center gap-1 z-10 text-green-700 bg-green-100">
-                    <CheckCircle className="h-4 w-4" /> Inscrit
-                </Badge>
-            )}
             <CardHeader className="p-0">
                 {course.imageUrl && <Link href={course.href} className="block aspect-video overflow-hidden group">
                     <Image
@@ -88,7 +81,7 @@ function CourseCard({ course, isEnrolled }: { course: Course, isEnrolled: boolea
                     </div>
                 </div>
                 <Button asChild className="w-full font-bold mt-auto">
-                    <Link href={course.href}>{isEnrolled ? "Accéder à la formation" : "En Savoir Plus"}</Link>
+                    <Link href={course.href}>En Savoir Plus</Link>
                 </Button>
             </CardContent>
         </Card>
@@ -116,19 +109,6 @@ function CourseSkeleton() {
 }
 
 export default function CoursesPage() {
-  const { user, isUserLoading } = useUser();
-  const firestore = getFirestore();
-
-  const enrollmentsQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    return collection(firestore, `users/${user.uid}/courseEnrollments`);
-  }, [user, firestore]);
-  
-  const { data: enrollments, isLoading: areEnrollmentsLoading } = useCollection(enrollmentsQuery);
-
-  const enrolledCourseIds = new Set(enrollments?.map(e => e.courseId));
-  const isLoading = isUserLoading || (user && areEnrollmentsLoading);
-
 
   return (
     <div className="container py-12 md:py-16">
@@ -139,21 +119,13 @@ export default function CoursesPage() {
         </p>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-        {isLoading ? (
-            <>
-                <CourseSkeleton />
-                <CourseSkeleton />
-                <CourseSkeleton />
-            </>
-        ) : (
-            staticCourses.map((course) => (
-                <CourseCard 
-                    key={course.id} 
-                    course={course}
-                    isEnrolled={user ? enrolledCourseIds.has(course.id) : false}
-                />
-            ))
-        )}
+        {staticCourses.map((course) => (
+            <CourseCard 
+                key={course.id} 
+                course={course}
+                isEnrolled={false}
+            />
+        ))}
       </div>
     </div>
   );

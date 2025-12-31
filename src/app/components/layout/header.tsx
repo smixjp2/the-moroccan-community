@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
-import { useUser } from "@/firebase";
-import { UserNav } from "@/app/components/auth/user-nav";
 
 const navLinks: NavLink[] = [
   { href: "/", label: "Accueil" },
@@ -22,7 +20,6 @@ const navLinks: NavLink[] = [
 
 export function Header() {
   const pathname = usePathname();
-  const { user, isUserLoading } = useUser();
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-4 lg:gap-6", className)}>
@@ -40,6 +37,17 @@ export function Header() {
           {link.label}
         </Link>
       ))}
+       <Link
+          href="/dashboard"
+          className={cn(
+            "text-sm font-medium transition-colors hover:text-primary",
+            pathname.startsWith('/dashboard')
+              ? "text-primary"
+              : "text-muted-foreground"
+          )}
+        >
+          Tableau de bord
+        </Link>
     </nav>
   );
 
@@ -56,25 +64,6 @@ export function Header() {
         </div>
         
         <div className="flex flex-1 items-center justify-end gap-2">
-          {isUserLoading ? (
-             <div className="h-10 w-28 animate-pulse rounded-md bg-muted" />
-          ) : user ? (
-            <>
-                <Button asChild variant="ghost" size="sm" className="hidden md:flex">
-                    <Link href="/dashboard">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        Tableau de bord
-                    </Link>
-                </Button>
-                <UserNav />
-            </>
-          ) : (
-            <div className="hidden md:flex gap-2">
-                <Button variant="ghost" asChild>
-                    <Link href="/login">Connexion</Link>
-                </Button>
-            </div>
-          )}
           <div className="flex md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -90,17 +79,9 @@ export function Header() {
                 </Link>
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
                  <div className="mt-8 flex flex-col space-y-2">
-                    {user ? (
-                        <Button asChild>
-                            <Link href="/dashboard">Tableau de bord</Link>
-                        </Button>
-                    ) : (
-                        <>
-                            <Button variant="ghost" asChild>
-                                <Link href="/login">Connexion</Link>
-                            </Button>
-                        </>
-                    )}
+                    <Button asChild>
+                        <Link href="/dashboard">Tableau de bord</Link>
+                    </Button>
                 </div>
               </SheetContent>
             </Sheet>
