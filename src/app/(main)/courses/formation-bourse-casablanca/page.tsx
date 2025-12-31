@@ -25,7 +25,7 @@ const highlights = [
 ];
 
 function ProtectedCourseContent() {
-    const videoUrl = "https://drive.google.com/file/d/1q2w3e4r5t6y7u8i9o0p/view?usp=sharing"; // Lien Google Drive de la vidéo
+    const videoUrl = "https://drive.google.com/file/d/1_9Vd5T_1a2b3c4d5e6f7g8h9i0j/view?usp=sharing"; // Lien Google Drive de la vidéo
     return (
         <>
             <section className="py-16 bg-card">
@@ -190,4 +190,3 @@ export default function FormationBourseCasablancaPage() {
   );
 }
 
-    
