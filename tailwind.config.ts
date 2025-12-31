@@ -1,5 +1,5 @@
 import type {Config} from 'tailwindcss';
-
+// Forcing a cache clear again to resolve a stubborn build error.
 export default {
   darkMode: ['class'],
   content: [
