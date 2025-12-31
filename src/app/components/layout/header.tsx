@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
+import { useUser } from "@/firebase";
+import { UserNav } from "@/app/components/auth/user-nav";
 
 const navLinks: NavLink[] = [
   { href: "/", label: "Accueil" },
@@ -20,6 +22,7 @@ const navLinks: NavLink[] = [
 
 export function Header() {
   const pathname = usePathname();
+  const { user, isUserLoading } = useUser();
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-4 lg:gap-6", className)}>
@@ -29,7 +32,7 @@ export function Header() {
           href={link.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-primary",
-            pathname.startsWith(link.href) && link.href !== "/" || pathname === link.href
+            (pathname.startsWith(link.href) && link.href !== "/") || pathname === link.href
               ? "text-primary"
               : "text-muted-foreground"
           )}
@@ -51,23 +54,53 @@ export function Header() {
         <div className="hidden md:flex flex-1 items-center justify-center">
           <NavLinks />
         </div>
-
-        <div className="flex flex-1 items-center justify-end gap-4 md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Ouvrir le menu de navigation</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
-                <Scaling className="h-6 w-6 text-primary" />
-                <span className="font-headline text-lg font-bold">The Moroccan Community</span>
-              </Link>
-              <NavLinks className="flex-col items-start space-y-4 text-lg" />
-            </SheetContent>
-          </Sheet>
+        
+        <div className="flex flex-1 items-center justify-end gap-2">
+          {isUserLoading ? (
+             <div className="h-10 w-28 animate-pulse rounded-md bg-muted" />
+          ) : user ? (
+            <UserNav />
+          ) : (
+            <div className="hidden md:flex gap-2">
+                <Button variant="ghost" asChild>
+                    <Link href="/login">Connexion</Link>
+                </Button>
+                <Button asChild>
+                    <Link href="/signup">Inscription</Link>
+                </Button>
+            </div>
+          )}
+          <div className="flex md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Ouvrir le menu de navigation</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
+                  <Scaling className="h-6 w-6 text-primary" />
+                  <span className="font-headline text-lg font-bold">The Moroccan Community</span>
+                </Link>
+                <NavLinks className="flex-col items-start space-y-4 text-lg" />
+                 <div className="mt-8 flex flex-col space-y-2">
+                    {user ? (
+                        <p>Connecté en tant que {user.email}</p>
+                    ) : (
+                        <>
+                            <Button variant="ghost" asChild>
+                                <Link href="/login">Connexion</Link>
+                            </Button>
+                            <Button asChild>
+                                <Link href="/signup">Inscription</Link>
+                            </Button>
+                        </>
+                    )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
