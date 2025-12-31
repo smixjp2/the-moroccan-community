@@ -25,75 +25,17 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     };
   }
 
-  const { name, email, subject, message } = validatedFields.data;
+  // --- Simulation d'envoi ---
+  // L'intégration Brevo a été retirée à la demande de l'utilisateur.
+  // Aucun e-mail ne sera envoyé. Nous retournons un message de succès simulé.
+  console.log("Formulaire de contact soumis (simulation) :");
+  console.log(validatedFields.data);
 
-  const BREVO_API_KEY = process.env.BREVO_API_KEY;
+  // Simuler une petite latence réseau
+  await new Promise(resolve => setTimeout(resolve, 1000));
 
-  if (!BREVO_API_KEY) {
-    console.error("Brevo API key is missing. Cannot send contact email.");
-    return {
-        message: "Le service de messagerie n'est pas configuré. Veuillez réessayer plus tard.",
-        status: 'error',
-    };
-  }
-
-  const emailPayload = {
-    sender: {
-        name: name,
-        email: "contact@themoroccan.community" // Adresse d'expéditeur validée dans Brevo
-    },
-    to: [{
-        email: "themoroccananalyst@gmail.com",
-        name: "The Moroccan Community"
-    }],
-    replyTo: {
-        email: email,
-        name: name
-    },
-    subject: `[Contact Form] ${subject}`,
-    htmlContent: `
-        <html>
-            <body>
-                <h1>Nouveau message depuis le formulaire de contact</h1>
-                <p><strong>Nom:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Sujet:</strong> ${subject}</p>
-                <hr>
-                <p><strong>Message:</strong></p>
-                <p>${message.replace(/\n/g, '<br>')}</p>
-            </body>
-        </html>
-    `
+  return {
+    message: "Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.",
+    status: 'success',
   };
-
-  try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": BREVO_API_KEY,
-      },
-      body: JSON.stringify(emailPayload),
-    });
-
-    if (response.ok) {
-        return {
-            message: "Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.",
-            status: 'success',
-        };
-    } else {
-        const errorData = await response.json();
-        console.error("Brevo API Error:", errorData);
-        return {
-            message: "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.",
-            status: 'error',
-        };
-    }
-  } catch (error) {
-    console.error("Failed to send email:", error);
-    return {
-        message: "Une erreur interne est survenue. Veuillez réessayer plus tard.",
-        status: 'error',
-    };
-  }
 }
