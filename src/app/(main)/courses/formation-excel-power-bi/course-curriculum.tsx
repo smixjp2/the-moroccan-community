@@ -18,7 +18,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { CheckCircle, BarChart, Gift, FileSpreadsheet, Database } from "lucide-react";
+import { CheckCircle, BarChart, Gift, FileSpreadsheet, Database, Clock } from "lucide-react";
 
 const sessions = [
   {
@@ -145,11 +145,11 @@ export function CourseCurriculum() {
         <DialogFooter className="flex-col sm:flex-col sm:space-x-0 items-center pt-4 border-t">
             <div className="text-center">
                  <p className="text-sm text-muted-foreground">Accès à vie à la formation et au coaching carrière</p>
-                 <p className="text-4xl font-bold font-headline my-2 text-primary">1,999 MAD</p>
-                 <p className="text-xs text-muted-foreground">(Prix de lancement suggéré)</p>
+                 <p className="text-4xl font-bold font-headline my-2 text-primary">Bientôt</p>
+                 <p className="text-xs text-muted-foreground">Le lancement est imminent !</p>
             </div>
-          <Button type="button" size="lg" asChild className="w-full mt-4">
-            <a href="#">S'inscrire Maintenant</a>
+          <Button type="button" size="lg" disabled className="w-full mt-4">
+             <Clock className="mr-2 h-4 w-4" /> Bientôt disponible
           </Button>
            <DialogClose asChild>
                 <Button type="button" variant="ghost" className="text-xs text-muted-foreground">
