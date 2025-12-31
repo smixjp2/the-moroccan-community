@@ -15,6 +15,7 @@ const navLinks: NavLink[] = [
   { href: "/courses", label: "Cours" },
   { href: "/tools", label: "Outils" },
   { href: "/resources", label: "Ressources" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
