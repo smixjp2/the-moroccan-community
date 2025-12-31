@@ -14,11 +14,13 @@ export default function AuthLayout({
   const router = useRouter();
 
   useEffect(() => {
+    // If user is loaded and a user object exists, they shouldn't be on an auth page.
     if (!isUserLoading && user) {
       router.replace('/dashboard');
     }
   }, [user, isUserLoading, router]);
 
+  // While loading, or if the user is logged in (and about to be redirected), show a loader.
   if (isUserLoading || user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -27,5 +29,6 @@ export default function AuthLayout({
     );
   }
 
+  // If loading is finished and there's no user, show the auth page content (e.g., login form).
   return <>{children}</>;
 }

@@ -33,12 +33,12 @@ export default function LoginPage() {
         variant: 'destructive',
       });
     } else if (state?.status === 'success') {
-      // The redirect is now handled by the AuthLayout
+      // The redirect is now handled by the AuthLayout, but we can also push here to be sure.
       toast({
         title: 'Connexion réussie',
         description: 'Vous allez être redirigé...',
       });
-       // router.push is handled by the layout, but we can force it here as well
+       // Force the navigation to ensure user gets to the dashboard
       router.push('/dashboard');
     }
   }, [state, toast, router]);

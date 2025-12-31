@@ -41,6 +41,7 @@ export async function loginWithEmail(prevState: any, formData: FormData) {
     const firebaseApp = initializeFirebaseServer();
     const auth = getAuth(firebaseApp);
     await signInWithEmailAndPassword(auth, email, password);
+    // Revalidation is enough, client-side will handle redirect.
     revalidatePath('/');
     return { status: 'success', message: 'Connexion réussie' };
   } catch (e: any) {
