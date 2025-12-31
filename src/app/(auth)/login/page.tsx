@@ -61,12 +61,6 @@ export default function LoginPage() {
             </div>
             <SubmitButton />
           </form>
-          <div className="mt-4 text-center text-sm">
-            Vous n'avez pas de compte ?{' '}
-            <Link href="/signup" className="underline">
-              S'inscrire
-            </Link>
-          </div>
         </CardContent>
       </Card>
     </div>

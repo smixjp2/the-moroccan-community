@@ -65,9 +65,6 @@ export function Header() {
                 <Button variant="ghost" asChild>
                     <Link href="/login">Connexion</Link>
                 </Button>
-                <Button asChild>
-                    <Link href="/signup">Inscription</Link>
-                </Button>
             </div>
           )}
           <div className="flex md:hidden">
@@ -91,9 +88,6 @@ export function Header() {
                         <>
                             <Button variant="ghost" asChild>
                                 <Link href="/login">Connexion</Link>
-                            </Button>
-                            <Button asChild>
-                                <Link href="/signup">Inscription</Link>
                             </Button>
                         </>
                     )}
