@@ -25,7 +25,7 @@ const highlights = [
 ];
 
 function ProtectedCourseContent() {
-    const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ"; // Placeholder video
+    const videoUrl = "https://drive.google.com/file/d/1q2w3e4r5t6y7u8i9o0p/view?usp=sharing"; // Lien Google Drive de la vidéo
     return (
         <>
             <section className="py-16 bg-card">
@@ -135,20 +135,11 @@ function LoadingState() {
 
 export default function FormationBourseCasablancaPage() {
   const { user, isUserLoading } = useUser();
-  const firestore = getFirestore();
-
-  const enrollmentsQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    return query(
-      collection(firestore, `users/${user.uid}/courseEnrollments`),
-      where("courseId", "==", courseId)
-    );
-  }, [user, firestore]);
-
-  const { data: enrollments, isLoading: isEnrollmentsLoading } = useCollection(enrollmentsQuery);
-
-  const hasAccess = !!enrollments && enrollments.length > 0;
-  const isLoading = isUserLoading || isEnrollmentsLoading;
+  
+  // --- MODIFICATION TEMPORAIRE POUR TEST ---
+  // On simule que l'utilisateur a accès s'il est connecté.
+  const hasAccess = !!user; 
+  const isLoading = isUserLoading;
 
   return (
     <div className="bg-background">

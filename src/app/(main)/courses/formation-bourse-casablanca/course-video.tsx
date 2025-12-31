@@ -5,8 +5,19 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 // Helper function to convert Google Drive link to an embeddable format
 function getEmbeddableUrl(googleDriveUrl: string): string | null {
-  const regex = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=sharing/;
-  const match = googleDriveUrl.match(regex);
+  // Regex pour les deux formats d'URL Google Drive
+  const regex1 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=sharing/;
+  const regex2 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=drive_link/;
+  const regex3 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+
+
+  let match = googleDriveUrl.match(regex1);
+  if (!match) {
+    match = googleDriveUrl.match(regex2);
+  }
+   if (!match) {
+    match = googleDriveUrl.match(regex3);
+  }
 
   if (match && match[1]) {
     const fileId = match[1];
@@ -23,8 +34,8 @@ export function CourseVideo({ videoUrl }: { videoUrl: string }) {
 
     if (!embedUrl) {
         return (
-            <div className="w-full bg-muted rounded-lg flex items-center justify-center p-8">
-                <p className="text-destructive">Le format de l'URL de la vidéo est invalide.</p>
+            <div className="w-full bg-muted rounded-lg flex items-center justify-center p-8 aspect-[16/9]">
+                <p className="text-destructive text-center">L'URL de la vidéo Google Drive est invalide ou n'est pas dans un format reconnu.</p>
             </div>
         )
     }
