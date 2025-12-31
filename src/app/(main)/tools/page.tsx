@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calculator } from "lucide-react";
+import { ArrowRight, Calculator, PieChart } from "lucide-react";
 import type { Tool } from "@/lib/types";
 
 const tools: Tool[] = [
   {
-    id: "wealth-planner",
-    title: "Planificateur de Patrimoine",
-    description: "Projetez la croissance de votre patrimoine sur le long terme en fonction de votre épargne et de vos investissements.",
-    href: "/tools/wealth-planner",
-    icon: Calculator,
+    id: "budget-analyzer",
+    title: "Analyseur de Budget Mensuel",
+    description: "Analysez vos revenus et dépenses pour découvrir votre capacité d'épargne et d'investissement mensuelle.",
+    href: "/tools/budget-analyzer",
+    icon: PieChart,
     badge: "Nouveau"
   },
   {
@@ -19,7 +19,6 @@ const tools: Tool[] = [
     description: "Visualisez la puissance des intérêts composés et voyez comment votre capital peut fructifier avec le temps.",
     href: "/tools/compound-interest-simulator",
     icon: Calculator,
-    badge: "Nouveau"
   },
    {
     id: "dividend-yield-calculator",
@@ -27,7 +26,6 @@ const tools: Tool[] = [
     description: "Calculez le rendement de vos actions à dividendes et estimez vos revenus annuels.",
     href: "/tools/dividend-yield-calculator",
     icon: Calculator,
-    badge: "Nouveau"
   },
 ];
 
