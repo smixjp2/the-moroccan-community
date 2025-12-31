@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useUser } from '@/firebase';
+import { useUser, useCollection, useMemoFirebase } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -9,11 +10,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import type { Course } from '@/lib/types';
+import { collection, getFirestore } from 'firebase/firestore';
 
 
-const staticCourses: Course[] = [
+const allCourses: Course[] = [
   {
     id: "formation-bourse-casablanca",
     title: "De Zéro à Héros : La Formation Complète sur la Bourse de Casablanca",
@@ -24,7 +26,18 @@ const staticCourses: Course[] = [
     imageHint: PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse')?.imageHint || '',
     href: "/courses/formation-bourse-casablanca",
     isNew: true,
-  }
+  },
+  {
+    id: "formation-excel-power-bi",
+    title: "Excel & Power BI pour la Finance : de Débutant à Avancé",
+    description: "Maîtrisez Excel, Power Query et Power BI pour l'analyse de données financières. Une compétence très demandée, incluant un coaching carrière.",
+    level: "Tous Niveaux",
+    duration: "16 Heures",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'course-excel-power-bi')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'course-excel-power-bi')?.imageHint || '',
+    href: "/courses/formation-excel-power-bi",
+    isNew: true,
+  },
 ];
 
 
@@ -57,6 +70,17 @@ function CourseCard({ course }: { course: Course }) {
 export default function DashboardPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const firestore = getFirestore();
+
+  const enrollmentsQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return collection(firestore, `users/${user.uid}/courseEnrollments`);
+  }, [user, firestore]);
+  
+  const { data: enrollments, isLoading: areEnrollmentsLoading } = useCollection(enrollmentsQuery);
+
+  const enrolledCourseIds = new Set(enrollments?.map(e => e.courseId));
+  const userCourses = allCourses.filter(course => enrolledCourseIds.has(course.id));
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -64,7 +88,9 @@ export default function DashboardPage() {
     }
   }, [user, isUserLoading, router]);
 
-  if (isUserLoading || !user) {
+  const isLoading = isUserLoading || (user && areEnrollmentsLoading);
+
+  if (isLoading || !user) {
     return (
       <div className="container py-12">
         <Skeleton className="h-8 w-64 mb-4" />
@@ -91,13 +117,22 @@ export default function DashboardPage() {
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold font-headline mb-4">Mes Formations</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Pour l'instant, on affiche la formation statiquement.
-              Plus tard, on la listera depuis la base de données. */}
-          {staticCourses.map(course => (
-              <CourseCard key={course.id} course={course} />
-          ))}
-        </div>
+        {userCourses.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {userCourses.map(course => (
+                    <CourseCard key={course.id} course={course} />
+                ))}
+            </div>
+        ) : (
+            <Card className="flex flex-col items-center justify-center p-12 text-center">
+                <BookOpen className="h-16 w-16 text-muted-foreground mb-4" />
+                <h3 className="text-xl font-semibold font-headline">Vous n'êtes inscrit à aucune formation</h3>
+                <p className="text-muted-foreground mt-2">Explorez notre catalogue pour trouver la formation qui vous convient.</p>
+                <Button asChild className="mt-6">
+                    <Link href="/courses">Voir toutes les formations</Link>
+                </Button>
+            </Card>
+        )}
       </div>
     </div>
   );

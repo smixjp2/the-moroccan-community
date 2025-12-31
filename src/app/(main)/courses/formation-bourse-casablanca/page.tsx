@@ -135,11 +135,20 @@ function LoadingState() {
 
 export default function FormationBourseCasablancaPage() {
   const { user, isUserLoading } = useUser();
-  
-  // --- MODIFICATION TEMPORAIRE POUR TEST ---
-  // On simule que l'utilisateur a accès s'il est connecté.
-  const hasAccess = !!user; 
-  const isLoading = isUserLoading;
+  const firestore = getFirestore();
+
+  const enrollmentQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return query(
+      collection(firestore, `users/${user.uid}/courseEnrollments`),
+      where("courseId", "==", courseId)
+    );
+  }, [user, firestore]);
+
+  const { data: enrollments, isLoading: areEnrollmentsLoading } = useCollection(enrollmentQuery);
+
+  const isLoading = isUserLoading || (user && areEnrollmentsLoading);
+  const hasAccess = !!enrollments && enrollments.length > 0;
 
   return (
     <div className="bg-background">
@@ -189,4 +198,3 @@ export default function FormationBourseCasablancaPage() {
     </div>
   );
 }
-
