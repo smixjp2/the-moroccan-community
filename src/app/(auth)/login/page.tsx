@@ -33,7 +33,6 @@ export default function LoginPage() {
         variant: 'destructive',
       });
     } else if (state?.status === 'success') {
-      // The redirect is now handled by the AuthLayout, but we can also push here to be sure.
       toast({
         title: 'Connexion réussie',
         description: 'Vous allez être redirigé...',
