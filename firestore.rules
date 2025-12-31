@@ -1,0 +1,197 @@
+/**
+ * @file firestore.rules
+ * @description Firestore Security Rules for the Moroccan Analyst platform.
+ *
+ * @section Core Philosophy
+ * This ruleset enforces a strict security model that segregates public content from private user data.
+ * Publicly accessible content such as articles, courses, and product comparisons are read-only for all clients,
+ * ensuring that this data can only be modified through a trusted server-side environment (e.g., Admin SDK).
+ * All user-specific data, such as profiles and course enrollments, is strictly protected, allowing users to
+ * access and manage only their own information.
+ *
+ * @section Data Structure
+ * The data is organized into two main categories:
+ * 1. Top-Level Public Collections: Collections like `/articles`, `/courses`, and `/digitalProducts` store global,
+ *    read-only content accessible to everyone.
+ * 2. User-Scoped Private Collections: All data private to a user is stored under the `/users/{userId}` path.
+ *    This includes their profile and subcollections like `/courseEnrollments`, which track their activity.
+ *
+ * @section Key Security Decisions
+ * - User Isolation: A user can only ever read or write documents within their own data tree (`/users/{userId}`).
+ * - No User Listing: To protect user privacy, it is impossible for any client to list the documents in the root `/users` collection.
+ * - Public Content is Read-Only: All top-level content collections are configured to be read-only from the client. All content creation or management must be performed by a backend service.
+ * - Write-Only for Subscriptions: The `/newsletterSubscriptions` collection allows anyone to create a document (subscribe) but denies all read access to protect the privacy of subscriber emails.
+ *
+ * @section Denormalization for Authorization
+ * The ruleset leverages the data structure for simple and performant authorization. By placing a user's course
+ * enrollments in a subcollection (`/users/{userId}/courseEnrollments`), we can use fast, path-based ownership
+ * checks (`isOwner(userId)`) instead of slow and costly `get()` calls to other documents. This avoids complex
+ * lookups and makes security logic clear and efficient.
+ *
+ * @section Structural Segregation
+ * This ruleset clearly separates private, user-specific data (like `/users/{userId}/courseEnrollments`) from
+ * public, global data (like `/courses`). This segregation ensures that list operations on public collections
+ * are safe and performant, as they never risk exposing private documents that would otherwise need to be filtered out.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if a user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the currently authenticated user's UID matches the provided userId.
+     * This is the primary function for enforcing data ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Checks for ownership on an existing document. Used for safe updates and deletes.
+     * Ensures the operation targets a document that actually exists.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Public Read-Only Collections
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Allows public, read-only access to all articles.
+     * @path /articles/{articleId}
+     * @allow (get) Any user, signed in or not, can read an individual article.
+     * @deny (create) No client, signed in or not, can create a new article.
+     * @principle Public content should be read-only from the client to prevent unauthorized modification.
+     */
+    match /articles/{articleId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows public, read-only access to all course information.
+     * @path /courses/{courseId}
+     * @allow (get) Any user, signed in or not, can view course details.
+     * @deny (create) No client can create a new course. This must be done by an admin.
+     * @principle Public content should be read-only from the client.
+     */
+    match /courses/{courseId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows public, read-only access to checking account comparisons.
+     * @path /checkingAccountComparisons/{checkingAccountComparisonId}
+     * @allow (get) Any user can read checking account comparison data.
+     * @deny (update) No client can modify existing comparison data.
+     * @principle Public content should be read-only from the client.
+     */
+    match /checkingAccountComparisons/{checkingAccountComparisonId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows public, read-only access to brokerage account comparisons.
+     * @path /brokerageComparisons/{brokerageComparisonId}
+     * @allow (get) Any user can read brokerage comparison data.
+     * @deny (delete) No client can delete existing comparison data.
+     * @principle Public content should be read-only from the client.
+     */
+    match /brokerageComparisons/{brokerageComparisonId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows public, read-only access to digital products.
+     * @path /digitalProducts/{digitalProductId}
+     * @allow (list) Any user can list all available digital products.
+     * @deny (create) No client can create a new digital product entry.
+     * @principle Public content should be read-only from the client.
+     */
+    match /digitalProducts/{digitalProductId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    /**
+     * @description Allows public, read-only access to inspiration sources.
+     * @path /inspirationSources/{inspirationSourceId}
+     * @allow (get) Any user can read the inspiration source information.
+     * @deny (create) No client can add a new inspiration source.
+     * @principle Public content should be read-only from the client.
+     */
+    match /inspirationSources/{inspirationSourceId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Special Access Collections
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Allows anyone to subscribe to the newsletter but protects subscriber privacy.
+     * @path /newsletterSubscriptions/{newsletterSubscriptionId}
+     * @allow (create) Any user, signed in or not, can create a subscription document.
+     * @deny (get) No client can read any subscription data to protect email privacy.
+     * @deny (list) Listing subscriptions is denied to prevent data leaks.
+     * @principle Enforces a "write-only" pattern for sensitive data submission.
+     */
+    match /newsletterSubscriptions/{newsletterSubscriptionId} {
+      allow create: if true;
+      allow get, list, update, delete: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // User-Specific Data
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Manages user profile documents. Users can create, read, and update their own profile.
+     * @path /users/{userId}
+     * @allow (create) A new user can create their own profile document if their auth UID matches the document ID.
+     * @allow (get) A user can read their own profile.
+     * @deny (get) A user cannot read another user's profile.
+     * @deny (list) Listing all users is forbidden to protect user privacy.
+     * @principle Restricts access to a user's own data tree.
+     */
+    match /users/{userId} {
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+
+      /**
+       * @description Manages a user's course enrollments.
+       * @path /users/{userId}/courseEnrollments/{courseEnrollmentId}
+       * @allow (create) A user can create a course enrollment for themselves.
+       * @allow (list) A user can list all of their own course enrollments.
+       * @deny (get) A user cannot get the enrollment details of another user.
+       * @deny (delete) A user cannot delete another user's enrollment.
+       * @principle Enforces document ownership for writes and reads within a user's private subcollection.
+       */
+      match /courseEnrollments/{courseEnrollmentId} {
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow get, list: if isOwner(userId);
+        allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+        allow delete: if isExistingOwner(userId);
+      }
+    }
+  }
+}

@@ -1,0 +1,473 @@
+{
+  "entities": {
+    "Article": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Article",
+      "type": "object",
+      "description": "Represents an article on the Moroccan stock market.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Article entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the article."
+        },
+        "content": {
+          "type": "string",
+          "description": "The main content of the article."
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the article."
+        },
+        "publicationDate": {
+          "type": "string",
+          "description": "Date and time the article was published.",
+          "format": "date-time"
+        },
+        "sector": {
+          "type": "string",
+          "description": "The business sector that the article relates to."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "content",
+        "author",
+        "publicationDate"
+      ]
+    },
+    "Course": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course",
+      "type": "object",
+      "description": "Represents an investment course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Course entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the course content."
+        },
+        "instructor": {
+          "type": "string",
+          "description": "Name of the instructor."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the course."
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "URL of the video hosted on google drive."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "instructor",
+        "price",
+        "videoUrl"
+      ]
+    },
+    "CheckingAccountComparison": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CheckingAccountComparison",
+      "type": "object",
+      "description": "Represents a comparison of checking accounts offered by different banks.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CheckingAccountComparison entity."
+        },
+        "bankName": {
+          "type": "string",
+          "description": "Name of the bank."
+        },
+        "fees": {
+          "type": "string",
+          "description": "Fees associated with the account."
+        },
+        "accessibility": {
+          "type": "string",
+          "description": "Accessibility features of the account."
+        }
+      },
+      "required": [
+        "id",
+        "bankName",
+        "fees",
+        "accessibility"
+      ]
+    },
+    "BrokerageComparison": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BrokerageComparison",
+      "type": "object",
+      "description": "Represents a comparison of brokerage accounts offered by different banks.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the BrokerageComparison entity."
+        },
+        "bankName": {
+          "type": "string",
+          "description": "Name of the bank."
+        },
+        "feesAndCommissions": {
+          "type": "string",
+          "description": "Fees and commissions associated with the account."
+        },
+        "tradingPlatform": {
+          "type": "string",
+          "description": "Trading platform features."
+        },
+        "responsiveness": {
+          "type": "string",
+          "description": "Responsiveness of the brokerage."
+        }
+      },
+      "required": [
+        "id",
+        "bankName",
+        "feesAndCommissions",
+        "tradingPlatform",
+        "responsiveness"
+      ]
+    },
+    "DigitalProduct": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "DigitalProduct",
+      "type": "object",
+      "description": "Represents a digital product, such as a simulator or comparison list.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the DigitalProduct entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the digital product."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the digital product."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL where the digital product can be accessed."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of digital product (e.g., simulator, comparison list)."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "url",
+        "type"
+      ]
+    },
+    "NewsletterSubscription": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "NewsletterSubscription",
+      "type": "object",
+      "description": "Represents a subscription to the weekly newsletter.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the NewsletterSubscription entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the subscriber.",
+          "format": "email"
+        },
+        "subscribedDate": {
+          "type": "string",
+          "description": "Date and time the user subscribed.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "subscribedDate"
+      ]
+    },
+    "InspirationSource": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "InspirationSource",
+      "type": "object",
+      "description": "Represents a source of inspiration for the platform's content.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the InspirationSource entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the inspiration source."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL of the inspiration source."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the source and its relevance."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "url",
+        "description"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "registrationDate": {
+          "type": "string",
+          "description": "Date and time the user registered.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "registrationDate"
+      ]
+    },
+    "CourseEnrollment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CourseEnrollment",
+      "type": "object",
+      "description": "Represents a user's enrollment in a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CourseEnrollment entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N CourseEnrollment)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N CourseEnrollment)"
+        },
+        "enrollmentDate": {
+          "type": "string",
+          "description": "Date and time the user enrolled in the course.",
+          "format": "date-time"
+        },
+        "completionDate": {
+          "type": "string",
+          "description": "Date and time the user completed the course. Null if not completed.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "courseId",
+        "enrollmentDate"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/articles/{articleId}",
+        "definition": {
+          "entityName": "Article",
+          "schema": {
+            "$ref": "#/backend/entities/Article"
+          },
+          "description": "Stores articles related to the Moroccan stock market.",
+          "params": [
+            {
+              "name": "articleId",
+              "description": "Unique identifier for the article."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}",
+        "definition": {
+          "entityName": "Course",
+          "schema": {
+            "$ref": "#/backend/entities/Course"
+          },
+          "description": "Stores courses related to investing.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "Unique identifier for the course."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/checkingAccountComparisons/{checkingAccountComparisonId}",
+        "definition": {
+          "entityName": "CheckingAccountComparison",
+          "schema": {
+            "$ref": "#/backend/entities/CheckingAccountComparison"
+          },
+          "description": "Stores comparisons of checking accounts.",
+          "params": [
+            {
+              "name": "checkingAccountComparisonId",
+              "description": "Unique identifier for the checking account comparison."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/brokerageComparisons/{brokerageComparisonId}",
+        "definition": {
+          "entityName": "BrokerageComparison",
+          "schema": {
+            "$ref": "#/backend/entities/BrokerageComparison"
+          },
+          "description": "Stores comparisons of brokerage accounts.",
+          "params": [
+            {
+              "name": "brokerageComparisonId",
+              "description": "Unique identifier for the brokerage comparison."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/digitalProducts/{digitalProductId}",
+        "definition": {
+          "entityName": "DigitalProduct",
+          "schema": {
+            "$ref": "#/backend/entities/DigitalProduct"
+          },
+          "description": "Stores information about digital products like simulators.",
+          "params": [
+            {
+              "name": "digitalProductId",
+              "description": "Unique identifier for the digital product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/newsletterSubscriptions/{newsletterSubscriptionId}",
+        "definition": {
+          "entityName": "NewsletterSubscription",
+          "schema": {
+            "$ref": "#/backend/entities/NewsletterSubscription"
+          },
+          "description": "Stores newsletter subscription information.",
+          "params": [
+            {
+              "name": "newsletterSubscriptionId",
+              "description": "Unique identifier for the newsletter subscription."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/inspirationSources/{inspirationSourceId}",
+        "definition": {
+          "entityName": "InspirationSource",
+          "schema": {
+            "$ref": "#/backend/entities/InspirationSource"
+          },
+          "description": "Stores sources of inspiration for the platform.",
+          "params": [
+            {
+              "name": "inspirationSourceId",
+              "description": "Unique identifier for the inspiration source."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user information.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/courseEnrollments/{courseEnrollmentId}",
+        "definition": {
+          "entityName": "CourseEnrollment",
+          "schema": {
+            "$ref": "#/backend/entities/CourseEnrollment"
+          },
+          "description": "Stores user's enrollment information for a specific course.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            },
+            {
+              "name": "courseEnrollmentId",
+              "description": "Unique identifier for the course enrollment."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to host courses, articles, comparisons, and digital products for the Moroccan Analyst platform. It prioritizes authorization independence by avoiding hierarchical `get()` calls in security rules. Course access is managed via user-specific subcollections (`/users/{userId}/courseEnrollments/{courseEnrollmentId}`) to simplify ownership-based security and enable secure listing of a user's enrolled courses. Article, Comparison and Product data can be stored in root-level collections, since those are global datas. This segregation strategy (Structural Segregation) ensures each collection has a homogeneous security posture, simplifying rules. The use of path-based ownership for course enrollments enables robust and easily debuggable security rules. No custom claims are used, adhering to the DBAC principle, and rules are not used as filters (QAPs), ensuring secure list operations."
+  }
+}
