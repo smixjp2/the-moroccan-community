@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Scaling, LayoutDashboard } from "lucide-react";
+import { Menu, Scaling } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -37,17 +37,6 @@ export function Header() {
           {link.label}
         </Link>
       ))}
-       <Link
-          href="/dashboard"
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-primary",
-            pathname.startsWith('/dashboard')
-              ? "text-primary"
-              : "text-muted-foreground"
-          )}
-        >
-          Tableau de bord
-        </Link>
     </nav>
   );
 
@@ -78,11 +67,6 @@ export function Header() {
                   <span className="font-headline text-lg font-bold">The Moroccan Community</span>
                 </Link>
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
-                 <div className="mt-8 flex flex-col space-y-2">
-                    <Button asChild>
-                        <Link href="/dashboard">Tableau de bord</Link>
-                    </Button>
-                </div>
               </SheetContent>
             </Sheet>
           </div>
