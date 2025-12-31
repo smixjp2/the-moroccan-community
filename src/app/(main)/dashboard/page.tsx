@@ -72,6 +72,13 @@ export default function DashboardPage() {
   const router = useRouter();
   const firestore = getFirestore();
 
+  useEffect(() => {
+    // Wait until the loading is finished before checking for the user
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
+
   const enrollmentsQuery = useMemoFirebase(() => {
     if (!user) return null;
     return collection(firestore, `users/${user.uid}/courseEnrollments`);
@@ -82,20 +89,15 @@ export default function DashboardPage() {
   const enrolledCourseIds = new Set(enrollments?.map(e => e.courseId));
   const userCourses = allCourses.filter(course => enrolledCourseIds.has(course.id));
 
-  useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, isUserLoading, router]);
-
   const isLoading = isUserLoading || (user && areEnrollmentsLoading);
 
-  if (isLoading || !user) {
+  // Show a loading state while user auth is being confirmed
+  if (isUserLoading || !user) {
     return (
       <div className="container py-12">
-        <Skeleton className="h-8 w-64 mb-4" />
-        <Skeleton className="h-4 w-96 mb-8" />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h1 className="text-3xl font-bold font-headline">Bienvenue...</h1>
+        <p className="text-muted-foreground mt-2">Vérification de votre compte en cours...</p>
+         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card>
                 <Skeleton className="w-full aspect-video" />
                 <CardContent className="p-6">
@@ -117,7 +119,19 @@ export default function DashboardPage() {
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold font-headline mb-4">Mes Formations</h2>
-        {userCourses.length > 0 ? (
+        {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <Card>
+                    <Skeleton className="w-full aspect-video" />
+                    <CardContent className="p-6">
+                        <Skeleton className="h-6 w-3/4 mb-4" />
+                        <Skeleton className="h-4 w-full mb-2" />
+                        <Skeleton className="h-4 w-5/6 mb-4" />
+                        <Skeleton className="h-10 w-40" />
+                    </CardContent>
+                </Card>
+            </div>
+        ) : userCourses.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {userCourses.map(course => (
                     <CourseCard key={course.id} course={course} />
