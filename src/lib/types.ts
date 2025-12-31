@@ -1,3 +1,4 @@
+
 export type NavLink = {
   href: string;
   label: string;
@@ -23,6 +24,7 @@ export interface Course {
   duration: string;
   level: string;
   href: string;
+  isNew?: boolean;
 }
 
 export interface Resource {
@@ -65,3 +67,5 @@ export type Opcvm = {
         historicalNav: { date: string; value: number }[];
     };
 };
+
+    

@@ -1,10 +1,20 @@
+
+'use client';
+
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, BarChart, Target, Gift, Check } from "lucide-react";
+import { BookOpen, BarChart, Target, Gift, Check, Lock } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
+import { useUser, useCollection, useMemoFirebase } from "@/firebase";
+import { collection, query, where, getFirestore } from "firebase/firestore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { CourseVideo } from "./course-video";
 
+const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
 
 const highlights = [
@@ -14,7 +24,132 @@ const highlights = [
   { icon: Gift, text: "Accès à un groupe privé et des lives mensuels" },
 ];
 
+function ProtectedCourseContent() {
+    const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ"; // Placeholder video
+    return (
+        <>
+            <section className="py-16 bg-card">
+                 <div className="container">
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-8">Contenu de la formation</h2>
+                    <CourseVideo videoUrl={videoUrl} />
+                </div>
+            </section>
+
+             {/* Course For Who Section */}
+            <section className="py-16">
+                <div className="container grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold">À qui s'adresse cette formation ?</h2>
+                    <p className="mt-4 text-muted-foreground">
+                    Que vous soyez un débutant absolu ou un investisseur cherchant à se perfectionner sur le marché marocain, cette formation est faite pour vous.
+                    </p>
+                    <ul className="mt-6 space-y-4">
+                    <li className="flex items-start">
+                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
+                        <span><strong>Les débutants</strong> qui veulent investir leur premier dirham en bourse de manière intelligente.</span>
+                    </li>
+                    <li className="flex items-start">
+                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
+                        <span><strong>Les investisseurs intermédiaires</strong> qui souhaitent professionnaliser leur approche sur le marché marocain.</span>
+                    </li>
+                    <li className="flex items-start">
+                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
+                        <span>Ceux qui en ont marre de suivre des conseils génériques et veulent une <strong>analyse 100% adaptée au Maroc.</strong></span>
+                    </li>
+                    <li className="flex items-start">
+                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
+                        <span>Les <strong>futurs retraités</strong> qui veulent construire un portefeuille de dividendes solide.</span>
+                    </li>
+                    </ul>
+                </div>
+                <div>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="font-headline">Ce que vous saurez faire après la formation</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                            <p>✅ Analyser n'importe quelle action marocaine de A à Z.</p>
+                            <p>✅ Lire et comprendre les rapports financiers des entreprises cotées.</p>
+                            <p>✅ Construire et gérer un portefeuille diversifié et performant.</p>
+                            <p>✅ Utiliser les plateformes de courtage marocaines sans stress.</p>
+                            <p>✅ Éviter les erreurs coûteuses spécifiques au marché marocain.</p>
+                        </CardContent>
+                    </Card>
+                </div>
+                </div>
+            </section>
+
+                {/* CTA Final */}
+            <section className="py-20 text-center bg-card">
+                <div className="container">
+                <h2 className="font-headline text-3xl md:text-4xl font-bold">Vous avez accès !</h2>
+                <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                    Vous pouvez visionner le contenu de la formation et accéder à toutes les ressources.
+                </p>
+                <div className="mt-8">
+                    <CourseCurriculum />
+                </div>
+                </div>
+            </section>
+        </>
+    )
+}
+
+function AccessDeniedContent() {
+    return (
+         <section className="py-20 text-center">
+            <div className="container">
+                <Lock className="h-16 w-16 mx-auto text-primary mb-4" />
+                <h2 className="font-headline text-3xl md:text-4xl font-bold">Contenu Réservé aux Membres</h2>
+                <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                    Cette formation est accessible uniquement aux membres inscrits. Pour accéder au contenu, vous devez avoir un compte et avoir acheté cette formation.
+                </p>
+                <div className="mt-8 flex gap-4 justify-center">
+                    <Button asChild size="lg">
+                        <Link href="/login">Se Connecter</Link>
+                    </Button>
+                    <Button variant="secondary" size="lg" disabled>
+                        Acheter cette formation (Bientôt disponible)
+                    </Button>
+                </div>
+            </div>
+      </section>
+    )
+}
+
+function LoadingState() {
+    return (
+        <div className="container py-16">
+            <div className="space-y-4">
+                <Skeleton className="h-8 w-1/3 mx-auto" />
+                <Skeleton className="h-6 w-2/3 mx-auto" />
+            </div>
+             <div className="mt-12 space-y-4">
+                <Skeleton className="h-96 w-full" />
+                <Skeleton className="h-24 w-full" />
+            </div>
+        </div>
+    )
+}
+
+
 export default function FormationBourseCasablancaPage() {
+  const { user, isUserLoading } = useUser();
+  const firestore = getFirestore();
+
+  const enrollmentsQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return query(
+      collection(firestore, `users/${user.uid}/courseEnrollments`),
+      where("courseId", "==", courseId)
+    );
+  }, [user, firestore]);
+
+  const { data: enrollments, isLoading: isEnrollmentsLoading } = useCollection(enrollmentsQuery);
+
+  const hasAccess = !!enrollments && enrollments.length > 0;
+  const isLoading = isUserLoading || isEnrollmentsLoading;
+
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -58,62 +193,10 @@ export default function FormationBourseCasablancaPage() {
         </div>
       </section>
 
-      {/* Course For Who Section */}
-      <section className="py-16 bg-card">
-        <div className="container grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="font-headline text-3xl md:text-4xl font-bold">À qui s'adresse cette formation ?</h2>
-            <p className="mt-4 text-muted-foreground">
-              Que vous soyez un débutant absolu ou un investisseur cherchant à se perfectionner sur le marché marocain, cette formation est faite pour vous.
-            </p>
-            <ul className="mt-6 space-y-4">
-              <li className="flex items-start">
-                <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                <span><strong>Les débutants</strong> qui veulent investir leur premier dirham en bourse de manière intelligente.</span>
-              </li>
-              <li className="flex items-start">
-                <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                <span><strong>Les investisseurs intermédiaires</strong> qui souhaitent professionnaliser leur approche sur le marché marocain.</span>
-              </li>
-              <li className="flex items-start">
-                <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                <span>Ceux qui en ont marre de suivre des conseils génériques et veulent une <strong>analyse 100% adaptée au Maroc.</strong></span>
-              </li>
-               <li className="flex items-start">
-                <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                <span>Les <strong>futurs retraités</strong> qui veulent construire un portefeuille de dividendes solide.</span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <Card>
-                <CardHeader>
-                    <CardTitle className="font-headline">Ce que vous saurez faire après la formation</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                    <p>✅ Analyser n'importe quelle action marocaine de A à Z.</p>
-                    <p>✅ Lire et comprendre les rapports financiers des entreprises cotées.</p>
-                    <p>✅ Construire et gérer un portefeuille diversifié et performant.</p>
-                    <p>✅ Utiliser les plateformes de courtage marocaines sans stress.</p>
-                    <p>✅ Éviter les erreurs coûteuses spécifiques au marché marocain.</p>
-                </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-        {/* CTA Final */}
-       <section className="py-20 text-center">
-        <div className="container">
-          <h2 className="font-headline text-3xl md:text-4xl font-bold">Prêt à Devenir un Investisseur Averti ?</h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Ne laissez pas la complexité du marché vous intimider. Rejoignez la formation et prenez le contrôle de votre avenir financier.
-          </p>
-          <div className="mt-8">
-             <CourseCurriculum />
-          </div>
-        </div>
-      </section>
+      {isLoading ? <LoadingState /> : hasAccess ? <ProtectedCourseContent /> : <AccessDeniedContent />}
+      
     </div>
   );
 }
+
+    
