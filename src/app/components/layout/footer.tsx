@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Scaling, Instagram, Youtube, Loader2 } from "lucide-react";
+import { Instagram, Youtube, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
@@ -48,7 +49,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-                <Scaling className="h-6 w-6 text-primary" />
+                <Image src="/logo.svg" alt="The Moroccan Community Logo" width={24} height={24} />
                 <span className="font-headline text-lg font-bold">The Moroccan Community</span>
             </Link>
             <p className="text-muted-foreground text-sm">
