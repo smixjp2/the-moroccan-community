@@ -75,8 +75,14 @@
     {
       "id": "resource-3",
       "description": "Image for a free compound interest simulator.",
-      "imageUrl": "https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxleGNlbCUyMHNoZWV0fGVufDB8fHx8MTcyMjAwOTY3NHww&ixlib-rb-4.0.3&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxleGNlbCUyMHNoZWV0fGVufDB8fHx8MTcyMjAwOTY3NHww&ixlib=rb-4.0.3&q=80&w=1080",
       "imageHint": "excel sheet"
+    },
+    {
+      "id": "resource-guide-account",
+      "description": "Image for a guide on creating a brokerage account.",
+      "imageUrl": "https://images.unsplash.com/photo-1579642984417-0c00620f8e94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGd1aWRlfGVufDB8fHx8MTc2NzI1OTgzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "document guide"
     },
     {
       "id": "feature-articles",
@@ -87,7 +93,7 @@
     {
       "id": "feature-tools",
       "description": "Image for the tools feature card on the homepage.",
-      "imageUrl": "https://images.unsplash.com/photo-1581166418878-11f0dde922c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VhcnMlMjB0b29sc3xlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1581166418878-11f0dde922c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VhcnMlMjB0b29sc3xlbnwwfHx8fDE3NjY3MDQ5NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "gears tools"
     },
     {
@@ -99,7 +105,7 @@
     {
       "id": "private-community",
       "description": "Image for the private community section.",
-      "imageUrl": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzY2NzEzMjQyfDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzY2NzEzMjQyfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract background"
     }
   ]

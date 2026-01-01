@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,15 @@ import type { Resource } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const resources: Resource[] = [
+    {
+    id: "4",
+    title: "Guide : Créer un Compte-Titre à la Bourse de Casablanca",
+    description: "Un guide PDF étape par étape pour ouvrir votre compte-titre auprès d'une société de bourse marocaine et commencer à investir.",
+    price: "Gratuit",
+    href: "https://docs.google.com/uc?export=download&id=1bL4Yam2LfuJISP0_ExyigJyLpeeLhw7s",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageHint || '',
+  },
   {
     id: "3",
     title: "Simulateur d'Intérêts Composés (Excel)",
