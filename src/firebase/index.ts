@@ -11,11 +11,9 @@ export function initializeFirebase() {
     return getSdks(getApp());
   }
   
-  // In a production Firebase App Hosting environment, the config is automatically provided.
-  // In development, we must pass it explicitly.
-  const firebaseApp = process.env.NODE_ENV === 'production' 
-    ? initializeApp() 
-    : initializeApp(firebaseConfig);
+  // We always pass the config. In a production Firebase App Hosting environment,
+  // this config is ignored and the service's auto-provisioned config is used.
+  const firebaseApp = initializeApp(firebaseConfig);
 
   return getSdks(firebaseApp);
 }
