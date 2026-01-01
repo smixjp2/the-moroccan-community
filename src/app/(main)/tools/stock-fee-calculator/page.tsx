@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -7,15 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, ArrowUp, ArrowDown, Wallet, TrendingUp } from 'lucide-react';
-
-const BUY_FEE_RATE = 0.01; // 1%
-const SELL_FEE_RATE = 0.01; // 1%
+import { Info, ArrowUp, ArrowDown, Wallet, TrendingUp, Percent } from 'lucide-react';
 
 export default function StockFeeCalculatorPage() {
   const [buyPrice, setBuyPrice] = useState(100);
   const [sellPrice, setSellPrice] = useState(110);
   const [numberOfShares, setNumberOfShares] = useState(100);
+  const [buyFeeRate, setBuyFeeRate] = useState(1);
+  const [sellFeeRate, setSellFeeRate] = useState(1);
+  const [capitalGainsTaxRate, setCapitalGainsTaxRate] = useState(15);
   const [isCalculated, setIsCalculated] = useState(false);
 
   const {
@@ -24,28 +25,33 @@ export default function StockFeeCalculatorPage() {
     buyFee,
     sellFee,
     totalFees,
+    grossProfit,
+    capitalGainsTax,
     netProfit,
-    netProfitPercentage,
+    netRoi,
     breakEvenPrice,
   } = useMemo(() => {
     const buyP = Number(buyPrice) || 0;
     const sellP = Number(sellPrice) || 0;
     const shares = Number(numberOfShares) || 0;
+    const buyFeeR = (Number(buyFeeRate) || 0) / 100;
+    const sellFeeR = (Number(sellFeeRate) || 0) / 100;
+    const taxR = (Number(capitalGainsTaxRate) || 0) / 100;
 
     const initialCost = buyP * shares;
-    const bFee = initialCost * BUY_FEE_RATE;
+    const bFee = initialCost * buyFeeR;
     const totalBuy = initialCost + bFee;
 
-    const initialSellValue = sellP * shares;
-    const sFee = initialSellValue * SELL_FEE_RATE;
-    const totalSell = initialSellValue - sFee;
+    const sellValue = sellP * shares;
+    const sFee = sellValue * sellFeeR;
+    const totalSell = sellValue - sFee;
 
-    const profit = totalSell - totalBuy;
-    const profitPercentage = initialCost > 0 ? (profit / totalBuy) * 100 : 0;
+    const gProfit = totalSell - totalBuy;
+    const tax = gProfit > 0 ? gProfit * taxR : 0;
+    const nProfit = gProfit - tax;
+    const roi = totalBuy > 0 ? (nProfit / totalBuy) * 100 : 0;
     
-    // P_vente * N * (1 - Taux_vente) = P_achat * N * (1 + Taux_achat)
-    // P_vente = P_achat * (1 + Taux_achat) / (1 - Taux_vente)
-    const bePrice = buyP * (1 + BUY_FEE_RATE) / (1 - SELL_FEE_RATE);
+    const bePrice = buyP * (1 + buyFeeR) / (1 - sellFeeR);
 
     return {
       totalBuyCost: totalBuy,
@@ -53,11 +59,13 @@ export default function StockFeeCalculatorPage() {
       buyFee: bFee,
       sellFee: sFee,
       totalFees: bFee + sFee,
-      netProfit: profit,
-      netProfitPercentage: profitPercentage,
+      grossProfit: gProfit,
+      capitalGainsTax: tax,
+      netProfit: nProfit,
+      netRoi: roi,
       breakEvenPrice: bePrice,
     };
-  }, [buyPrice, sellPrice, numberOfShares]);
+  }, [buyPrice, sellPrice, numberOfShares, buyFeeRate, sellFeeRate, capitalGainsTaxRate]);
 
   const handleCalculate = () => {
     setIsCalculated(true);
@@ -66,9 +74,9 @@ export default function StockFeeCalculatorPage() {
   return (
     <div className="container py-12 md:py-16">
       <div className="text-center max-w-3xl mx-auto mb-8">
-        <h1 className="font-headline text-4xl font-bold md:text-5xl">Calculateur de Frais de Transaction</h1>
+        <h1 className="font-headline text-4xl font-bold md:text-5xl">Calculateur de Frais & Plus-Value</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Simulez l'impact des frais de courtage sur le profit de vos transactions d'achat et de vente d'actions.
+          Simulez l'impact des frais de courtage et de l'impôt sur la plus-value sur le profit de vos transactions d'achat et de vente d'actions.
         </p>
       </div>
 
@@ -83,11 +91,12 @@ export default function StockFeeCalculatorPage() {
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-4 text-muted-foreground">
-                <p>Ce simulateur vous aide à comprendre le coût réel de vos opérations en bourse. Nous utilisons une estimation de <strong>1% de frais pour l'achat et 1% pour la vente.</strong></p>
+                <p>Ce simulateur vous aide à comprendre le coût réel et le profit net de vos opérations en bourse.</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li><strong>Prix d'achat par action :</strong> Le prix auquel vous achetez une action.</li>
-                  <li><strong>Prix de vente par action :</strong> Le prix auquel vous prévoyez de vendre cette action.</li>
-                  <li><strong>Nombre d'actions :</strong> La quantité d'actions concernées par la transaction.</li>
+                  <li><strong>Prix d'achat/vente :</strong> Les prix unitaires de l'action.</li>
+                  <li><strong>Nombre d'actions :</strong> La quantité d'actions concernées.</li>
+                  <li><strong>Frais de courtage (%) :</strong> Entrez le pourcentage de commission de votre courtier pour l'achat et la vente.</li>
+                  <li><strong>Impôt sur la plus-value (%) :</strong> Au Maroc, cet impôt (TPPU) est généralement de 15% sur le gain net.</li>
                 </ul>
                 <p>Cliquez sur "Calculer" pour voir la simulation détaillée.</p>
               </div>
@@ -115,6 +124,20 @@ export default function StockFeeCalculatorPage() {
                 <Label htmlFor="number-of-shares">Nombre d'actions</Label>
                 <Input id="number-of-shares" type="number" value={numberOfShares} onChange={(e) => setNumberOfShares(Number(e.target.value))} />
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="buy-fee">Frais achat (%)</Label>
+                  <Input id="buy-fee" type="number" value={buyFeeRate} onChange={(e) => setBuyFeeRate(Number(e.target.value))} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sell-fee">Frais vente (%)</Label>
+                  <Input id="sell-fee" type="number" value={sellFeeRate} onChange={(e) => setSellFeeRate(Number(e.target.value))} />
+                </div>
+              </div>
+               <div className="space-y-2">
+                  <Label htmlFor="tax-rate">Impôt plus-value (%)</Label>
+                  <Input id="tax-rate" type="number" value={capitalGainsTaxRate} onChange={(e) => setCapitalGainsTaxRate(Number(e.target.value))} />
+                </div>
               <Button onClick={handleCalculate} className="w-full">Calculer</Button>
             </CardContent>
           </Card>
@@ -148,7 +171,7 @@ export default function StockFeeCalculatorPage() {
                         </CardHeader>
                         <CardContent className="p-2 space-y-2 text-sm">
                             <div className="flex justify-between"><span>Coût initial :</span> <strong>{formatCurrency(buyPrice * numberOfShares)}</strong></div>
-                            <div className="flex justify-between"><span>Frais d'achat (1%) :</span> <strong>{formatCurrency(buyFee)}</strong></div>
+                            <div className="flex justify-between"><span>Frais d'achat ({buyFeeRate}%) :</span> <strong>{formatCurrency(buyFee)}</strong></div>
                             <div className="flex justify-between border-t pt-2 mt-2"><span>Coût Total d'Achat :</span> <strong className="text-lg">{formatCurrency(totalBuyCost)}</strong></div>
                         </CardContent>
                     </Card>
@@ -162,8 +185,8 @@ export default function StockFeeCalculatorPage() {
                         </CardHeader>
                          <CardContent className="p-2 space-y-2 text-sm">
                             <div className="flex justify-between"><span>Valeur de vente :</span> <strong>{formatCurrency(sellPrice * numberOfShares)}</strong></div>
-                            <div className="flex justify-between"><span>Frais de vente (1%) :</span> <strong>{formatCurrency(sellFee)}</strong></div>
-                            <div className="flex justify-between border-t pt-2 mt-2"><span>Montant Net Reçu :</span> <strong className="text-lg">{formatCurrency(totalSellValue)}</strong></div>
+                            <div className="flex justify-between"><span>Frais de vente ({sellFeeRate}%) :</span> <strong>{formatCurrency(sellFee)}</strong></div>
+                            <div className="flex justify-between border-t pt-2 mt-2"><span>Montant Brut Reçu :</span> <strong className="text-lg">{formatCurrency(totalSellValue + sellFee)}</strong></div>
                         </CardContent>
                     </Card>
                   </div>
@@ -175,26 +198,32 @@ export default function StockFeeCalculatorPage() {
                     <CardTitle>Résultat Net et Impact des Frais</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                         <div className="p-4 rounded-lg bg-secondary">
                             <Wallet className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">Total des Frais</p>
-                            <p className="text-2xl font-bold">{formatCurrency(totalFees)}</p>
+                            <p className="text-sm text-muted-foreground">Total Frais Courtage</p>
+                            <p className="text-xl font-bold">{formatCurrency(totalFees)}</p>
+                        </div>
+                        <div className="p-4 rounded-lg bg-secondary">
+                           <Percent className="h-8 w-8 text-destructive mx-auto mb-2" />
+                            <p className="text-sm text-muted-foreground">Impôt Plus-Value</p>
+                            <p className="text-xl font-bold text-destructive">{formatCurrency(capitalGainsTax)}</p>
                         </div>
                          <div className={`p-4 rounded-lg ${netProfit >= 0 ? "bg-green-100 dark:bg-green-900/20" : "bg-red-100 dark:bg-red-900/20"}`}>
                              <TrendingUp className={`h-8 w-8 mx-auto mb-2 ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`} />
-                            <p className="text-sm text-muted-foreground">Profit / Perte Net(te)</p>
-                            <p className={`text-2xl font-bold ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}>{formatCurrency(netProfit)}</p>
+                            <p className="text-sm text-muted-foreground">Profit / Perte Net</p>
+                            <p className={`text-xl font-bold ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}>{formatCurrency(netProfit)}</p>
                         </div>
                         <div className={`p-4 rounded-lg ${netProfit >= 0 ? "bg-green-100 dark:bg-green-900/20" : "bg-red-100 dark:bg-red-900/20"}`}>
                              <TrendingUp className={`h-8 w-8 mx-auto mb-2 ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`} />
                             <p className="text-sm text-muted-foreground">Rendement Net</p>
-                             <p className={`text-2xl font-bold ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}>{netProfitPercentage.toFixed(2)}%</p>
+                             <p className={`text-xl font-bold ${netProfit >= 0 ? "text-green-600" : "text-red-600"}`}>{netRoi.toFixed(2)}%</p>
                         </div>
                     </div>
                     <div className="mt-6 border-t pt-4 text-sm text-muted-foreground">
-                        <p>Pour cette opération, les frais représentent <strong>{(totalFees / totalBuyCost * 100).toFixed(2)}%</strong> de votre investissement initial.</p>
-                        <p className="mt-2">Le prix de votre action doit atteindre <strong>{formatCurrency(breakEvenPrice)}</strong> juste pour couvrir les frais d'achat et de vente. C'est votre seuil de rentabilité.</p>
+                        <p>
+                          Pour que votre investissement soit rentable, le prix de l'action doit dépasser le seuil de rentabilité de <strong>{formatCurrency(breakEvenPrice)}</strong> juste pour couvrir les frais de courtage (avant impôt).
+                        </p>
                     </div>
                 </CardContent>
               </Card>
