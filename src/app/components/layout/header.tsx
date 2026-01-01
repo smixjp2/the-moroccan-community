@@ -46,9 +46,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-6 flex items-center gap-2">
-          <Image src="/logo.svg" alt="The Moroccan Community Logo" width={24} height={24} />
-          <span className="font-headline text-lg font-bold">The Moroccan Community</span>
+        <Link href="/" className="mr-6 flex items-center">
+          <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={24} priority />
         </Link>
 
         <div className="hidden md:flex flex-1 items-center justify-center">
@@ -66,8 +65,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
-                  <Image src="/logo.svg" alt="The Moroccan Community Logo" width={24} height={24} />
-                  <span className="font-headline text-lg font-bold">The Moroccan Community</span>
+                  <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={24} />
                 </Link>
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
               </SheetContent>
