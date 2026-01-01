@@ -41,7 +41,7 @@ const staticCourses: Course[] = [
     duration: "4 Semaines",
     imageUrl: PlaceHolderImages.find(p => p.id === 'course-1')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'course-1')?.imageHint || '',
-    href: "#",
+    href: "/courses/premier-salaire",
     isNew: false,
   },
 ];

@@ -80,6 +80,41 @@
         "price"
       ]
     },
+    "FirstSalaryCourse": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FirstSalaryCourse",
+      "type": "object",
+      "description": "Represents the 'How to Invest Your First Salary' course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FirstSalaryCourse entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the course content."
+        },
+        "instructor": {
+          "type": "string",
+          "description": "Name of the instructor."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the course."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "instructor",
+        "price"
+      ]
+    },
     "CheckingAccountComparison": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "CheckingAccountComparison",
@@ -352,6 +387,22 @@
         }
       },
       {
+        "path": "/courses/{courseId}/firstSalary",
+        "definition": {
+          "entityName": "FirstSalaryCourse",
+          "schema": {
+            "$ref": "#/backend/entities/FirstSalaryCourse"
+          },
+          "description": "Stores information about the 'How to Invest Your First Salary' course.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "Unique identifier for the course, inherited from the parent path."
+            }
+          ]
+        }
+      },
+      {
         "path": "/checkingAccountComparisons/{checkingAccountComparisonId}",
         "definition": {
           "entityName": "CheckingAccountComparison",
@@ -471,5 +522,3 @@
     "reasoning": "The Firestore structure is designed to host courses, articles, comparisons, and digital products for the Moroccan Analyst platform. It prioritizes authorization independence by avoiding hierarchical `get()` calls in security rules. Course access is managed via user-specific subcollections (`/users/{userId}/courseEnrollments/{courseEnrollmentId}`) to simplify ownership-based security and enable secure listing of a user's enrolled courses. Article, Comparison and Product data can be stored in root-level collections, since those are global datas. This segregation strategy (Structural Segregation) ensures each collection has a homogeneous security posture, simplifying rules. The use of path-based ownership for course enrollments enables robust and easily debuggable security rules. No custom claims are used, adhering to the DBAC principle, and rules are not used as filters (QAPs), ensuring secure list operations."
   }
 }
-
-    
