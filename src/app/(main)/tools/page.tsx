@@ -1,17 +1,24 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calculator, PieChart, Home, Percent } from "lucide-react";
+import { ArrowRight, Calculator, PieChart, Home, Percent, Library } from "lucide-react";
 import type { Tool } from "@/lib/types";
 
 const tools: Tool[] = [
+   {
+    id: "opcvm-comparator",
+    title: "Comparateur d'OPCVM",
+    description: "Explorez, filtrez et comparez les fonds d'investissement (OPCVM) marocains pour trouver celui qui correspond à vos objectifs.",
+    href: "/tools/opcvm-comparator",
+    icon: Library,
+    badge: "Nouveau"
+  },
   {
     id: "budget-analyzer",
     title: "Analyseur de Budget Mensuel",
     description: "Analysez vos revenus et dépenses pour découvrir votre capacité d'épargne et d'investissement mensuelle.",
     href: "/tools/budget-analyzer",
     icon: PieChart,
-    badge: "Nouveau"
   },
   {
     id: "compound-interest-simulator",
