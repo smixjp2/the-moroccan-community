@@ -5,7 +5,7 @@ import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, BarChart, Target, Gift, Check } from "lucide-react";
+import { BookOpen, BarChart, Target, Gift, Check, Clock } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
 import { CourseVideo } from "./course-video";
 
@@ -20,7 +20,6 @@ const highlights = [
 ];
 
 function ProtectedCourseContent() {
-    const videoUrl = "https://drive.google.com/file/d/1_9Vd5T_1a2b3c4d5e6f7g8h9i0j/view?usp=sharing"; // Lien Google Drive de la vidéo
     return (
         <>
              {/* Course For Who Section */}
@@ -63,19 +62,6 @@ function ProtectedCourseContent() {
                             <p>✅ Éviter les erreurs coûteuses spécifiques au marché marocain.</p>
                         </CardContent>
                     </Card>
-                </div>
-                </div>
-            </section>
-
-                {/* CTA Final */}
-            <section className="py-20 text-center bg-card">
-                <div className="container">
-                <h2 className="font-headline text-3xl md:text-4xl font-bold">Vous avez accès !</h2>
-                <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                    Vous pouvez visionner le contenu de la formation et accéder à toutes les ressources.
-                </p>
-                <div className="mt-8">
-                    <CourseCurriculum />
                 </div>
                 </div>
             </section>

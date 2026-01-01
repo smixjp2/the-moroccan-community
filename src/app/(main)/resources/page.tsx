@@ -23,8 +23,8 @@ const resources: Resource[] = [
     description: "دليل PDF خطوة بخطوة لفتح حساب الأوراق المالية الخاص بك في المغرب والبدء في الاستثمار.",
     price: "Gratuit",
     href: "https://docs.google.com/uc?export=download&id=1SJMxRYWXLN84R-ELkFZcc_-QcqwEJZYY",
-    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageUrl || '',
-    imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageHint || '',
+    imageUrl: "https://images.unsplash.com/photo-1590402494811-8ffd243345b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhcmFiaWMlMjBkb2N1bWVudHxlbnwwfHx8fDE3MjI0NzEyMDZ8MA&ixlib=rb-4.0.3&q=80&w=1080",
+    imageHint: "arabic document",
   },
   {
     id: "3",
