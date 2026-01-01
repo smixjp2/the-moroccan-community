@@ -42,20 +42,24 @@ export default function StockFeeCalculatorPage() {
     const bFee = initialCost * buyFeeR;
     const totalBuy = initialCost + bFee;
 
-    const sellValue = sellP * shares;
-    const sFee = sellValue * sellFeeR;
-    const totalSell = sellValue - sFee;
+    const grossSellValue = sellP * shares;
+    const sFee = grossSellValue * sellFeeR;
+    const netSell = grossSellValue - sFee;
 
-    const gProfit = totalSell - totalBuy;
+    const gProfit = netSell - totalBuy;
     const tax = gProfit > 0 ? gProfit * taxR : 0;
     const nProfit = gProfit - tax;
     const roi = totalBuy > 0 ? (nProfit / totalBuy) * 100 : 0;
     
-    const bePrice = buyP * (1 + buyFeeR) / (1 - sellFeeR);
+    // bePrice * shares - (bePrice * shares * sellFeeR) = buyP * shares + (buyP * shares * buyFeeR)
+    // bePrice * shares * (1 - sellFeeR) = buyP * shares * (1 + buyFeeR)
+    // bePrice = buyP * (1 + buyFeeR) / (1 - sellFeeR)
+    const bePrice = totalBuy > 0 ? buyP * (1 + buyFeeR) / (1 - sellFeeR) : 0;
+
 
     return {
       totalBuyCost: totalBuy,
-      totalSellValue: totalSell,
+      totalSellValue: netSell,
       buyFee: bFee,
       sellFee: sFee,
       totalFees: bFee + sFee,
@@ -184,9 +188,9 @@ export default function StockFeeCalculatorPage() {
                             </div>
                         </CardHeader>
                          <CardContent className="p-2 space-y-2 text-sm">
-                            <div className="flex justify-between"><span>Valeur de vente :</span> <strong>{formatCurrency(sellPrice * numberOfShares)}</strong></div>
-                            <div className="flex justify-between"><span>Frais de vente ({sellFeeRate}%) :</span> <strong>{formatCurrency(sellFee)}</strong></div>
-                            <div className="flex justify-between border-t pt-2 mt-2"><span>Montant Brut Reçu :</span> <strong className="text-lg">{formatCurrency(totalSellValue + sellFee)}</strong></div>
+                            <div className="flex justify-between"><span>Valeur de vente brute :</span> <strong>{formatCurrency(sellPrice * numberOfShares)}</strong></div>
+                            <div className="flex justify-between"><span>Frais de vente ({sellFeeRate}%) :</span> <strong className="text-destructive">-{formatCurrency(sellFee)}</strong></div>
+                            <div className="flex justify-between border-t pt-2 mt-2"><span>Montant Net Reçu :</span> <strong className="text-lg">{formatCurrency(totalSellValue)}</strong></div>
                         </CardContent>
                     </Card>
                   </div>
@@ -235,3 +239,5 @@ export default function StockFeeCalculatorPage() {
     </div>
   );
 }
+
+    
