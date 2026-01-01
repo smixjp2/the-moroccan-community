@@ -2,58 +2,17 @@
 'use client';
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
-// Helper function to convert Google Drive link to an embeddable format
-function getEmbeddableUrl(googleDriveUrl: string): string | null {
-  // Regex pour les deux formats d'URL Google Drive
-  const regex1 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=sharing/;
-  const regex2 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=drive_link/;
-  const regex3 = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
-
-
-  let match = googleDriveUrl.match(regex1);
-  if (!match) {
-    match = googleDriveUrl.match(regex2);
-  }
-   if (!match) {
-    match = googleDriveUrl.match(regex3);
-  }
-
-  if (match && match[1]) {
-    const fileId = match[1];
-    return `https://drive.google.com/file/d/${fileId}/preview`;
-  }
-  
-  // Return null or a fallback URL if the format is not recognized
-  return null; 
-}
-
+import { Video } from "lucide-react";
 
 export function CourseVideo({ videoUrl }: { videoUrl: string }) {
-    const embedUrl = getEmbeddableUrl(videoUrl);
-
-    if (!embedUrl) {
-        return (
-            <div className="w-full bg-muted rounded-lg flex items-center justify-center p-8 aspect-[16/9]">
-                <p className="text-destructive text-center">L'URL de la vidéo Google Drive est invalide ou n'est pas dans un format reconnu.</p>
-            </div>
-        )
-    }
-  
+  // Le lecteur vidéo est temporairement remplacé par un placeholder.
   return (
     <div className="w-full max-w-4xl mx-auto">
-        <AspectRatio ratio={16 / 9} className="bg-muted rounded-lg overflow-hidden shadow-lg">
-            <iframe
-                src={embedUrl}
-                title="Course Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-            ></iframe>
-        </AspectRatio>
+      <AspectRatio ratio={16 / 9} className="bg-muted rounded-lg overflow-hidden shadow-lg flex flex-col items-center justify-center">
+        <Video className="h-16 w-16 text-muted-foreground mb-4" />
+        <p className="text-lg font-semibold text-muted-foreground">Vidéo de formation</p>
+        <p className="text-sm text-muted-foreground">Le contenu sera bientôt disponible ici.</p>
+      </AspectRatio>
     </div>
   );
 }
-
-    
