@@ -18,7 +18,7 @@ function SubmitButton() {
     );
 }
 
-export function Footer() {
+export function Footer({ lang }: { lang: string }) {
   const { toast } = useToast();
   const [state, formAction] = useActionState(subscribeToNewsletter, {
     message: "",
@@ -47,7 +47,7 @@ export function Footer() {
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href={`/${lang}`} className="flex items-center gap-2">
                 <Scaling className="h-6 w-6 text-primary" />
                 <span className="font-headline text-lg font-bold">The Moroccan Community</span>
             </Link>

@@ -2,6 +2,7 @@
 export type NavLink = {
   href: string;
   label: string;
+  path: string;
 };
 
 export interface Article {

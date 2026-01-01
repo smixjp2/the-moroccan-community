@@ -9,41 +9,47 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
 
-const navLinks: NavLink[] = [
-  { href: "/", label: "Accueil" },
-  { href: "/articles", label: "Articles" },
-  { href: "/courses", label: "Cours" },
-  { href: "/tools", label: "Outils" },
-  { href: "/resources", label: "Ressources" },
-  { href: "/contact", label: "Contact" },
+const baseNavLinks: Omit<NavLink, 'href'>[] = [
+  { label: "Accueil", path: "" },
+  { label: "Articles", path: "/articles" },
+  { label: "Cours", path: "/courses" },
+  { label: "Outils", path: "/tools" },
+  { label: "Ressources", path: "/resources" },
+  { label: "Contact", path: "/contact" },
 ];
 
-export function Header() {
+export function Header({ lang }: { lang: string }) {
   const pathname = usePathname();
+
+  const navLinks: NavLink[] = baseNavLinks.map(link => ({
+      ...link,
+      href: `/${lang}${link.path || '/'}`,
+  }));
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-4 lg:gap-6", className)}>
-      {navLinks.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-primary",
-            (pathname.startsWith(link.href) && link.href !== "/") || pathname === link.href
-              ? "text-primary"
-              : "text-muted-foreground"
-          )}
-        >
-          {link.label}
-        </Link>
-      ))}
+      {navLinks.map((link) => {
+        const isActive = link.path === "" ? pathname === `/${lang}` : pathname.startsWith(link.href)
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary",
+              isActive ? "text-primary" : "text-muted-foreground"
+            )}
+          >
+            {link.label}
+          </Link>
+        )
+      })}
     </nav>
   );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-6 flex items-center gap-2">
+        <Link href={`/${lang}`} className="mr-6 flex items-center gap-2">
           <Scaling className="h-6 w-6 text-primary" />
           <span className="font-headline text-lg font-bold">The Moroccan Community</span>
         </Link>
@@ -62,7 +68,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
-                <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
+                <Link href={`/${lang}`} className="mr-6 flex items-center gap-2 mb-6">
                   <Scaling className="h-6 w-6 text-primary" />
                   <span className="font-headline text-lg font-bold">The Moroccan Community</span>
                 </Link>
