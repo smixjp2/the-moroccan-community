@@ -23,13 +23,6 @@ function ProtectedCourseContent() {
     const videoUrl = "https://drive.google.com/file/d/1_9Vd5T_1a2b3c4d5e6f7g8h9i0j/view?usp=sharing"; // Lien Google Drive de la vidéo
     return (
         <>
-            <section className="py-16 bg-card">
-                 <div className="container">
-                    <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-8">Contenu de la formation</h2>
-                    <CourseVideo videoUrl={videoUrl} />
-                </div>
-            </section>
-
              {/* Course For Who Section */}
             <section className="py-16">
                 <div className="container grid md:grid-cols-2 gap-12 items-center">
