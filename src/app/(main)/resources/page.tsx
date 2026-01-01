@@ -66,16 +66,18 @@ export default function ResourcesPage() {
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {resources.map((resource) => (
-          <Card key={resource.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <Card key={resource.id} className="flex flex-col overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
              <CardHeader className="p-0">
-                <Image
-                    src={resource.imageUrl}
-                    alt={resource.title}
-                    data-ai-hint={resource.imageHint}
-                    width={600}
-                    height={400}
-                    className="object-cover w-full h-auto aspect-video"
-                />
+                <div className="aspect-video overflow-hidden">
+                  <Image
+                      src={resource.imageUrl}
+                      alt={resource.title}
+                      data-ai-hint={resource.imageHint}
+                      width={600}
+                      height={400}
+                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
             </CardHeader>
             <CardContent className="p-6 flex flex-col flex-1">
               <CardTitle className="font-headline text-2xl mb-2" dir={resource.id === '5' ? 'rtl' : 'ltr'}>{resource.title}</CardTitle>
