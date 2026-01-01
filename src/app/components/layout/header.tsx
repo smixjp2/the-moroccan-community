@@ -9,8 +9,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
 
-const baseNavLinks: Omit<NavLink, 'href'>[] = [
-  { label: "Accueil", path: "" },
+const navLinks: Omit<NavLink, "href">[] = [
+  { label: "Accueil", path: "/" },
   { label: "Articles", path: "/articles" },
   { label: "Cours", path: "/courses" },
   { label: "Outils", path: "/tools" },
@@ -18,22 +18,18 @@ const baseNavLinks: Omit<NavLink, 'href'>[] = [
   { label: "Contact", path: "/contact" },
 ];
 
-export function Header({ lang }: { lang: string }) {
+export function Header() {
   const pathname = usePathname();
-
-  const navLinks: NavLink[] = baseNavLinks.map(link => ({
-      ...link,
-      href: `/${lang}${link.path || '/'}`,
-  }));
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-4 lg:gap-6", className)}>
       {navLinks.map((link) => {
-        const isActive = link.path === "" ? pathname === `/${lang}` : pathname.startsWith(link.href)
+        const href = link.path;
+        const isActive = (href === "/" && pathname === href) || (href !== "/" && pathname.startsWith(href));
         return (
           <Link
-            key={link.href}
-            href={link.href}
+            key={href}
+            href={href}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
               isActive ? "text-primary" : "text-muted-foreground"
@@ -49,7 +45,7 @@ export function Header({ lang }: { lang: string }) {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href={`/${lang}`} className="mr-6 flex items-center gap-2">
+        <Link href="/" className="mr-6 flex items-center gap-2">
           <Scaling className="h-6 w-6 text-primary" />
           <span className="font-headline text-lg font-bold">The Moroccan Community</span>
         </Link>
@@ -68,7 +64,7 @@ export function Header({ lang }: { lang: string }) {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
-                <Link href={`/${lang}`} className="mr-6 flex items-center gap-2 mb-6">
+                <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
                   <Scaling className="h-6 w-6 text-primary" />
                   <span className="font-headline text-lg font-bold">The Moroccan Community</span>
                 </Link>
