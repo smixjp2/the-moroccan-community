@@ -17,6 +17,15 @@ const resources: Resource[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageHint || '',
   },
+   {
+    id: "5",
+    title: "كيفية فتح حساب (Compte-Titres) في بورصة الدار البيضاء",
+    description: "دليل PDF خطوة بخطوة لفتح حساب الأوراق المالية الخاص بك في المغرب والبدء في الاستثمار.",
+    price: "Gratuit",
+    href: "https://docs.google.com/uc?export=download&id=1SJMxRYWXLN84R-ELkFZcc_-QcqwEJZYY",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageHint || '',
+  },
   {
     id: "3",
     title: "Simulateur d'Intérêts Composés (Excel)",
@@ -71,8 +80,8 @@ export default function ResourcesPage() {
                 </div>
             </CardHeader>
             <CardContent className="p-6 flex flex-col flex-1">
-              <CardTitle className="font-headline text-2xl mb-2">{resource.title}</CardTitle>
-              <CardDescription className="mb-4 flex-1">{resource.description}</CardDescription>
+              <CardTitle className="font-headline text-2xl mb-2" dir={resource.id === '5' ? 'rtl' : 'ltr'}>{resource.title}</CardTitle>
+              <CardDescription className="mb-4 flex-1" dir={resource.id === '5' ? 'rtl' : 'ltr'}>{resource.description}</CardDescription>
               <div className="flex justify-between items-center mt-4">
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
                 <Button asChild className="font-bold" disabled={resource.price !== 'Gratuit'}>

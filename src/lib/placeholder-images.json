@@ -39,7 +39,7 @@
     {
       "id": "article-6",
       "description": "Image for an article about the tourism sector.",
-      "imageUrl": "https://images.unsplash.com/photo-1597115793997-06eb0c3cfe24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b3VyaXNtJTIwdHJhdmVsfGVufDB8fHx8MTc2NjkxODAwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1597115793997-06eb0c3cfe24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0b3VyaXNtJTIwdHJhdmVsfGVufDB8fHx8fDE3NjY5MTgwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "tourism travel"
     },
     {
@@ -83,6 +83,12 @@
       "description": "Image for a guide on creating a brokerage account.",
       "imageUrl": "https://images.unsplash.com/photo-1579642984417-0c00620f8e94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGd1aWRlfGVufDB8fHx8MTc2NzI1OTgzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "document guide"
+    },
+    {
+      "id": "resource-guide-account-ar",
+      "description": "Image for an arabic guide on creating a brokerage account.",
+      "imageUrl": "https://images.unsplash.com/photo-1671461519096-4be7a2597766?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhcmFiaWMlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjcyNjA4NjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "arabic document"
     },
     {
       "id": "feature-articles",
