@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calculator, PieChart, Home } from "lucide-react";
+import { ArrowRight, Calculator, PieChart, Home, Percent } from "lucide-react";
 import type { Tool } from "@/lib/types";
 
 const tools: Tool[] = [
@@ -33,6 +33,13 @@ const tools: Tool[] = [
     description: "Estimez vos mensualités, le coût total des intérêts et visualisez votre plan d'amortissement.",
     href: "/tools/mortgage-calculator",
     icon: Home,
+  },
+  {
+    id: "stock-fee-calculator",
+    title: "Calculateur de Frais de Transaction",
+    description: "Simulez l'impact des frais de courtage sur le profit de vos transactions d'achat et de vente d'actions.",
+    href: "/tools/stock-fee-calculator",
+    icon: Percent,
   },
 ];
 
