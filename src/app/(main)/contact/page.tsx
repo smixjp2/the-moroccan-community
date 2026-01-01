@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Loader2, Send } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -75,7 +76,18 @@ export default function ContactPage() {
 
           <div>
             <Label htmlFor="subject">Sujet</Label>
-            <Input id="subject" name="subject" type="text" placeholder="Sujet de votre message" required />
+            <Select name="subject" required>
+                <SelectTrigger id="subject">
+                    <SelectValue placeholder="Choisissez le sujet de votre message" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="question">Question générale</SelectItem>
+                    <SelectItem value="partenariat">Partenariat</SelectItem>
+                    <SelectItem value="support">Support technique</SelectItem>
+                    <SelectItem value="presse">Presse</SelectItem>
+                    <SelectItem value="autre">Autre</SelectItem>
+                </SelectContent>
+            </Select>
             {state?.errors?.subject && <p className="text-sm font-medium text-destructive mt-2">{state.errors.subject[0]}</p>}
           </div>
 

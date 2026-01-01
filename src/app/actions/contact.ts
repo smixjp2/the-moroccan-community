@@ -5,7 +5,9 @@ import { z } from 'zod';
 const contactSchema = z.object({
   name: z.string().min(2, { message: 'Le nom doit contenir au moins 2 caractères.' }),
   email: z.string().email({ message: 'Adresse e-mail invalide.' }),
-  subject: z.string().min(5, { message: 'Le sujet doit contenir au moins 5 caractères.' }),
+  subject: z.enum(['question', 'partenariat', 'support', 'presse', 'autre'], {
+    errorMap: () => ({ message: 'Veuillez sélectionner un sujet.' })
+  }),
   message: z.string().min(10, { message: 'Le message doit contenir au moins 10 caractères.' }),
 });
 
