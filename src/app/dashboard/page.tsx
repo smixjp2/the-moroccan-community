@@ -1,40 +1,22 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useUser } from '@/firebase/provider';
-import { useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { BookOpen, Bookmark, Shield, User } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DashboardPage() {
-  const { user, isUserLoading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, isUserLoading, router]);
-
-  if (isUserLoading) {
-    return (
-        <div className="flex h-screen items-center justify-center">
-            <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
-        </div>
-    );
-  }
-
-  if (!user) {
-    return null; 
-  }
+  // Données factices pour la prévisualisation
+  const fakeUser = {
+    displayName: 'Investisseur',
+    email: 'exemple@email.com',
+  };
 
   return (
     <div className="container py-12 md:py-16">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-            <h1 className="text-4xl font-bold font-headline">Bienvenue, {user.displayName || 'Investisseur'} !</h1>
+            <h1 className="text-4xl font-bold font-headline">Bienvenue, {fakeUser.displayName} !</h1>
             <p className="text-muted-foreground">Ceci est votre tableau de bord personnel.</p>
         </div>
 
@@ -48,7 +30,7 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Email:</strong> {fakeUser.email}</p>
                     {/* Future functionality:
                     <Button variant="link" className="p-0 h-auto mt-2">Modifier le profil</Button> 
                     */}
