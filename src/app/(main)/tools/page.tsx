@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calculator, PieChart, Home, Percent, Library } from "lucide-react";
+import { ArrowRight, Calculator, PieChart, Home, Percent, Library, ClipboardList } from "lucide-react";
 import type { Tool } from "@/lib/types";
 
 const tools: Tool[] = [
@@ -11,6 +11,14 @@ const tools: Tool[] = [
     description: "Explorez, filtrez et comparez les fonds d'investissement (OPCVM) marocains pour trouver celui qui correspond à vos objectifs.",
     href: "/tools/opcvm-comparator",
     icon: Library,
+    badge: "Nouveau"
+  },
+  {
+    id: "investor-profile-quiz",
+    title: "Quel est votre Profil d'Investisseur ?",
+    description: "Répondez à quelques questions pour découvrir votre profil de risque et obtenir des conseils adaptés au marché marocain.",
+    href: "/tools/investor-profile-quiz",
+    icon: ClipboardList,
     badge: "Nouveau"
   },
   {

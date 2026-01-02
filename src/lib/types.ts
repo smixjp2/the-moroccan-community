@@ -1,4 +1,6 @@
 
+import { LucideIcon } from "lucide-react";
+
 export type NavLink = {
   href: string;
   label: string;
@@ -43,7 +45,7 @@ export interface Tool {
   title: string;
   description: string;
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string }> | LucideIcon;
   badge?: string;
 }
 
