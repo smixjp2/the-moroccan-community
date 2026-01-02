@@ -126,6 +126,8 @@ export default function InvestorProfileQuizPage() {
     setAnswers([]);
     setResult(null);
   };
+  
+  const ProfileIcon = result ? profiles[result].icon : null;
 
 
   return (
@@ -167,7 +169,7 @@ export default function InvestorProfileQuizPage() {
              <CardContent className="pt-6">
                 <div className="text-center">
                     <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center ${profiles[result].bgColor}`}>
-                        <profiles[result].icon className={`w-8 h-8 ${profiles[result].color}`} />
+                        {ProfileIcon && <ProfileIcon className={`w-8 h-8 ${profiles[result].color}`} />}
                     </div>
                     <h2 className={`font-headline text-3xl font-bold mt-4 ${profiles[result].color}`}>{profiles[result].title}</h2>
                     <p className="mt-2 text-muted-foreground">{profiles[result].description}</p>
