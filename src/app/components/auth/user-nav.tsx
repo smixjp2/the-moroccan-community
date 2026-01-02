@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -10,8 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { LogOut, User as UserIcon, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '../ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useUser, useAuth } from '@/firebase/provider';
 import { useRouter } from 'next/navigation';
 
@@ -21,7 +22,9 @@ export function UserNav() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await auth.signOut();
+    if (auth) {
+        await auth.signOut();
+    }
     router.push('/');
   };
 
