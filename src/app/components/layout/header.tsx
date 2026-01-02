@@ -1,14 +1,16 @@
+
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
+import { useUser } from "@/firebase/provider";
+import { UserNav } from "@/app/components/auth/user-nav";
 
 const navLinks: Omit<NavLink, "href">[] = [
   { label: "Accueil", path: "/" },
@@ -21,6 +23,7 @@ const navLinks: Omit<NavLink, "href">[] = [
 
 export function Header() {
   const pathname = usePathname();
+  const { user, isUserLoading } = useUser();
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-4 lg:gap-6", className)}>
@@ -55,6 +58,20 @@ export function Header() {
         </div>
         
         <div className="flex flex-1 items-center justify-end gap-2">
+          {isUserLoading ? (
+            <div className="h-8 w-24 animate-pulse rounded-md bg-muted" />
+          ) : user ? (
+            <UserNav />
+          ) : (
+            <div className="hidden md:flex items-center gap-2">
+              <Button variant="ghost" asChild>
+                <Link href="/login">Connexion</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup">Inscription</Link>
+              </Button>
+            </div>
+          )}
           <div className="flex md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -68,6 +85,22 @@ export function Header() {
                   <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={40} />
                 </Link>
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
+                <div className="mt-8 flex flex-col gap-4">
+                  {user ? (
+                      <Button asChild>
+                         <Link href="/dashboard">Tableau de Bord</Link>
+                      </Button>
+                  ) : (
+                    <>
+                       <Button variant="outline" asChild>
+                          <Link href="/login">Connexion</Link>
+                       </Button>
+                       <Button asChild>
+                          <Link href="/signup">Inscription</Link>
+                       </Button>
+                    </>
+                  )}
+                </div>
               </SheetContent>
             </Sheet>
           </div>

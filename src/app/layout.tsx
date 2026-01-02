@@ -6,9 +6,6 @@ import { FirebaseClientProvider } from "@/firebase";
 export const metadata: Metadata = {
   title: "The Moroccan Community",
   description: "Débloquez le potentiel du marché marocain.",
-  icons: {
-    icon: "/logo.svg",
-  },
 };
 
 export default function RootLayout({
@@ -25,6 +22,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
       </head>
       <body className="font-body antialiased">
         <FirebaseClientProvider>
