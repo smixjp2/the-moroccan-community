@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -8,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Shield, BarChart, TrendingUp, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
-import { PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, RadarChart, Pie, PieChart, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, RadarChart, Pie, PieChart, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
 const questions = [
