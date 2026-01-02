@@ -11,11 +11,11 @@ import { Progress } from '@/components/ui/progress';
 
 const questions = [
   {
-    question: "Quel est votre principal objectif en investissant ?",
+    question: "Quel est votre principal objectif en investissant à la Bourse de Casablanca ?",
     options: [
-      { text: "Préserver mon capital avant tout.", points: 1 },
-      { text: "Un équilibre entre croissance et sécurité.", points: 2 },
-      { text: "Maximiser la croissance, même avec un risque plus élevé.", points: 3 },
+      { text: "Préserver mon capital avant tout, quitte à avoir un rendement faible.", points: 1 },
+      { text: "Obtenir un rendement supérieur aux placements sans risque, avec une prise de risque modérée.", points: 2 },
+      { text: "Maximiser la croissance de mon capital sur le long terme, même si cela implique une forte volatilité.", points: 3 },
     ],
   },
   {
@@ -27,19 +27,19 @@ const questions = [
     ],
   },
   {
-    question: "Face à une baisse de 15% de votre portefeuille en un mois, quelle serait votre réaction ?",
+    question: "Face à une baisse de 15% de votre portefeuille en un mois, quelle serait votre réaction la plus probable ?",
     options: [
-      { text: "Je vends tout ou une partie pour limiter les pertes.", points: 1 },
-      { text: "Je ne fais rien et j'attends que ça remonte.", points: 2 },
-      { text: "C'est une opportunité, j'envisage d'investir plus.", points: 3 },
+      { text: "Je vends une partie pour limiter les pertes et sécuriser le reste.", points: 1 },
+      { text: "Je ne fais rien et j'attends que le marché se stabilise.", points: 2 },
+      { text: "C'est une opportunité, j'envisage d'investir davantage si les fondamentaux des entreprises sont bons.", points: 3 },
     ],
   },
   {
-    question: "Quelle est votre expérience des marchés financiers ?",
+    question: "Quelle est votre expérience des marchés financiers marocains ?",
     options: [
-      { text: "Débutant, c'est un nouveau domaine pour moi.", points: 1 },
-      { text: "Intermédiaire, je connais les bases (actions, obligations).", points: 2 },
-      { text: "Confirmé, je suis à l'aise avec divers produits financiers.", points: 3 },
+      { text: "Débutant, je découvre le fonctionnement de la bourse, des actions et des OPCVM.", points: 1 },
+      { text: "Intermédiaire, je connais les bases et j'ai déjà réalisé quelques investissements.", points: 2 },
+      { text: "Confirmé, je suis à l'aise avec l'analyse d'actions et les différentes stratégies.", points: 3 },
     ],
   },
    {
@@ -58,11 +58,11 @@ const profiles = {
     icon: Shield,
     color: "text-blue-600",
     bgColor: "bg-blue-100",
-    description: "Votre priorité est la sécurité de votre capital. Vous préférez des rendements stables et prévisibles, quitte à ce qu'ils soient modestes, plutôt que de vous exposer à une forte volatilité.",
+    description: "Votre priorité absolue est la sécurité de votre capital. Vous préférez des rendements stables et prévisibles, comme ceux des placements obligataires, et vous tolérez mal la volatilité du marché actions.",
     recommendations: [
-        "Placements monétaires et obligataires (OPCVM Monétaires, Bons du Trésor).",
-        "Actions de grandes entreprises stables versant des dividendes réguliers ('valeurs de rendement').",
-        "Allocation majoritairement défensive (environ 70-80% en obligations/monétaire).",
+        "Placements majoritairement défensifs : OPCVM Monétaires, Obligataires à court terme.",
+        "Une petite partie (10-20%) peut être allouée à des actions de grandes entreprises marocaines très stables versant des dividendes réguliers (dites 'valeurs de rendement').",
+        "Exemples d'actions : Maroc Telecom, Marsa Maroc (pour leur profil défensif et leurs dividendes).",
     ],
   },
   equilibre: {
@@ -70,11 +70,12 @@ const profiles = {
     icon: BarChart,
     color: "text-yellow-600",
     bgColor: "bg-yellow-100",
-    description: "Vous recherchez un bon compromis entre la performance et le risque. Vous êtes prêt à accepter une certaine volatilité pour obtenir un rendement supérieur à celui des placements sans risque.",
+    description: "Vous recherchez un bon compromis entre la performance et le risque. Vous êtes prêt à accepter une certaine volatilité pour obtenir un rendement supérieur à celui des placements sans risque, en diversifiant vos actifs.",
     recommendations: [
-      "Mix d'actions et d'obligations (OPCVM Diversifiés).",
-      "Investissement dans des actions de croissance solides et des valeurs de rendement.",
-      "Allocation équilibrée (environ 50-60% en actions, 40-50% en obligations).",
+      "Un portefeuille diversifié : environ 50-60% en actions et 40-50% en obligations via des OPCVM.",
+      "Investissement dans des actions de croissance solides (leaders de leur secteur) et des valeurs de rendement.",
+      "Exposition aux principaux secteurs de la cote : Banques, BTP, Industries.",
+      "Utilisation d'OPCVM Diversifiés ou Actions pour une gestion simplifiée."
     ],
   },
   dynamique: {
@@ -82,11 +83,12 @@ const profiles = {
     icon: TrendingUp,
     color: "text-red-600",
     bgColor: "bg-red-100",
-    description: "Votre objectif principal est de maximiser la performance de votre portefeuille sur le long terme. Vous comprenez que cela implique une prise de risque plus importante et une plus grande volatilité.",
+    description: "Votre objectif principal est de maximiser la performance de votre portefeuille sur le long terme. Vous comprenez que cela implique une prise de risque plus importante et une plus grande volatilité à court terme.",
     recommendations: [
-      "Majorité du portefeuille en actions (OPCVM Actions).",
-      "Exposition à des entreprises de plus petite taille ou des secteurs en forte croissance.",
-      "Allocation offensive (plus de 75% en actions).",
+      "Portefeuille majoritairement investi en actions (plus de 75%).",
+      "Exposition à des entreprises de taille moyenne ou des secteurs en forte croissance (technologie, énergies renouvelables).",
+      "Recherche d'opportunités de plus-value sur des 'valeurs de croissance' comme HPS ou des 'valeurs de retournement'.",
+      "La connaissance de l'analyse fondamentale est un atout majeur pour ce profil.",
     ],
   },
 };
@@ -135,7 +137,7 @@ export default function InvestorProfileQuizPage() {
        <div className="text-center max-w-3xl mx-auto mb-12">
         <h1 className="font-headline text-4xl font-bold md:text-5xl">Découvrez Votre Profil d'Investisseur</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Un court questionnaire pour vous aider à mieux comprendre votre tolérance au risque et à définir une stratégie d'investissement qui vous correspond.
+          Un court questionnaire pour vous aider à mieux comprendre votre tolérance au risque et à définir une stratégie d'investissement qui vous correspond sur la Bourse de Casablanca.
         </p>
       </div>
 
@@ -175,7 +177,7 @@ export default function InvestorProfileQuizPage() {
                     <p className="mt-2 text-muted-foreground">{profiles[result].description}</p>
                 </div>
                 <div className="mt-8">
-                    <h3 className="font-semibold text-lg mb-4">Types d'investissements généralement adaptés :</h3>
+                    <h3 className="font-semibold text-lg mb-4">Stratégies et types d'investissements adaptés :</h3>
                     <ul className="space-y-3">
                         {profiles[result].recommendations.map((rec, i) => (
                              <li key={i} className="flex items-start">
@@ -186,7 +188,7 @@ export default function InvestorProfileQuizPage() {
                     </ul>
                 </div>
                 <div className="mt-8 text-center">
-                     <p className="text-xs text-muted-foreground mb-4">Ceci est une recommandation générale. Il est conseillé d'affiner votre stratégie avec un professionnel.</p>
+                     <p className="text-xs text-muted-foreground mb-4">Ceci est une recommandation générale. Il est conseillé d'approfondir vos recherches et/ou de consulter un professionnel.</p>
                      <Button onClick={resetQuiz}>Refaire le quiz</Button>
                 </div>
              </CardContent>
