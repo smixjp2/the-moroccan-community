@@ -1,30 +1,34 @@
 
 'use client';
 
-import { useUser } from '@/firebase';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { BookOpen, Bookmark, Shield, User as UserIcon } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DashboardPage() {
-  const { user, isUserLoading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, isUserLoading, router]);
-
-  if (isUserLoading || !user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Chargement...</p>
-      </div>
-    );
+  const user = {
+      displayName: 'Investisseur',
+      email: 'exemple@email.com'
   }
+
+  // NOTE: La logique de redirection a été temporairement retirée
+  // pour faciliter la prévisualisation du design.
+  //   const { user, isUserLoading } = useUser();
+  //   const router = useRouter();
+
+  //   useEffect(() => {
+  //     if (!isUserLoading && !user) {
+  //       router.push('/login');
+  //     }
+  //   }, [user, isUserLoading, router]);
+
+  //   if (isUserLoading || !user) {
+  //     return (
+  //       <div className="flex items-center justify-center min-h-screen">
+  //         <p>Chargement...</p>
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div className="container py-12 md:py-16">
