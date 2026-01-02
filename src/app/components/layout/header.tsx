@@ -4,13 +4,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/lib/types";
 import { useUser } from "@/firebase/provider";
 import { UserNav } from "@/app/components/auth/user-nav";
+import { Button } from "@/components/ui/button";
+import { MobileNav } from "./mobile-nav";
 
 const navLinks: Omit<NavLink, "href">[] = [
   { label: "Accueil", path: "/" },
@@ -72,38 +71,7 @@ export function Header() {
               </Button>
             </div>
           )}
-          <div className="flex md:hidden">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Ouvrir le menu de navigation</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
-                  <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={40} />
-                </Link>
-                <NavLinks className="flex-col items-start space-y-4 text-lg" />
-                <div className="mt-8 flex flex-col gap-4">
-                  {user ? (
-                      <Button asChild>
-                         <Link href="/dashboard">Tableau de Bord</Link>
-                      </Button>
-                  ) : (
-                    <>
-                       <Button variant="outline" asChild>
-                          <Link href="/login">Connexion</Link>
-                       </Button>
-                       <Button asChild>
-                          <Link href="/signup">Inscription</Link>
-                       </Button>
-                    </>
-                  )}
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+          <MobileNav user={user} navLinks={navLinks} />
         </div>
       </div>
     </header>
