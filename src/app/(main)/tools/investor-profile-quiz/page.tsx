@@ -1,16 +1,19 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Shield, BarChart, TrendingUp, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, RadarChart, Pie, PieChart, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
 const questions = [
   {
+    id: 'objective',
     question: "Quel est votre principal objectif en investissant à la Bourse de Casablanca ?",
     options: [
       { text: "Préserver mon capital avant tout, quitte à avoir un rendement faible.", points: 1 },
@@ -19,22 +22,34 @@ const questions = [
     ],
   },
   {
-    question: "Pour combien de temps prévoyez-vous d'investir cet argent ?",
+    id: 'horizon',
+    question: "Pour combien de temps prévoyez-vous d'investir la majorité de cet argent ?",
     options: [
       { text: "Moins de 3 ans.", points: 1 },
       { text: "Entre 3 et 7 ans.", points: 2 },
       { text: "Plus de 7 ans.", points: 3 },
     ],
   },
-  {
-    question: "Face à une baisse de 15% de votre portefeuille en un mois, quelle serait votre réaction la plus probable ?",
+    {
+    id: 'lossReaction',
+    question: "Face à une baisse de 20% de votre portefeuille en un mois, quelle serait votre réaction la plus probable ?",
     options: [
-      { text: "Je vends une partie pour limiter les pertes et sécuriser le reste.", points: 1 },
-      { text: "Je ne fais rien et j'attends que le marché se stabilise.", points: 2 },
-      { text: "C'est une opportunité, j'envisage d'investir davantage si les fondamentaux des entreprises sont bons.", points: 3 },
+      { text: "Je panique et je vends tout pour limiter les pertes.", points: 1 },
+      { text: "Je ne fais rien et j'attends que le marché se stabilise, même si je suis inquiet.", points: 2 },
+      { text: "C'est une opportunité, j'envisage d'investir davantage car les prix sont plus bas.", points: 3 },
     ],
   },
   {
+    id: 'gainReaction',
+    question: "Votre portefeuille gagne 25% en six mois. Que faites-vous ?",
+    options: [
+        { text: "Je vends tout pour sécuriser mes gains.", points: 1},
+        { text: "Je vends une partie pour prendre des bénéfices et je laisse le reste investi.", points: 2},
+        { text: "Je ne vends rien, c'est un investissement à long terme.", points: 3},
+    ]
+  },
+  {
+    id: 'knowledge',
     question: "Quelle est votre expérience des marchés financiers marocains ?",
     options: [
       { text: "Débutant, je découvre le fonctionnement de la bourse, des actions et des OPCVM.", points: 1 },
@@ -43,11 +58,12 @@ const questions = [
     ],
   },
    {
-    question: "Quelle part de vos revenus mensuels êtes-vous prêt à investir ?",
+    id: 'income',
+    question: "Quelle part de votre épargne mensuelle êtes-vous prêt à investir en bourse ?",
     options: [
-      { text: "Moins de 10%.", points: 1 },
-      { text: "Entre 10% et 25%.", points: 2 },
-      { text: "Plus de 25%.", points: 3 },
+      { text: "Moins de 25%.", points: 1 },
+      { text: "Entre 25% et 50%.", points: 2 },
+      { text: "Plus de 50%.", points: 3 },
     ],
   },
 ];
@@ -57,52 +73,66 @@ const profiles = {
     title: "Profil Prudent",
     icon: Shield,
     color: "text-blue-600",
-    bgColor: "bg-blue-100",
-    description: "Votre priorité absolue est la sécurité de votre capital. Vous préférez des rendements stables et prévisibles, comme ceux des placements obligataires, et vous tolérez mal la volatilité du marché actions.",
+    bgColor: "bg-blue-100 dark:bg-blue-900/20",
+    description: "Votre priorité absolue est la sécurité de votre capital. Vous préférez des rendements stables et prévisibles, et vous tolérez mal la volatilité du marché actions.",
     recommendations: [
         "Placements majoritairement défensifs : OPCVM Monétaires, Obligataires à court terme.",
-        "Une petite partie (10-20%) peut être allouée à des actions de grandes entreprises marocaines très stables versant des dividendes réguliers (dites 'valeurs de rendement').",
+        "Une petite partie (10-25%) peut être allouée à des actions de grandes entreprises marocaines très stables versant des dividendes réguliers (dites 'valeurs de rendement').",
         "Exemples d'actions : Maroc Telecom, Marsa Maroc (pour leur profil défensif et leurs dividendes).",
     ],
+    allocation: [
+        { name: 'Actions', value: 20, fill: 'hsl(var(--chart-4))'},
+        { name: 'Obligations', value: 60, fill: 'hsl(var(--chart-2))'},
+        { name: 'Liquidités', value: 20, fill: 'hsl(var(--chart-5))'},
+    ]
   },
   equilibre: {
     title: "Profil Équilibré",
     icon: BarChart,
-    color: "text-yellow-600",
-    bgColor: "bg-yellow-100",
-    description: "Vous recherchez un bon compromis entre la performance et le risque. Vous êtes prêt à accepter une certaine volatilité pour obtenir un rendement supérieur à celui des placements sans risque, en diversifiant vos actifs.",
+    color: "text-yellow-500",
+    bgColor: "bg-yellow-100 dark:bg-yellow-900/20",
+    description: "Vous recherchez un bon compromis entre la performance et le risque. Vous êtes prêt à accepter une certaine volatilité pour obtenir un rendement supérieur, en diversifiant vos actifs.",
     recommendations: [
-      "Un portefeuille diversifié : environ 50-60% en actions et 40-50% en obligations via des OPCVM.",
+      "Un portefeuille diversifié : environ 50-60% en actions et 40-50% en obligations ou OPCVM diversifiés.",
       "Investissement dans des actions de croissance solides (leaders de leur secteur) et des valeurs de rendement.",
       "Exposition aux principaux secteurs de la cote : Banques, BTP, Industries.",
       "Utilisation d'OPCVM Diversifiés ou Actions pour une gestion simplifiée."
     ],
+    allocation: [
+        { name: 'Actions', value: 55, fill: 'hsl(var(--chart-4))'},
+        { name: 'Obligations', value: 40, fill: 'hsl(var(--chart-2))'},
+        { name: 'Liquidités', value: 5, fill: 'hsl(var(--chart-5))'},
+    ]
   },
   dynamique: {
     title: "Profil Dynamique",
     icon: TrendingUp,
-    color: "text-red-600",
-    bgColor: "bg-red-100",
-    description: "Votre objectif principal est de maximiser la performance de votre portefeuille sur le long terme. Vous comprenez que cela implique une prise de risque plus importante et une plus grande volatilité à court terme.",
+    color: "text-destructive",
+    bgColor: "bg-red-100 dark:bg-red-900/20",
+    description: "Votre objectif principal est de maximiser la performance de votre portefeuille sur le long terme. Vous comprenez que cela implique une prise de risque plus importante et une plus grande volatilité.",
     recommendations: [
       "Portefeuille majoritairement investi en actions (plus de 75%).",
       "Exposition à des entreprises de taille moyenne ou des secteurs en forte croissance (technologie, énergies renouvelables).",
       "Recherche d'opportunités de plus-value sur des 'valeurs de croissance' comme HPS ou des 'valeurs de retournement'.",
       "La connaissance de l'analyse fondamentale est un atout majeur pour ce profil.",
     ],
+    allocation: [
+        { name: 'Actions', value: 85, fill: 'hsl(var(--chart-4))'},
+        { name: 'Obligations', value: 10, fill: 'hsl(var(--chart-2))'},
+        { name: 'Liquidités', value: 5, fill: 'hsl(var(--chart-5))'},
+    ]
   },
 };
 
 export default function InvestorProfileQuizPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<keyof typeof profiles | null>(null);
 
   const progress = (currentQuestion / questions.length) * 100;
-
-  const handleAnswer = (points: number) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = points;
+  
+  const handleAnswer = (questionId: string, points: number) => {
+    const newAnswers = {...answers, [questionId]: points};
     setAnswers(newAnswers);
 
     if (currentQuestion < questions.length - 1) {
@@ -112,11 +142,29 @@ export default function InvestorProfileQuizPage() {
     }
   };
 
-  const calculateResult = (finalAnswers: number[]) => {
-    const totalPoints = finalAnswers.reduce((sum, a) => sum + a, 0);
-    if (totalPoints <= 7) {
+  const score = useMemo(() => {
+    return Object.values(answers).reduce((sum, a) => sum + a, 0);
+  }, [answers])
+
+
+  const radarData = useMemo(() => {
+    return [
+      { subject: 'Objectif', value: (answers['objective'] || 0) * 33.3, fullMark: 100 },
+      { subject: 'Horizon', value: (answers['horizon'] || 0) * 33.3, fullMark: 100 },
+      { subject: 'Risque', value: (answers['lossReaction'] || 0) * 33.3, fullMark: 100 },
+      { subject: 'Discipline', value: (answers['gainReaction'] || 0) * 33.3, fullMark: 100 },
+      { subject: 'Connaissance', value: (answers['knowledge'] || 0) * 33.3, fullMark: 100 },
+    ];
+  }, [answers]);
+
+  const calculateResult = (finalAnswers: Record<string, number>) => {
+    const totalPoints = Object.values(finalAnswers).reduce((sum, a) => sum + a, 0);
+    const maxScore = questions.length * 3;
+    const minScore = questions.length * 1;
+    
+    if (totalPoints <= minScore + (maxScore - minScore) / 3) {
       setResult('prudent');
-    } else if (totalPoints <= 12) {
+    } else if (totalPoints <= minScore + (2 * (maxScore - minScore)) / 3) {
       setResult('equilibre');
     } else {
       setResult('dynamique');
@@ -125,7 +173,7 @@ export default function InvestorProfileQuizPage() {
   
   const resetQuiz = () => {
     setCurrentQuestion(0);
-    setAnswers([]);
+    setAnswers({});
     setResult(null);
   };
   
@@ -137,7 +185,7 @@ export default function InvestorProfileQuizPage() {
        <div className="text-center max-w-3xl mx-auto mb-12">
         <h1 className="font-headline text-4xl font-bold md:text-5xl">Découvrez Votre Profil d'Investisseur</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
-          Un court questionnaire pour vous aider à mieux comprendre votre tolérance au risque et à définir une stratégie d'investissement qui vous correspond sur la Bourse de Casablanca.
+          Un questionnaire complet pour vous aider à mieux comprendre votre tolérance au risque et à définir une stratégie d'investissement qui vous correspond sur la Bourse de Casablanca.
         </p>
       </div>
 
@@ -152,7 +200,7 @@ export default function InvestorProfileQuizPage() {
                 <CardContent>
                     <RadioGroup
                         key={currentQuestion}
-                        onValueChange={(value) => handleAnswer(Number(value))}
+                        onValueChange={(value) => handleAnswer(questions[currentQuestion].id, Number(value))}
                     >
                         {questions[currentQuestion].options.map((option, index) => (
                         <Label
@@ -176,6 +224,46 @@ export default function InvestorProfileQuizPage() {
                     <h2 className={`font-headline text-3xl font-bold mt-4 ${profiles[result].color}`}>{profiles[result].title}</h2>
                     <p className="mt-2 text-muted-foreground">{profiles[result].description}</p>
                 </div>
+
+                <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Analyse du Profil</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                           <ChartContainer config={{}} className="w-full h-[250px]">
+                                <ResponsiveContainer>
+                                    <RadarChart data={radarData}>
+                                        <PolarGrid />
+                                        <PolarAngleAxis dataKey="subject" />
+                                        <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                                        <Radar name="Profil" dataKey="value" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.6} />
+                                    </RadarChart>
+                                </ResponsiveContainer>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Suggestion d'Allocation</CardTitle>
+                        </CardHeader>
+                         <CardContent>
+                            <ChartContainer config={{}} className="w-full h-[250px]">
+                                <ResponsiveContainer>
+                                    <PieChart>
+                                        <Pie data={profiles[result].allocation} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={80} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} >
+                                             {profiles[result].allocation.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={entry.fill} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip content={<ChartTooltipContent />} />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+                </div>
+
                 <div className="mt-8">
                     <h3 className="font-semibold text-lg mb-4">Stratégies et types d'investissements adaptés :</h3>
                     <ul className="space-y-3">
