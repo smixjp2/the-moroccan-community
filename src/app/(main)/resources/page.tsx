@@ -26,15 +26,6 @@ const resources: Resource[] = [
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageUrl || '',
     imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account')?.imageHint || '',
   },
-   {
-    id: "5",
-    title: "كيفية فتح حساب (Compte-Titres) في بورصة الدار البيضاء",
-    description: "دليل PDF خطوة بخطوة لفتح حساب الأوراق المالية الخاص بك في المغرب والبدء في الاستثمار.",
-    price: "Gratuit",
-    href: "https://docs.google.com/uc?export=download&id=1SJMxRYWXLN84R-ELkFZcc_-QcqwEJZYY",
-    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageUrl || '',
-    imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageHint || '',
-  },
   {
     id: "3",
     title: "Simulateur d'Intérêts Composés (Excel)",
