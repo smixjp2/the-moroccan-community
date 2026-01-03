@@ -1,10 +1,11 @@
 "use server";
 
 import { z } from "zod";
+import type { FormState } from "@/lib/types";
 
 const emailSchema = z.string().email({ message: "Adresse e-mail invalide." });
 
-export async function subscribeToNewsletter(prevState: any, formData: FormData) {
+export async function subscribeToNewsletter(prevState: any, formData: FormData): Promise<FormState> {
   const email = formData.get("email") as string;
 
   const validatedEmail = emailSchema.safeParse(email);

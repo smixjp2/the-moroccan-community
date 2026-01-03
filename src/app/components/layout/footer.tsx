@@ -9,20 +9,16 @@ import { Instagram, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import { subscribeToNewsletter } from '@/app/actions/newsletter';
 import { useToast } from '@/hooks/use-toast';
+import type { FormState } from '@/lib/types';
 
-type State = {
-  message: string;
-  status: 'error' | 'success' | '';
-};
-
-const initialState: State = {
+const initialState: FormState = {
   message: '',
   status: '',
 };
 
 export function Footer() {
   const { toast } = useToast();
-  const [state, setState] = useState<State>(initialState);
+  const [state, setState] = useState<FormState>(initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
   const formAction = async (formData: FormData) => {
