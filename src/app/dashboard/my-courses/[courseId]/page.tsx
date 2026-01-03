@@ -15,10 +15,17 @@ import { courses as coursesData } from "@/lib/courses-data";
 import { notFound } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { Lesson } from '@/lib/types';
+import type { Lesson, CourseResource } from '@/lib/types';
 
 // This is a placeholder for the full curriculum structure
-const courseCurriculum = {
+const courseCurriculum: Record<string, {
+  title: string;
+  modules: {
+    title: string;
+    lessons: Lesson[];
+  }[];
+  resources: CourseResource[];
+}> = {
   "formation-bourse-casablanca": {
     title: "De Zéro à Héros : La Formation Complète sur la Bourse de Casablanca",
     modules: [
@@ -49,7 +56,6 @@ const courseCurriculum = {
 export default function CoursePlayerPage({ params }: { params: { courseId: string } }) {
   const { courseId } = params;
   
-  // @ts-ignore
   const curriculum = courseCurriculum[courseId];
 
   const announcementVideoUrl = "https://drive.google.com/file/d/1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs/preview";
@@ -96,7 +102,7 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
                     <TabsContent value="resources" className="p-4 border rounded-b-md rounded-tr-md bg-background">
                          <h2 className="text-xl font-semibold mb-4">Fichiers à Télécharger</h2>
                          <ul className="space-y-3">
-                             {curriculum.resources.map((resource, index) => (
+                             {curriculum.resources.map((resource: CourseResource, index: number) => (
                                  <li key={index}>
                                      <Button variant="outline" asChild>
                                          <a href={resource.fileUrl} target="_blank" rel="noopener noreferrer">

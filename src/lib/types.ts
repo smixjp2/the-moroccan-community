@@ -78,6 +78,11 @@ export interface Lesson {
   videoUrl: string;
 }
 
+export interface CourseResource {
+  title: string;
+  fileUrl: string;
+}
+
 export type FormState = {
   message: string;
   status: 'error' | 'success' | '';
