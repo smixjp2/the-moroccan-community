@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { CheckCircle, PlayCircle, FileText, Download } from 'lucide-react';
+import { CheckCircle, PlayCircle, FileText, Download, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { courses as coursesData } from "@/lib/courses-data";
 import { notFound } from 'next/navigation';
@@ -24,7 +24,7 @@ const courseCurriculum = {
         {
             title: "MODULE 1 : Comprendre la Bourse",
             lessons: [
-                { title: "Leçon 1.1: Histoire & rôle économique", duration: "12:34", videoUrl: "https://drive.google.com/file/d/13shUyx3gjaaurjcQc5atdB_jnoMTqfUY/preview" },
+                { title: "Leçon 1.1: Histoire & rôle économique", duration: "12:34", videoUrl: "https://storage.googleapis.com/votre-projet-firebase.appspot.com/placeholder.mp4" }, // TODO: Remplacer par la vraie URL Firebase
                 { title: "Leçon 1.2: Structure du marché marocain", duration: "15:02", videoUrl: "" },
                 { title: "Leçon 1.3: Les acteurs clés", duration: "10:51", videoUrl: "" },
             ]
@@ -57,7 +57,7 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
     return notFound();
   }
 
-  const embedUrl = selectedLesson?.videoUrl || '';
+  const videoSourceUrl = selectedLesson?.videoUrl || '';
 
   return (
     <div className="flex h-[calc(100vh-4rem)] bg-muted/40">
@@ -65,17 +65,19 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
       <main className="flex-1 flex flex-col">
         <div className="flex-1 p-4 md:p-6 flex flex-col gap-6">
             <AspectRatio ratio={16 / 9} className="bg-black rounded-lg overflow-hidden shadow-lg">
-                {embedUrl ? (
-                    <iframe
-                        src={embedUrl}
-                        title="Lecteur Vidéo du Cours"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
+                {videoSourceUrl ? (
+                    <video
+                        controls
+                        controlsList="nodownload"
+                        src={videoSourceUrl}
                         className="w-full h-full"
-                    ></iframe>
+                        onContextMenu={(e) => e.preventDefault()} // Empêche le clic droit
+                    >
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
                 ): (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gray-800 text-white">
+                        <Lock className="h-12 w-12 text-muted-foreground mb-4" />
                         <p>Sélectionnez une leçon pour commencer.</p>
                     </div>
                 )}
