@@ -4,7 +4,7 @@ import "./globals.css";
 import { FirebaseClientProvider } from "@/firebase";
 
 export const metadata: Metadata = {
-  title: "The Moroccan Community",
+  title: "MASI Insights",
   description: "Débloquez le potentiel du marché marocain.",
 };
 
