@@ -11,7 +11,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
-const previewVideoUrl = "https://drive.google.com/file/d/1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs/preview";
+const previewVideoId = "1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs";
+const previewVideoUrl = `https://drive.google.com/file/d/${previewVideoId}/preview`;
 
 
 const highlights = [
