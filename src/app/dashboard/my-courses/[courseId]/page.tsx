@@ -15,6 +15,7 @@ import { courses as coursesData } from "@/lib/courses-data";
 import { notFound } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import type { Lesson } from '@/lib/types';
 
 // This is a placeholder for the full curriculum structure
 const courseCurriculum = {
@@ -52,15 +53,13 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
   const curriculum = courseCurriculum[courseId];
 
   const announcementVideoUrl = "https://drive.google.com/file/d/1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs/preview";
-  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
 
   if (!curriculum) {
     return notFound();
   }
 
-  // @ts-ignore
   const videoSourceUrl = selectedLesson?.videoUrl || announcementVideoUrl;
-  // @ts-ignore
   const isAnnouncement = !selectedLesson || !selectedLesson.videoUrl;
 
 
@@ -135,9 +134,7 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
                     {module.lessons.map((lesson, lessonIndex) => (
                       <li key={lessonIndex}>
                         <button
-                          // @ts-ignore
                           onClick={() => setSelectedLesson(lesson)}
-                           // @ts-ignore
                           className={`w-full text-left flex items-start gap-3 p-4 text-sm transition-colors hover:bg-primary/10 ${selectedLesson?.title === lesson.title ? 'bg-primary/10' : ''}`}
                         >
                           <PlayCircle className="h-5 w-5 mt-0.5 text-muted-foreground flex-shrink-0" />

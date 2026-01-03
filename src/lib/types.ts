@@ -72,4 +72,9 @@ export type Opcvm = {
     };
 };
 
+export interface Lesson {
+  title: string;
+  duration: string;
+  videoUrl: string;
+}
     
