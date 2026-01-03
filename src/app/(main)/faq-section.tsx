@@ -1,5 +1,7 @@
+
 'use client';
 
+import { useState, useEffect } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqItems = [
@@ -26,6 +28,12 @@ const faqItems = [
 ]
 
 export function FaqSection() {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     return (
         <section className="py-16 md:py-24 bg-background">
             <div className="container">
@@ -36,16 +44,18 @@ export function FaqSection() {
                     </p>
                 </div>
                 <div className="mt-12 max-w-3xl mx-auto">
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqItems.map((item, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline">{item.question}</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    {item.answer}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+                    {isMounted && (
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqItems.map((item, index) => (
+                                <AccordionItem value={`item-${index}`} key={index}>
+                                    <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline">{item.question}</AccordionTrigger>
+                                    <AccordionContent className="text-muted-foreground">
+                                        {item.answer}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    )}
                 </div>
             </div>
         </section>
