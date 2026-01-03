@@ -1,13 +1,16 @@
-
 'use client';
 
 import Image from "next/image";
+import { useMemo } from 'react';
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, BarChart, Target, Gift, Check, Clock } from "lucide-react";
+import { BookOpen, BarChart, Target, Gift, Check, Clock, Lock, Unlock } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
 import { CourseVideo } from "./course-video";
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { Skeleton } from "@/components/ui/skeleton";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
@@ -19,9 +22,28 @@ const highlights = [
   { icon: Gift, text: "Accès à un groupe privé et des lives mensuels" },
 ];
 
-function ProtectedCourseContent() {
+function ProtectedCourseContent({ isEnrolled, videoUrl }: { isEnrolled: boolean, videoUrl?: string }) {
+    if (!isEnrolled) {
+        return (
+             <div className="container py-16 text-center">
+                <Card className="max-w-2xl mx-auto p-8">
+                    <Lock className="h-12 w-12 mx-auto text-primary mb-4" />
+                    <h2 className="font-headline text-2xl font-bold">Contenu Réservé aux Membres</h2>
+                    <p className="text-muted-foreground mt-2">
+                        Vous devez être inscrit à ce cours pour accéder au contenu vidéo et aux modules détaillés.
+                    </p>
+                </Card>
+            </div>
+        )
+    }
+
     return (
         <>
+            <section className="py-12">
+                <div className="container">
+                    <CourseVideo videoUrl={videoUrl || ''} />
+                </div>
+            </section>
              {/* Course For Who Section */}
             <section className="py-16">
                 <div className="container grid md:grid-cols-2 gap-12 items-center">
@@ -69,9 +91,41 @@ function ProtectedCourseContent() {
     )
 }
 
+function CoursePageSkeleton() {
+    return (
+        <div className="container py-16">
+            <Card className="max-w-2xl mx-auto p-8">
+                 <div className="flex flex-col items-center space-y-4">
+                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <Skeleton className="h-8 w-64" />
+                    <Skeleton className="h-4 w-80" />
+                </div>
+            </Card>
+        </div>
+    )
+}
+
 
 export default function FormationBourseCasablancaPage() {
- 
+  const { user, isUserLoading } = useUser();
+  const firestore = useFirestore();
+
+  const enrollmentRef = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    return doc(firestore, 'users', user.uid, 'enrollments', courseId);
+  }, [user, firestore]);
+
+  const courseRef = useMemoFirebase(() => {
+      if (!firestore) return null;
+      return doc(firestore, 'courses', courseId);
+  }, [firestore]);
+
+  const { data: enrollment, isLoading: isEnrollmentLoading } = useDoc(enrollmentRef);
+  const { data: courseData, isLoading: isCourseLoading } = useDoc(courseRef);
+
+  const isEnrolled = !!enrollment;
+  const isLoading = isUserLoading || isEnrollmentLoading || isCourseLoading;
+  
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -115,7 +169,7 @@ export default function FormationBourseCasablancaPage() {
         </div>
       </section>
       
-      <ProtectedCourseContent />
+      {isLoading ? <CoursePageSkeleton /> : <ProtectedCourseContent isEnrolled={isEnrolled} videoUrl={courseData?.videoUrl} />}
     </div>
   );
 }
