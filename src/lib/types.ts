@@ -28,6 +28,7 @@ export interface Course {
   level: string;
   href: string;
   isNew?: boolean;
+  videoUrl?: string;
 }
 
 export interface Resource {

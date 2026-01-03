@@ -11,6 +11,7 @@ import { CourseVideo } from "./course-video";
 import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { Skeleton } from "@/components/ui/skeleton";
+import { courses as coursesData } from "@/lib/courses-data";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
@@ -114,17 +115,15 @@ export default function FormationBourseCasablancaPage() {
     if (!user || !firestore) return null;
     return doc(firestore, 'users', user.uid, 'enrollments', courseId);
   }, [user, firestore]);
-
-  const courseRef = useMemoFirebase(() => {
-      if (!firestore) return null;
-      return doc(firestore, 'courses', courseId);
-  }, [firestore]);
-
+  
   const { data: enrollment, isLoading: isEnrollmentLoading } = useDoc(enrollmentRef);
-  const { data: courseData, isLoading: isCourseLoading } = useDoc(courseRef);
+  
+  // For now, we simulate being enrolled if the user is logged in
+  // and we use the local data for the video URL.
+  const isEnrolled = !!user; 
+  const isLoading = isUserLoading;
 
-  const isEnrolled = !!enrollment;
-  const isLoading = isUserLoading || isEnrollmentLoading || isCourseLoading;
+  const courseData = coursesData.find(c => c.id === courseId);
   
   return (
     <div className="bg-background">
