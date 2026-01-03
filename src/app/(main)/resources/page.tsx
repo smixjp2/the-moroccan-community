@@ -18,6 +18,15 @@ const resources: Resource[] = [
     imageHint: PlaceHolderImages.find(p => p.id === 'resource-financial-model')?.imageHint || '',
   },
   {
+    id: "5",
+    title: "كيفية فتح حساب (Compte-Titres) في بورصة الدار البيضاء",
+    description: "دليل PDF خطوة بخطوة لفتح حساب الأوراق المالية الخاص بك في المغرب والبدء في الاستثمار.",
+    price: "Gratuit",
+    href: "https://docs.google.com/uc?export=download&id=1uD9iE1Zq9g-A9kprb5c-L4oX5v7n8mYv",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'resource-guide-account-ar')?.imageHint || '',
+  },
+  {
     id: "4",
     title: "Guide : Créer un Compte-Titre à la Bourse de Casablanca",
     description: "Un guide PDF étape par étape pour ouvrir votre compte-titre auprès d'une société de bourse marocaine et commencer à investir.",
