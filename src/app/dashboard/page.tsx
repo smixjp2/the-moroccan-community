@@ -2,32 +2,16 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { BookOpen, Bookmark, Shield, User as UserIcon } from 'lucide-react';
+import { BookOpen, Bookmark, Shield, User } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useUser } from '@/firebase';
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
-  const { user, isUserLoading } = useUser();
-  const router = useRouter();
+  const fakeUser = {
+    displayName: 'Investisseur',
+    email: 'exemple@email.com',
+  };
 
-  useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, isUserLoading, router]);
-
-  if (isUserLoading || !user) {
-    return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
-        <p>Chargement...</p>
-      </div>
-    );
-  }
-
-  // Example course enrollment
   const enrolledCourses = [
     { id: 'formation-bourse-casablanca', title: 'De Zéro à Héros : La Formation Complète sur la Bourse de Casablanca', progress: 25 }
   ];
@@ -36,21 +20,21 @@ export default function DashboardPage() {
     <div className="container py-12 md:py-16">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-            <h1 className="text-4xl font-bold font-headline">Bienvenue, {user.displayName || 'Utilisateur'} !</h1>
-            <p className="text-muted-foreground">Ceci est votre tableau de bord personnel.</p>
+            <h1 className="text-4xl font-bold font-headline">Aperçu du Tableau de Bord</h1>
+            <p className="text-muted-foreground">Ceci est un aperçu de ce à quoi ressemblera le tableau de bord personnel. Cliquez sur un cours pour voir la salle de classe.</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
             <Card>
                 <CardHeader className="flex flex-row items-center gap-4">
-                    <UserIcon className="h-8 w-8 text-primary" />
+                    <User className="h-8 w-8 text-primary" />
                     <div>
                         <CardTitle>Mon Compte</CardTitle>
                         <CardDescription>Informations sur votre compte.</CardDescription>
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Email:</strong> {fakeUser.email}</p>
                 </CardContent>
             </Card>
 
@@ -85,9 +69,8 @@ export default function DashboardPage() {
                                 <Link href={`/dashboard/my-courses/${course.id}`} className="block p-4 rounded-lg hover:bg-accent">
                                     <div className="flex justify-between items-center">
                                         <p className="font-semibold">{course.title}</p>
-                                        <Button variant="secondary">Reprendre</Button>
+                                        <Button variant="secondary">Accéder au cours</Button>
                                     </div>
-                                    {/* Future: <Progress value={course.progress} className="mt-2" /> */}
                                 </Link>
                             </li>
                         ))}
