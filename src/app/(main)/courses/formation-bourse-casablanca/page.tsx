@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from "next/image";
@@ -120,8 +121,8 @@ export default function FormationBourseCasablancaPage() {
   
   // For now, we simulate being enrolled if the user is logged in
   // and we use the local data for the video URL.
-  const isEnrolled = !!user; 
-  const isLoading = isUserLoading;
+  const isEnrolled = true; 
+  const isLoading = false;
 
   const courseData = coursesData.find(c => c.id === courseId);
   
