@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import type { FormState } from '@/lib/types';
 
 const contactSchema = z.object({
   name: z.string().min(2, { message: 'Le nom doit contenir au moins 2 caractères.' }),
@@ -11,7 +12,7 @@ const contactSchema = z.object({
   message: z.string().min(10, { message: 'Le message doit contenir au moins 10 caractères.' }),
 });
 
-export async function submitContactForm(prevState: any, formData: FormData) {
+export async function submitContactForm(prevState: FormState, formData: FormData): Promise<FormState> {
   const validatedFields = contactSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),

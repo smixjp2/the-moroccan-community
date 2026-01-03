@@ -77,4 +77,10 @@ export interface Lesson {
   duration: string;
   videoUrl: string;
 }
+
+export type FormState = {
+  message: string;
+  status: 'error' | 'success' | '';
+  errors?: Record<string, string[]>;
+};
     

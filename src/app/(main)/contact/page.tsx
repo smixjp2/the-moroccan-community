@@ -16,21 +16,16 @@ import {
 } from '@/components/ui/select';
 import { submitContactForm } from '@/app/actions/contact';
 import { useToast } from '@/hooks/use-toast';
+import type { FormState } from '@/lib/types';
 
-type State = {
-  message: string;
-  status: 'error' | 'success' | '';
-  errors?: Record<string, string[]>;
-};
-
-const initialState: State = {
+const initialState: FormState = {
   message: '',
   status: '',
 };
 
 export default function ContactPage() {
   const { toast } = useToast();
-  const [state, setState] = useState<State>(initialState);
+  const [state, setState] = useState<FormState>(initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
   const formAction = async (formData: FormData) => {
