@@ -49,7 +49,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/" className="mr-6 flex items-center">
-          <Image src="/logo.svg" alt="MASI Insights Logo" width={120} height={30} priority />
+          <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={25} priority />
         </Link>
 
         <div className="hidden md:flex flex-1 items-center justify-center">

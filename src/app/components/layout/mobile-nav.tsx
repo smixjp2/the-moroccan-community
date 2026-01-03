@@ -65,7 +65,7 @@ export function MobileNav({ user, navLinks }: MobileNavProps) {
               </SheetTrigger>
               <SheetContent side="left">
                 <Link href="/" className="mr-6 flex items-center gap-2 mb-6">
-                  <Image src="/logo.svg" alt="MASI Insights Logo" width={120} height={30} />
+                  <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={25} />
                 </Link>
                 <NavLinks className="flex-col items-start space-y-4 text-lg" />
                 <div className="mt-8 flex flex-col gap-4">

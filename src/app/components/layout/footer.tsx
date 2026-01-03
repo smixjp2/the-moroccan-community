@@ -49,7 +49,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center">
-                <Image src="/logo.svg" alt="MASI Insights Logo" width={120} height={30} />
+                <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={25} />
             </Link>
             <p className="text-muted-foreground text-sm">
               Votre source de premier plan pour l'analyse du marché marocain et l'intelligence d'investissement.
@@ -78,7 +78,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} MASI Insights. Tous droits réservés.</p>
+          <p>&copy; {new Date().getFullYear()} The Moroccan Community. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
