@@ -7,9 +7,12 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, BarChart, Target, Gift } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
+const previewVideoUrl = "https://drive.google.com/file/d/1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs/preview";
+
 
 const highlights = [
   { icon: BookOpen, text: "+12 heures de vidéo à la demande" },
@@ -63,8 +66,32 @@ export default function FormationBourseCasablancaPage() {
         </div>
       </section>
       
+      {/* Video Preview Section */}
+      <section className="py-16 bg-card">
+        <div className="container">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+                <h2 className="font-headline text-3xl md:text-4xl font-bold">Un Aperçu de la Formation</h2>
+                <p className="mt-4 text-muted-foreground md:text-lg">
+                    Découvrez un extrait du cours pour vous faire une idée de la qualité du contenu et de notre approche pédagogique.
+                </p>
+            </div>
+            <div className="w-full max-w-4xl mx-auto">
+                <AspectRatio ratio={16 / 9} className="bg-black rounded-lg overflow-hidden shadow-lg">
+                    <iframe
+                    src={previewVideoUrl}
+                    title="Aperçu du Cours"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                    ></iframe>
+                </AspectRatio>
+            </div>
+        </div>
+      </section>
+
        {/* CTA Final */}
-       <section className="py-20 text-center bg-card">
+       <section className="py-20 text-center">
         <div className="container">
           <h2 className="font-headline text-3xl md:text-4xl font-bold">Prêt à Devenir un Expert de la Bourse Marocaine ?</h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
