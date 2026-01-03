@@ -27,6 +27,11 @@ export default function ContactPage() {
   const { toast } = useToast();
   const [state, setState] = useState<FormState>(initialState);
   const formRef = useRef<HTMLFormElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const formAction = async (formData: FormData) => {
     const result = await submitContactForm(state, formData);
@@ -100,18 +105,20 @@ export default function ContactPage() {
 
           <div>
             <Label htmlFor="subject">Sujet</Label>
-            <Select name="subject" required>
-              <SelectTrigger id="subject">
-                <SelectValue placeholder="Choisissez le sujet de votre message" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="question">Question générale</SelectItem>
-                <SelectItem value="partenariat">Partenariat</SelectItem>
-                <SelectItem value="support">Support technique</SelectItem>
-                <SelectItem value="presse">Presse</SelectItem>
-                <SelectItem value="autre">Autre</SelectItem>
-              </SelectContent>
-            </Select>
+            {isMounted && (
+              <Select name="subject" required>
+                <SelectTrigger id="subject">
+                  <SelectValue placeholder="Choisissez le sujet de votre message" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="question">Question générale</SelectItem>
+                  <SelectItem value="partenariat">Partenariat</SelectItem>
+                  <SelectItem value="support">Support technique</SelectItem>
+                  <SelectItem value="presse">Presse</SelectItem>
+                  <SelectItem value="autre">Autre</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
             {state.errors?.subject && (
               <p className="text-sm font-medium text-destructive mt-1">
                 {state.errors.subject[0]}
