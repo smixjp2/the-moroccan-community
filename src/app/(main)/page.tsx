@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,8 @@ import {
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Input } from '@/components/ui/input';
 import { FaqSection } from './faq-section';
+import { subscribeToNewsletter } from '@/app/actions/newsletter';
+import { useToast } from '@/hooks/use-toast';
 
 const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
 const featureImages = {
@@ -60,14 +62,43 @@ const features = [
   },
 ];
 
+type State = {
+  message: string;
+  status: 'error' | 'success' | '';
+};
+
+const initialState: State = {
+  message: '',
+  status: '',
+};
+
 export default function Home() {
+  const { toast } = useToast();
+  const [state, setState] = useState<State>(initialState);
   const formRef = useRef<HTMLFormElement>(null);
   
-  // La logique de soumission est temporairement désactivée pour la stabilité.
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Soumission du formulaire désactivée pour le moment.");
-  };
+  const formAction = async (formData: FormData) => {
+    const result = await subscribeToNewsletter(state, formData);
+    setState(result);
+  }
+
+  useEffect(() => {
+    if (state.status === 'success') {
+      toast({
+        title: 'Inscription réussie !',
+        description: state.message,
+      });
+      formRef.current?.reset();
+      setState(initialState);
+    } else if (state.status === 'error' && state.message) {
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: state.message,
+      });
+       setState(initialState);
+    }
+  }, [state, toast]);
 
   return (
     <>
@@ -226,7 +257,7 @@ export default function Home() {
           </div>
           <form
             ref={formRef}
-            onSubmit={handleSubmit}
+            action={formAction}
             className="flex w-full max-w-md items-center space-x-2 mx-auto"
           >
             <Input

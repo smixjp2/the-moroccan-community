@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,16 +14,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { submitContactForm } from '@/app/actions/contact';
+import { useToast } from '@/hooks/use-toast';
+
+type State = {
+  message: string;
+  status: 'error' | 'success' | '';
+  errors?: Record<string, string[]>;
+};
+
+const initialState: State = {
+  message: '',
+  status: '',
+};
 
 export default function ContactPage() {
+  const { toast } = useToast();
+  const [state, setState] = useState<State>(initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // La logique de soumission est temporairement désactivée pour la stabilité.
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Soumission du formulaire désactivée pour le moment.");
-    // Vous pouvez ajouter un toast ici pour informer l'utilisateur.
-  };
+  const formAction = async (formData: FormData) => {
+    const result = await submitContactForm(state, formData);
+    setState(result);
+  }
+
+  useEffect(() => {
+    if (state.status === 'success') {
+      toast({
+        title: 'Message Envoyé !',
+        description: state.message,
+      });
+      formRef.current?.reset();
+      setState(initialState);
+    } else if (state.status === 'error' && state.message && !state.errors) {
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: state.message,
+      });
+      setState(initialState);
+    }
+  }, [state, toast]);
 
   return (
     <div className="container py-12 md:py-16">
@@ -39,7 +70,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+        <form ref={formRef} action={formAction} className="space-y-6">
           <div>
             <Label htmlFor="name">Nom complet</Label>
             <Input
@@ -49,6 +80,11 @@ export default function ContactPage() {
               placeholder="Votre nom complet"
               required
             />
+            {state.errors?.name && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                {state.errors.name[0]}
+              </p>
+            )}
           </div>
 
           <div>
@@ -60,6 +96,11 @@ export default function ContactPage() {
               placeholder="votre@email.com"
               required
             />
+            {state.errors?.email && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                {state.errors.email[0]}
+              </p>
+            )}
           </div>
 
           <div>
@@ -76,6 +117,11 @@ export default function ContactPage() {
                 <SelectItem value="autre">Autre</SelectItem>
               </SelectContent>
             </Select>
+            {state.errors?.subject && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                {state.errors.subject[0]}
+              </p>
+            )}
           </div>
 
           <div>
@@ -87,6 +133,11 @@ export default function ContactPage() {
               required
               className="min-h-[150px]"
             />
+            {state.errors?.message && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                {state.errors.message[0]}
+              </p>
+            )}
           </div>
 
           <Button type="submit" size="lg" className="w-full">
