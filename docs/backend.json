@@ -108,7 +108,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Course",
       "type": "object",
-      "description": "Represents an investment course.",
+      "description": "Represents an investment course, including secure content links.",
       "properties": {
         "id": {
           "type": "string",
@@ -120,7 +120,7 @@
         },
         "description": {
           "type": "string",
-          "description": "Description of the course content."
+          "description": "Public description of the course content."
         },
         "price": {
           "type": "number",
@@ -129,6 +129,10 @@
         "instructor": {
           "type": "string",
           "description": "Instructor of the course."
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "The secure URL to the course video (e.g., Google Drive link). This should be protected by security rules."
         }
       },
       "required": [
@@ -169,6 +173,24 @@
         "email",
         "subscriptionDate"
       ]
+    },
+    "CourseEnrollment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course Enrollment",
+      "type": "object",
+      "description": "Represents a user's enrollment in a course.",
+      "properties": {
+        "enrollmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date the user enrolled in the course."
+        },
+        "courseId": {
+          "type": "string",
+          "description": "The ID of the enrolled course."
+        }
+      },
+      "required": ["enrollmentDate", "courseId"]
     }
   },
   "auth": {
@@ -234,7 +256,7 @@
           "schema": {
             "$ref": "#/backend/entities/Course"
           },
-          "description": "Stores information about investment courses. Global read access, restricted write access.",
+          "description": "Stores information about investment courses, including the secure video URL. Read access is restricted to enrolled users.",
           "params": [
             {
               "name": "courseId",
@@ -258,8 +280,29 @@
             }
           ]
         }
+      },
+      {
+        "path": "/users/{userId}/enrollments/{courseId}",
+        "definition": {
+          "entityName": "CourseEnrollment",
+          "schema": {
+            "$ref": "#/backend/entities/CourseEnrollment"
+          },
+          "description": "Stores a user's enrollment record for a specific course.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The ID of the user."
+            },
+            {
+              "name": "courseId",
+              "description": "The ID of the course."
+            }
+          ]
+        }
       }
     ],
-    "reasoning": "The Firestore data structure is designed to support the 'MASI Insights' application, focusing on Moroccan stock market analysis, bank and brokerage comparisons, investment courses, and a weekly newsletter. To ensure security and scalability, the structure prioritizes authorization independence and clear data segregation.  The design avoids hierarchical authorization dependencies (`get()` calls in security rules) by denormalizing relevant authorization data directly into the documents where it's needed.\n\n*   **Articles:** Stored in the `/articles` collection. No specific ownership, implying global read access with potentially restricted write access for admins.\n*   **Banks & Brokerages:** Stored in separate collections (`/banks` and `/brokerages`) for comparison purposes. Again, global read, restricted write.\n*   **Courses:** Stored in the `/courses` collection. Global read, restricted write.\n*   **Newsletter Subscriptions:** Stored in the `/newsletter_subscriptions` collection. Each document represents a user's subscription.  The `email` field serves as a unique identifier, and access is generally open for reading, but restricted for writing. User-specific data could also be stored under `/users/{userId}/subscriptions` to guarantee ownership and data privacy.\n\nThis structure is suitable for the application's requirements, offering simple and robust security rules.  It segregates data based on its nature (articles, banks, courses, subscriptions) to avoid mixing data with different access needs within the same collection. The use of separate collections for different entities also aligns with the DBAC principle, as role-based access control can be implemented by checking for the existence of documents in dedicated roles collections (e.g., `/roles_admin/{uid}`)."
+    "reasoning": "The Firestore data structure is designed to support the 'MASI Insights' application, focusing on Moroccan stock market analysis, bank and brokerage comparisons, investment courses, and a weekly newsletter. To ensure security and scalability, the structure prioritizes authorization independence and clear data segregation.  The design avoids hierarchical authorization dependencies (`get()` calls in security rules) by denormalizing relevant authorization data directly into the documents where it's needed.\n\n*   **Articles:** Stored in the `/articles` collection. No specific ownership, implying global read access with potentially restricted write access for admins.\n*   **Banks & Brokerages:** Stored in separate collections (`/banks` and `/brokerages`) for comparison purposes. Again, global read, restricted write.\n*   **Courses:** Stored in the `/courses` collection. Read access is restricted to users who have an enrollment document in `/users/{userId}/enrollments/{courseId}`.\n*   **Newsletter Subscriptions:** Stored in the `/newsletter_subscriptions` collection. Each document represents a user's subscription.  The `email` field serves as a unique identifier, and access is generally open for reading, but restricted for writing. User-specific data could also be stored under `/users/{userId}/subscriptions` to guarantee ownership and data privacy.\n\nThis structure is suitable for the application's requirements, offering simple and robust security rules.  It segregates data based on its nature (articles, banks, courses, subscriptions) to avoid mixing data with different access needs within the same collection. The use of separate collections for different entities also aligns with the DBAC principle, as role-based access control can be implemented by checking for the existence of documents in dedicated roles collections (e.g., `/roles_admin/{uid}`)."
   }
 }
+    

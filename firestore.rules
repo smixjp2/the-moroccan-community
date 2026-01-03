@@ -1,112 +1,110 @@
 /**
  * Core Philosophy: This ruleset establishes a "Public Information Portal" security model.
- * All core content collections (articles, banks, brokerages, courses) are publicly readable by anyone,
- * including unauthenticated users. All write operations (create, update, delete) to this content
- * are disabled by default, anticipating that only a future administrative role should have modification rights.
+ * Public content collections (articles, banks, brokerages) are publicly readable.
+ * All write operations to this content are disabled, anticipating an admin role.
+ * User-specific data and protected content (courses) are secured based on user authentication and explicit enrollment.
  *
- * Data Structure: The Firestore structure is flat, consisting of several top-level collections.
- * - /articles/{articleId}
- * - /banks/{bankId}
- * - /brokerages/{brokerageId}
- * - /courses/{courseId}
- * - /newsletter_subscriptions/{subscriptionId}
- * There are no user-specific subcollections, simplifying the rules by avoiding nested access checks.
+ * Data Structure:
+ * - /articles/{articleId} - Public
+ * - /banks/{bankId} - Public
+ * - /brokerages/{brokerageId} - Public
+ * - /courses/{courseId} - Protected content, readable only by enrolled users.
+ * - /users/{userId}/enrollments/{courseId} - Enrollment records, owner-write only.
+ * - /newsletter_subscriptions/{subscriptionId} - Public write-only.
  *
  * Key Security Decisions:
- * - Public Read-Only Content: To allow the application to function as a public data source,
- *   most collections are world-readable.
- * - Admin-Only Writes (Default Deny): In the absence of a defined administrative role, all
- *   write operations to informational content are explicitly denied (`if false`). This provides a secure
- *   default, requiring a developer to consciously implement and grant administrative privileges.
- * - Newsletter Privacy: The `/newsletter_subscriptions` collection is write-only for the public.
- *   Anyone can create a subscription, but no one can read, list, update, or delete entries.
- *   This prevents the harvesting of subscriber email addresses.
- *
- * Denormalization for Authorization: This ruleset does not require denormalization as there are no
- * complex ownership or collaborative features. The security model is based on global roles (public vs. admin)
- * rather than resource-specific permissions.
- *
- * Structural Segregation: The data model correctly uses separate top-level collections for each
- * distinct entity (e.g., `articles`, `banks`), which aligns perfectly with this security model,
- * as each collection can have its own simple, independent access rules.
+ * - Public Read-Only Content: To allow the app to function as a public data source, most collections are world-readable.
+ * - Admin-Only Writes (Default Deny): Writes to public content are denied (`if false`) for security.
+ * - Course Content Protection: Reading a `/courses/{courseId}` document is only allowed if a corresponding enrollment document exists at `/users/$(request.auth.uid)/enrollments/$(courseId)`. This is a critical security feature.
+ * - Enrollment Control: Users can only write to their own enrollment subcollection. They cannot create, update, or delete enrollments for other users.
+ * - Newsletter Privacy: The `/newsletter_subscriptions` collection is write-only for the public to prevent email harvesting.
  */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
     // Helper functions
-    /**
-     * @description Checks if a user is authenticated.
-     */
-    // function isSignedIn() {
-    //   return request.auth != null;
-    // }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEnrolled(courseId) {
+      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)/enrollments/$(courseId));
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
 
     /**
-     * @description Provides read-only access to articles for all users. Writes are disabled pending
-     *              the implementation of an admin role.
-     * @path /articles/{articleId}
-     * @allow (get) Any user, authenticated or not, can read an article.
-     * @deny (create) A user attempts to create a new article. This is denied.
-     * @principle Implements a "Public Read, Admin-Only Write" pattern, defaulting to deny all writes for security.
+     * @description Provides read-only access to articles for all users. Writes are disabled.
      */
     match /articles/{articleId} {
       allow get, list: if true;
-      // CRITICAL: Cannot implement owner-only writes. The 'Article' entity's 'author' field is a simple string, not a UID.
-      allow create, update, delete: if false; // TODO: Add admin validation once an admin role or custom claim is defined.
+      allow create, update, delete: if false; // Admin-only
     }
 
     /**
      * @description Provides read-only access to bank information for all users. Writes are disabled.
-     * @path /banks/{bankId}
-     * @allow (list) Any user, authenticated or not, can list all bank documents.
-     * @deny (update) An authenticated user attempts to update a bank's information. This is denied.
-     * @principle Implements a "Public Read, Admin-Only Write" pattern, defaulting to deny all writes for security.
      */
     match /banks/{bankId} {
       allow get, list: if true;
-      allow create, update, delete: if false; // TODO: Add admin validation once an admin role or custom claim is defined.
+      allow create, update, delete: if false; // Admin-only
     }
 
     /**
      * @description Provides read-only access to brokerage information for all users. Writes are disabled.
-     * @path /brokerages/{brokerageId}
-     * @allow (get) An anonymous user can read a specific brokerage document.
-     * @deny (delete) An authenticated user attempts to delete a brokerage document. This is denied.
-     * @principle Implements a "Public Read, Admin-Only Write" pattern, defaulting to deny all writes for security.
      */
     match /brokerages/{brokerageId} {
       allow get, list: if true;
-      allow create, update, delete: if false; // TODO: Add admin validation once an admin role or custom claim is defined.
+      allow create, update, delete: if false; // Admin-only
     }
 
     /**
-     * @description Provides read-only access to course information for all users. Writes are disabled.
+     * @description PROTECTED: Course content is only readable by users who are enrolled.
      * @path /courses/{courseId}
-     * @allow (list) Any user can query the list of available courses.
-     * @deny (create) An authenticated user attempts to create a new course. This is denied.
-     * @principle Implements a "Public Read, Admin-Only Write" pattern, defaulting to deny all writes for security.
+     * @allow (get) An authenticated and enrolled user can read the course document (including the video link).
+     * @deny (list) Listing all courses is denied to prevent leaking information. Public course info should be on the app's frontend.
+     * @deny (create) No user can create a course.
+     * @principle Implements a "Paywall" pattern. Access to a resource is granted based on the existence of a "ticket" (enrollment doc).
      */
     match /courses/{courseId} {
-      allow get, list: if true;
-      // CRITICAL: Cannot implement owner-only writes. The 'Course' entity's 'instructor' field is a simple string, not a UID.
-      allow create, update, delete: if false; // TODO: Add admin validation once an admin role or custom claim is defined.
+      allow get: if isEnrolled(courseId);
+      allow list, create, update, delete: if false; // TODO: Add admin validation for writes.
     }
+    
+    /**
+     * @description User-specific data, including course enrollments.
+     * @path /users/{userId}
+     */
+    match /users/{userId} {
+        // Users can only access their own user document.
+        allow get, update: if isOwner(userId);
+        
+        /**
+         * @description PROTECTED: Manages a user's course enrollments.
+         * @path /users/{userId}/enrollments/{courseId}
+         * @allow (get, list) A user can read their own enrollment records.
+         * @deny (create, update, delete) Users cannot self-enroll. This must be done server-side (e.g., after payment).
+         * @principle Owner-only read access for user-private data. Write access is restricted to prevent tampering.
+         */
+        match /enrollments/{courseId} {
+            allow get, list: if isOwner(userId);
+            // Deny client-side writes to prevent users from enrolling themselves for free.
+            // This operation must be handled by a trusted backend/admin process after payment.
+            allow create, update, delete: if false;
+        }
+    }
+
 
     /**
      * @description Allows any user to subscribe to the newsletter but prevents anyone from reading
      *              or modifying subscription data to protect user privacy.
-     * @path /newsletter_subscriptions/{subscriptionId}
-     * @allow (create) Any user, authenticated or not, can create a new newsletter subscription document.
-     * @deny (get) A user attempts to read another user's subscription document. This is denied to prevent email harvesting.
-     * @principle Implements a "Public Write-Once, No Read" pattern to protect personally identifiable information (PII).
      */
     match /newsletter_subscriptions/{subscriptionId} {
       allow create: if true;
-      allow get: if false;
-      allow list: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow get, list, update, delete: if false;
     }
   }
 }
+    
