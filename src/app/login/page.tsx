@@ -88,14 +88,6 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex-col">
-          <p className="mt-2 text-center text-sm text-muted-foreground">
-            Vous n'avez pas de compte ?{' '}
-            <Link href="/signup" className="font-semibold text-primary hover:underline">
-              Inscrivez-vous
-            </Link>
-          </p>
-        </CardFooter>
       </Card>
     </div>
   );

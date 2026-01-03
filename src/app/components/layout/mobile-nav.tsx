@@ -78,9 +78,6 @@ export function MobileNav({ user, navLinks }: MobileNavProps) {
                        <Button variant="outline" asChild>
                           <Link href="/login">Connexion</Link>
                        </Button>
-                       <Button asChild>
-                          <Link href="/signup">Inscription</Link>
-                       </Button>
                     </>
                   )}
                 </div>
@@ -89,4 +86,3 @@ export function MobileNav({ user, navLinks }: MobileNavProps) {
           </div>
     )
 }
-
