@@ -51,13 +51,18 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
   // @ts-ignore
   const curriculum = courseCurriculum[courseId];
 
-  const [selectedLesson, setSelectedLesson] = useState(curriculum?.modules[0]?.lessons[0]);
+  const announcementVideoUrl = "https://drive.google.com/file/d/1gwYtICDrJTRVDc-pI4qxQ3HCZLut9EOs/preview";
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   if (!curriculum) {
     return notFound();
   }
 
-  const videoSourceUrl = selectedLesson?.videoUrl || '';
+  // @ts-ignore
+  const videoSourceUrl = selectedLesson?.videoUrl || announcementVideoUrl;
+  // @ts-ignore
+  const isAnnouncement = !selectedLesson || !selectedLesson.videoUrl;
+
 
   return (
     <div className="flex h-[calc(100vh-4rem)] bg-muted/40">
@@ -65,10 +70,14 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
       <main className="flex-1 flex flex-col">
         <div className="flex-1 p-4 md:p-6 flex flex-col gap-6">
             <AspectRatio ratio={16 / 9} className="bg-black rounded-lg overflow-hidden shadow-lg flex items-center justify-center">
-                 <div className="w-full h-full flex flex-col items-center justify-center bg-gray-800 text-white">
-                    <Lock className="h-12 w-12 text-muted-foreground mb-4" />
-                    <p>Sélectionnez une leçon pour commencer.</p>
-                </div>
+                 <iframe
+                    src={videoSourceUrl}
+                    title="Lecteur Vidéo du Cours"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                ></iframe>
             </AspectRatio>
             <div className="flex-1">
                 <Tabs defaultValue="description" className="w-full">
@@ -77,8 +86,13 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
                         <TabsTrigger value="resources">Ressources</TabsTrigger>
                     </TabsList>
                     <TabsContent value="description" className="p-4 border rounded-b-md rounded-tr-md bg-background">
-                         <h1 className="text-2xl font-bold font-headline">{selectedLesson?.title}</h1>
-                         <p className="text-muted-foreground mt-2">Ceci est une description de la leçon. Elle peut contenir des points clés, des résumés ou des instructions.</p>
+                         <h1 className="text-2xl font-bold font-headline">{isAnnouncement ? "Annonce de la Formation" : selectedLesson?.title}</h1>
+                         <p className="text-muted-foreground mt-2">
+                             {isAnnouncement 
+                                ? "Bienvenue ! Regardez cette vidéo d'introduction avant de commencer votre formation."
+                                : "Ceci est une description de la leçon. Elle peut contenir des points clés, des résumés ou des instructions."
+                             }
+                        </p>
                     </TabsContent>
                     <TabsContent value="resources" className="p-4 border rounded-b-md rounded-tr-md bg-background">
                          <h2 className="text-xl font-semibold mb-4">Fichiers à Télécharger</h2>
@@ -121,7 +135,9 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
                     {module.lessons.map((lesson, lessonIndex) => (
                       <li key={lessonIndex}>
                         <button
+                          // @ts-ignore
                           onClick={() => setSelectedLesson(lesson)}
+                           // @ts-ignore
                           className={`w-full text-left flex items-start gap-3 p-4 text-sm transition-colors hover:bg-primary/10 ${selectedLesson?.title === lesson.title ? 'bg-primary/10' : ''}`}
                         >
                           <PlayCircle className="h-5 w-5 mt-0.5 text-muted-foreground flex-shrink-0" />
