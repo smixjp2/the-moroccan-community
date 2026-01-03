@@ -8,11 +8,11 @@ import { useAuth, FirebaseClientProvider } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
-function LoginPageContent() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -23,6 +23,10 @@ function LoginPageContent() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth) {
+        setError("Le service d'authentification n'est pas disponible.");
+        return;
+    }
     setIsLoading(true);
     setError(null);
     try {
@@ -52,8 +56,7 @@ function LoginPageContent() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-background px-4 py-12">
-      <Card className="w-full max-w-sm">
+     <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-headline">Connexion</CardTitle>
           <CardDescription>Accédez à votre tableau de bord personnel</CardDescription>
@@ -88,14 +91,15 @@ function LoginPageContent() {
           </form>
         </CardContent>
       </Card>
-    </div>
-  );
+  )
 }
 
 export default function LoginPage() {
     return (
-        <FirebaseClientProvider>
-            <LoginPageContent />
-        </FirebaseClientProvider>
+        <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+            <FirebaseClientProvider>
+                <LoginForm />
+            </FirebaseClientProvider>
+        </div>
     )
 }

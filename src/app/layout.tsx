@@ -1,8 +1,7 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import { FirebaseClientProvider } from "@/firebase";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "MASI Insights",
@@ -26,10 +25,9 @@ export default function RootLayout({
         <link rel="icon" href="/logo.svg" type="image/svg+xml" />
       </head>
       <body className="font-body antialiased">
-        <FirebaseClientProvider>
+        <Providers>
           {children}
-          <Toaster />
-        </FirebaseClientProvider>
+        </Providers>
       </body>
     </html>
   );
