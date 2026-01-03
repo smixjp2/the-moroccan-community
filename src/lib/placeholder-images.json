@@ -21,7 +21,7 @@
     {
       "id": "article-3",
       "description": "Image for an article about real estate investment in Morocco.",
-      "imageUrl": "https://images.unsplash.com/photo-1643875402004-22631ef914aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc2NjY3NDk3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1643875402004-22631ef914aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8fDE3NjY2NzQ5NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "city architecture"
     },
     {
@@ -79,9 +79,15 @@
       "imageHint": "excel sheet"
     },
     {
+      "id": "resource-financial-model",
+      "description": "Image for a financial analysis Excel template.",
+      "imageUrl": "https://images.unsplash.com/photo-1665686306574-1ace09918530?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsYXB0b3AlMjBmaW5hbmNpYWwlMjBjaGFydHxlbnwwfHx8fDE3MjI1Mzk3MTB8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "financial charts"
+    },
+    {
       "id": "resource-guide-account",
       "description": "Image for a guide on creating a brokerage account.",
-      "imageUrl": "https://images.unsplash.com/photo-1579642984417-0c00620f8e94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGd1aWRlfGVufDB8fHx8MTc2NzI1OTgzM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1579642984417-0c00620f8e94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N1bWVudCUyMGd1aWRlfGVufDB8fHx8fDE3NjcyNTk4MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "document guide"
     },
     {

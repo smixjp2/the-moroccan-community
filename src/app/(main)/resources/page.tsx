@@ -3,12 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Download, Clock } from "lucide-react";
+import { Download, Clock, ShoppingCart } from "lucide-react";
 import type { Resource } from "@/lib/types";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const resources: Resource[] = [
     {
+    id: "6",
+    title: "Template d'Analyse Financière (Excel)",
+    description: "Un modèle Excel complet pour réaliser vos propres analyses financières d'entreprises, incluant ratios clés, valorisation et projections.",
+    price: "100 DH",
+    href: "#",
+    imageUrl: PlaceHolderImages.find(p => p.id === 'resource-financial-model')?.imageUrl || '',
+    imageHint: PlaceHolderImages.find(p => p.id === 'resource-financial-model')?.imageHint || '',
+  },
+  {
     id: "4",
     title: "Guide : Créer un Compte-Titre à la Bourse de Casablanca",
     description: "Un guide PDF étape par étape pour ouvrir votre compte-titre auprès d'une société de bourse marocaine et commencer à investir.",
@@ -86,7 +95,9 @@ export default function ResourcesPage() {
                 <span className="text-2xl font-bold font-headline text-primary">{resource.price}</span>
                 <Button asChild className="font-bold" disabled={resource.price !== 'Gratuit'}>
                   <Link href={resource.href} target={resource.price === 'Gratuit' ? '_blank' : '_self'} rel="noopener noreferrer">
-                    {resource.price === 'Gratuit' ? (<><Download className="mr-2 h-4 w-4" /> Télécharger</>) : (<><Clock className="mr-2 h-4 w-4" /> Bientôt</>)}
+                    {resource.price === 'Gratuit' && <><Download className="mr-2 h-4 w-4" /> Télécharger</>}
+                    {resource.price === 'Bientôt' && <><Clock className="mr-2 h-4 w-4" /> Bientôt</>}
+                    {resource.price.endsWith('DH') && <><ShoppingCart className="mr-2 h-4 w-4" /> Acheter</>}
                   </Link>
                 </Button>
               </div>
