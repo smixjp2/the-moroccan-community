@@ -64,23 +64,11 @@ export default function CoursePlayerPage({ params }: { params: { courseId: strin
       {/* Main Content */}
       <main className="flex-1 flex flex-col">
         <div className="flex-1 p-4 md:p-6 flex flex-col gap-6">
-            <AspectRatio ratio={16 / 9} className="bg-black rounded-lg overflow-hidden shadow-lg">
-                {videoSourceUrl ? (
-                    <video
-                        controls
-                        controlsList="nodownload"
-                        src={videoSourceUrl}
-                        className="w-full h-full"
-                        onContextMenu={(e) => e.preventDefault()} // Empêche le clic droit
-                    >
-                        Votre navigateur ne supporte pas la lecture de vidéos.
-                    </video>
-                ): (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gray-800 text-white">
-                        <Lock className="h-12 w-12 text-muted-foreground mb-4" />
-                        <p>Sélectionnez une leçon pour commencer.</p>
-                    </div>
-                )}
+            <AspectRatio ratio={16 / 9} className="bg-black rounded-lg overflow-hidden shadow-lg flex items-center justify-center">
+                 <div className="w-full h-full flex flex-col items-center justify-center bg-gray-800 text-white">
+                    <Lock className="h-12 w-12 text-muted-foreground mb-4" />
+                    <p>Sélectionnez une leçon pour commencer.</p>
+                </div>
             </AspectRatio>
             <div className="flex-1">
                 <Tabs defaultValue="description" className="w-full">
