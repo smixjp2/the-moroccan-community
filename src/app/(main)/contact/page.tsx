@@ -1,15 +1,12 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
-import { useToast } from '@/hooks/use-toast';
+import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2, Send } from 'lucide-react';
-import { submitContactForm } from '@/app/actions/contact';
+import { Send } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -18,56 +15,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" size="lg" disabled={pending} className="w-full">
-      {pending ? (
-        <Loader2 className="animate-spin" />
-      ) : (
-        <>
-          Envoyer le Message <Send className="ml-2" />
-        </>
-      )}
-    </Button>
-  );
-}
-
-type State = {
-  message: string;
-  errors?: Record<string, string[]>;
-  status: string;
-};
-
 export default function ContactPage() {
-  const { toast } = useToast();
-  const [state, setState] = useState<State>({
-    message: '',
-    errors: {},
-    status: '',
-  });
   const formRef = useRef<HTMLFormElement>(null);
 
-  const formAction = async (formData: FormData) => {
-    const result = await submitContactForm(null, formData);
-    setState(result);
+  // La logique de soumission est temporairement désactivée pour la stabilité.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Soumission du formulaire désactivée pour le moment.");
+    // Vous pouvez ajouter un toast ici pour informer l'utilisateur.
   };
-
-  useEffect(() => {
-    if (state.status === 'success') {
-      toast({
-        title: 'Message envoyé !',
-        description: state.message,
-      });
-      formRef.current?.reset();
-    } else if (state.status === 'error' && state.message && !state.errors) {
-      toast({
-        title: 'Erreur',
-        description: state.message,
-        variant: 'destructive',
-      });
-    }
-  }, [state, toast]);
 
   return (
     <div className="container py-12 md:py-16">
@@ -83,7 +39,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <form ref={formRef} action={formAction} className="space-y-6">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="name">Nom complet</Label>
             <Input
@@ -93,11 +49,6 @@ export default function ContactPage() {
               placeholder="Votre nom complet"
               required
             />
-            {state?.errors?.name && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {state.errors.name[0]}
-              </p>
-            )}
           </div>
 
           <div>
@@ -109,11 +60,6 @@ export default function ContactPage() {
               placeholder="votre@email.com"
               required
             />
-            {state?.errors?.email && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {state.errors.email[0]}
-              </p>
-            )}
           </div>
 
           <div>
@@ -130,11 +76,6 @@ export default function ContactPage() {
                 <SelectItem value="autre">Autre</SelectItem>
               </SelectContent>
             </Select>
-            {state?.errors?.subject && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {state.errors.subject[0]}
-              </p>
-            )}
           </div>
 
           <div>
@@ -146,14 +87,11 @@ export default function ContactPage() {
               required
               className="min-h-[150px]"
             />
-            {state?.errors?.message && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {state.errors.message[0]}
-              </p>
-            )}
           </div>
 
-          <SubmitButton />
+          <Button type="submit" size="lg" className="w-full">
+            Envoyer le Message <Send className="ml-2" />
+          </Button>
         </form>
       </div>
     </div>

@@ -1,9 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
-import { useToast } from '@/hooks/use-toast';
+import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -19,12 +17,10 @@ import {
   Newspaper,
   GraduationCap,
   Crown,
-  Loader2,
   Wrench,
 } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Input } from '@/components/ui/input';
-import { subscribeToNewsletter } from '@/app/actions/newsletter';
 import { FaqSection } from './faq-section';
 
 const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
@@ -64,40 +60,14 @@ const features = [
   },
 ];
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" size="lg" disabled={pending}>
-      {pending ? <Loader2 className="animate-spin" /> : "S'abonner"}
-    </Button>
-  );
-}
-
 export default function Home() {
-  const { toast } = useToast();
-  const [state, setState] = useState({ message: '', status: '' });
   const formRef = useRef<HTMLFormElement>(null);
-
-  const formAction = async (formData: FormData) => {
-    const result = await subscribeToNewsletter(null, formData);
-    setState(result);
+  
+  // La logique de soumission est temporairement désactivée pour la stabilité.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Soumission du formulaire désactivée pour le moment.");
   };
-
-  useEffect(() => {
-    if (state.status === 'success') {
-      toast({
-        title: 'Inscription réussie !',
-        description: state.message,
-      });
-      formRef.current?.reset();
-    } else if (state.status === 'error' && state.message) {
-      toast({
-        title: "Erreur d'inscription",
-        description: state.message,
-        variant: 'destructive',
-      });
-    }
-  }, [state, toast]);
 
   return (
     <>
@@ -256,7 +226,7 @@ export default function Home() {
           </div>
           <form
             ref={formRef}
-            action={formAction}
+            onSubmit={handleSubmit}
             className="flex w-full max-w-md items-center space-x-2 mx-auto"
           >
             <Input
@@ -266,7 +236,7 @@ export default function Home() {
               className="flex-1 py-6"
               required
             />
-            <SubmitButton />
+            <Button type="submit" size="lg">S'abonner</Button>
           </form>
         </div>
       </section>

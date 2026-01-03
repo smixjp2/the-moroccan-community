@@ -1,50 +1,21 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useRef } from 'react';
 import Image from 'next/image';
-import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Instagram, Youtube, Loader2 } from 'lucide-react';
+import { Instagram, Youtube } from 'lucide-react';
 import Link from 'next/link';
-import { subscribeToNewsletter } from '@/app/actions/newsletter';
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" variant="default" disabled={pending}>
-      {pending ? <Loader2 className="animate-spin" /> : "S'abonner"}
-    </Button>
-  );
-}
 
 export function Footer() {
-  const { toast } = useToast();
-  const [state, setState] = useState({ message: '', status: '' });
   const formRef = useRef<HTMLFormElement>(null);
 
-  const formAction = async (formData: FormData) => {
-    const result = await subscribeToNewsletter(null, formData);
-    setState(result);
+  // La logique de soumission est temporairement désactivée pour la stabilité.
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Soumission du formulaire désactivée pour le moment.");
   };
-
-  useEffect(() => {
-    if (state.status === 'success') {
-      toast({
-        title: 'Inscription réussie !',
-        description: state.message,
-      });
-      formRef.current?.reset();
-    } else if (state.status === 'error' && state.message) {
-      toast({
-        title: "Erreur d'inscription",
-        description: state.message,
-        variant: 'destructive',
-      });
-    }
-  }, [state, toast]);
 
   return (
     <footer className="border-t bg-card text-card-foreground">
@@ -106,7 +77,7 @@ export function Footer() {
             </p>
             <form
               ref={formRef}
-              action={formAction}
+              onSubmit={handleSubmit}
               className="flex w-full max-w-md items-center space-x-2"
             >
               <Input
@@ -116,7 +87,7 @@ export function Footer() {
                 className="flex-1"
                 required
               />
-              <SubmitButton />
+              <Button type="submit" variant="default">S'abonner</Button>
             </form>
           </div>
         </div>
