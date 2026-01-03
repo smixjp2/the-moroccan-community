@@ -1,20 +1,12 @@
 
+
 'use client';
 
 import Image from "next/image";
-import { useMemo } from 'react';
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, BarChart, Target, Gift, Check, Clock, Lock, Unlock } from "lucide-react";
+import { BookOpen, BarChart, Target, Gift } from "lucide-react";
 import { CourseCurriculum } from "./course-curriculum";
-import { CourseVideo } from "./course-video";
-import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
-import { doc } from 'firebase/firestore';
-import { Skeleton } from "@/components/ui/skeleton";
-import { courses as coursesData } from "@/lib/courses-data";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
@@ -26,70 +18,8 @@ const highlights = [
   { icon: Gift, text: "Accès à un groupe privé et des lives mensuels" },
 ];
 
-function ProtectedCourseContent({ isEnrolled, videoUrl }: { isEnrolled: boolean, videoUrl?: string }) {
-    if (!isEnrolled) {
-        return (
-             <div className="container py-16 text-center">
-                <Card className="max-w-2xl mx-auto p-8">
-                    <Lock className="h-12 w-12 mx-auto text-primary mb-4" />
-                    <h2 className="font-headline text-2xl font-bold">Contenu Réservé aux Membres</h2>
-                    <p className="text-muted-foreground mt-2">
-                        Vous devez être inscrit à ce cours pour accéder au contenu vidéo et aux modules détaillés.
-                    </p>
-                </Card>
-            </div>
-        )
-    }
-
-    return (
-        <div className="container py-16 text-center">
-            <Card className="max-w-2xl mx-auto p-8">
-                <Unlock className="h-12 w-12 mx-auto text-primary mb-4" />
-                <h2 className="font-headline text-2xl font-bold">Vous êtes inscrit !</h2>
-                <p className="text-muted-foreground mt-2">
-                    Accédez à votre formation directement depuis votre tableau de bord personnel.
-                </p>
-                <Button asChild className="mt-6">
-                    <Link href={`/dashboard/my-courses/${courseId}`}>
-                        Accéder au cours
-                    </Link>
-                </Button>
-            </Card>
-        </div>
-    )
-}
-
-function CoursePageSkeleton() {
-    return (
-        <div className="container py-16">
-            <Card className="max-w-2xl mx-auto p-8">
-                 <div className="flex flex-col items-center space-y-4">
-                    <Skeleton className="h-12 w-12 rounded-full" />
-                    <Skeleton className="h-8 w-64" />
-                    <Skeleton className="h-4 w-80" />
-                </div>
-            </Card>
-        </div>
-    )
-}
-
 
 export default function FormationBourseCasablancaPage() {
-  const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
-
-  const enrollmentRef = useMemoFirebase(() => {
-    if (!user || !firestore) return null;
-    return doc(firestore, 'users', user.uid, 'enrollments', courseId);
-  }, [user, firestore]);
-  
-  const { data: enrollment, isLoading: isEnrollmentLoading } = useDoc(enrollmentRef);
-
-  const isEnrolled = !!enrollment;
-  const isLoading = isUserLoading || isEnrollmentLoading;
-
-  const courseData = coursesData.find(c => c.id === courseId);
-  
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -133,7 +63,18 @@ export default function FormationBourseCasablancaPage() {
         </div>
       </section>
       
-      {isLoading ? <CoursePageSkeleton /> : <ProtectedCourseContent isEnrolled={isEnrolled} videoUrl={courseData?.videoUrl} />}
+       {/* CTA Final */}
+       <section className="py-20 text-center bg-card">
+        <div className="container">
+          <h2 className="font-headline text-3xl md:text-4xl font-bold">Prêt à Devenir un Expert de la Bourse Marocaine ?</h2>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            Rejoignez des centaines d'investisseurs et prenez en main votre avenir financier. L'inscription vous donne un accès à vie.
+          </p>
+          <div className="mt-8">
+             <CourseCurriculum />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
