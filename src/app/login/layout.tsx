@@ -1,4 +1,3 @@
-import { FirebaseClientProvider } from "@/firebase";
 
 export default function LoginLayout({
   children,
@@ -6,8 +5,8 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <FirebaseClientProvider>
+    <>
         {children}
-    </FirebaseClientProvider>
+    </>
   );
 }

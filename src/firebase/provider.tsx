@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
@@ -34,9 +35,9 @@ export interface FirebaseContextState {
 
 // Return type for useFirebase()
 export interface FirebaseServicesAndUser {
-  firebaseApp: FirebaseApp;
-  firestore: Firestore;
-  auth: Auth;
+  firebaseApp: FirebaseApp | null;
+  firestore: Firestore | null;
+  auth: Auth | null;
   user: User | null;
   isUserLoading: boolean;
   userError: Error | null;
@@ -119,11 +120,16 @@ export const useFirebase = (): FirebaseServicesAndUser => {
   const context = useContext(FirebaseContext);
 
   if (context === undefined) {
-    throw new Error('useFirebase must be used within a FirebaseProvider.');
-  }
-
-  if (!context.areServicesAvailable || !context.firebaseApp || !context.firestore || !context.auth) {
-    throw new Error('Firebase core services not available. Check FirebaseProvider props.');
+    // This case happens on the server, or if the component is outside the provider.
+    // Instead of throwing, we return a loading-like state.
+    return {
+      firebaseApp: null,
+      firestore: null,
+      auth: null,
+      user: null,
+      isUserLoading: true,
+      userError: null
+    };
   }
 
   return {
@@ -137,19 +143,19 @@ export const useFirebase = (): FirebaseServicesAndUser => {
 };
 
 /** Hook to access Firebase Auth instance. */
-export const useAuth = (): Auth => {
+export const useAuth = (): Auth | null => {
   const { auth } = useFirebase();
   return auth;
 };
 
 /** Hook to access Firestore instance. */
-export const useFirestore = (): Firestore => {
+export const useFirestore = (): Firestore | null => {
   const { firestore } = useFirebase();
   return firestore;
 };
 
 /** Hook to access Firebase App instance. */
-export const useFirebaseApp = (): FirebaseApp => {
+export const useFirebaseApp = (): FirebaseApp | null => {
   const { firebaseApp } = useFirebase();
   return firebaseApp;
 };

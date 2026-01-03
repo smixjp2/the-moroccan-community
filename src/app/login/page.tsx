@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useAuth, FirebaseClientProvider } from '@/firebase';
+import { useAuth } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +12,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 
-function LoginForm() {
+
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +57,8 @@ function LoginForm() {
   };
 
   return (
-     <Card className="w-full max-w-sm">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-headline">Connexion</CardTitle>
           <CardDescription>Accédez à votre tableau de bord personnel</CardDescription>
@@ -91,15 +93,6 @@ function LoginForm() {
           </form>
         </CardContent>
       </Card>
+    </div>
   )
-}
-
-export default function LoginPage() {
-    return (
-        <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
-            <FirebaseClientProvider>
-                <LoginForm />
-            </FirebaseClientProvider>
-        </div>
-    )
 }
