@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef, useActionState } from "react";
@@ -49,7 +50,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center">
-                <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={25} />
+                <Image src="/logo.svg" alt="The Moroccan Community Logo" width={200} height={40} />
             </Link>
             <p className="text-muted-foreground text-sm">
               Votre source de premier plan pour l'analyse du marché marocain et l'intelligence d'investissement.

@@ -1,20 +1,29 @@
-<svg
-  width="240"
-  height="30"
-  viewBox="0 0 240 30"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
+<svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .text {
       font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      fill: hsl(var(--foreground));
+      font-size: 16px;
+      font-weight: 600;
     }
-    .dark .text {
-      fill: hsl(var(--foreground));
+    .primary {
+      fill: hsl(75, 71%, 41%);
+    }
+    .foreground {
+      fill: hsl(224, 71%, 4%);
+    }
+    .dark .foreground {
+      fill: hsl(210, 20%, 98%);
     }
   </style>
-  <text x="5" y="20" class="text">THE MOROCCAN COMMUNITY</text>
+  <g clip-path="url(#clip0)">
+    <text x="0" y="25" class="text">
+      <tspan class="foreground">The Moroccan </tspan>
+      <tspan class="primary">Community</tspan>
+    </text>
+  </g>
+  <defs>
+    <clipPath id="clip0">
+      <rect width="200" height="40" fill="white"/>
+    </clipPath>
+  </defs>
 </svg>
