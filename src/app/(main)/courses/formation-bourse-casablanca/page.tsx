@@ -13,6 +13,8 @@ import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { Skeleton } from "@/components/ui/skeleton";
 import { courses as coursesData } from "@/lib/courses-data";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const courseId = "formation-bourse-casablanca";
 const courseImage = PlaceHolderImages.find(p => p.id === 'course-casablanca-bourse');
@@ -40,56 +42,20 @@ function ProtectedCourseContent({ isEnrolled, videoUrl }: { isEnrolled: boolean,
     }
 
     return (
-        <>
-            <section className="py-12">
-                <div className="container">
-                    <CourseVideo videoUrl={videoUrl || ''} />
-                </div>
-            </section>
-             {/* Course For Who Section */}
-            <section className="py-16">
-                <div className="container grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 className="font-headline text-3xl md:text-4xl font-bold">À qui s'adresse cette formation ?</h2>
-                    <p className="mt-4 text-muted-foreground">
-                    Que vous soyez un débutant absolu ou un investisseur cherchant à se perfectionner sur le marché marocain, cette formation est faite pour vous.
-                    </p>
-                    <ul className="mt-6 space-y-4">
-                    <li className="flex items-start">
-                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                        <span><strong>Les débutants</strong> qui veulent investir leur premier dirham en bourse de manière intelligente.</span>
-                    </li>
-                    <li className="flex items-start">
-                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                        <span><strong>Les investisseurs intermédiaires</strong> qui souhaitent professionnaliser leur approche sur le marché marocain.</span>
-                    </li>
-                    <li className="flex items-start">
-                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                        <span>Ceux qui en ont marre de suivre des conseils génériques et veulent une <strong>analyse 100% adaptée au Maroc.</strong></span>
-                    </li>
-                    <li className="flex items-start">
-                        <Check className="h-6 w-6 text-primary mr-3 flex-shrink-0" />
-                        <span>Les <strong>futurs retraités</strong> qui veulent construire un portefeuille de dividendes solide.</span>
-                    </li>
-                    </ul>
-                </div>
-                <div>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="font-headline">Ce que vous saurez faire après la formation</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <p>✅ Analyser n'importe quelle action marocaine de A à Z.</p>
-                            <p>✅ Lire et comprendre les rapports financiers des entreprises cotées.</p>
-                            <p>✅ Construire et gérer un portefeuille diversifié et performant.</p>
-                            <p>✅ Utiliser les plateformes de courtage marocaines sans stress.</p>
-                            <p>✅ Éviter les erreurs coûteuses spécifiques au marché marocain.</p>
-                        </CardContent>
-                    </Card>
-                </div>
-                </div>
-            </section>
-        </>
+        <div className="container py-16 text-center">
+            <Card className="max-w-2xl mx-auto p-8">
+                <Unlock className="h-12 w-12 mx-auto text-primary mb-4" />
+                <h2 className="font-headline text-2xl font-bold">Vous êtes inscrit !</h2>
+                <p className="text-muted-foreground mt-2">
+                    Accédez à votre formation directement depuis votre tableau de bord personnel.
+                </p>
+                <Button asChild className="mt-6">
+                    <Link href={`/dashboard/my-courses/${courseId}`}>
+                        Accéder au cours
+                    </Link>
+                </Button>
+            </Card>
+        </div>
     )
 }
 
@@ -118,11 +84,9 @@ export default function FormationBourseCasablancaPage() {
   }, [user, firestore]);
   
   const { data: enrollment, isLoading: isEnrollmentLoading } = useDoc(enrollmentRef);
-  
-  // For now, we simulate being enrolled if the user is logged in
-  // and we use the local data for the video URL.
-  const isEnrolled = true; 
-  const isLoading = false;
+
+  const isEnrolled = !!enrollment;
+  const isLoading = isUserLoading || isEnrollmentLoading;
 
   const courseData = coursesData.find(c => c.id === courseId);
   

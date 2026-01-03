@@ -4,31 +4,33 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { BookOpen, Bookmark, Shield, User as UserIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/firebase';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
-  const user = {
-      displayName: 'Investisseur',
-      email: 'exemple@email.com'
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
+
+  if (isUserLoading || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+        <p>Chargement...</p>
+      </div>
+    );
   }
 
-  // NOTE: La logique de redirection a été temporairement retirée
-  // pour faciliter la prévisualisation du design.
-  //   const { user, isUserLoading } = useUser();
-  //   const router = useRouter();
-
-  //   useEffect(() => {
-  //     if (!isUserLoading && !user) {
-  //       router.push('/login');
-  //     }
-  //   }, [user, isUserLoading, router]);
-
-  //   if (isUserLoading || !user) {
-  //     return (
-  //       <div className="flex items-center justify-center min-h-screen">
-  //         <p>Chargement...</p>
-  //       </div>
-  //     );
-  //   }
+  // Example course enrollment
+  const enrolledCourses = [
+    { id: 'formation-bourse-casablanca', title: 'De Zéro à Héros : La Formation Complète sur la Bourse de Casablanca', progress: 25 }
+  ];
 
   return (
     <div className="container py-12 md:py-16">
@@ -49,9 +51,6 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <p><strong>Email:</strong> {user.email}</p>
-                    {/* Future functionality:
-                    <Button variant="link" className="p-0 h-auto mt-2">Modifier le profil</Button> 
-                    */}
                 </CardContent>
             </Card>
 
@@ -64,23 +63,10 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    {/* This would be dynamic based on user's quiz results */}
                     <p className="text-2xl font-bold font-headline text-yellow-500">Équilibré</p>
-                    <p className="text-sm text-muted-foreground mt-1">Vous recherchez un bon compromis entre la performance et le risque.</p>
-                </CardContent>
-            </Card>
-
-            <Card className="md:col-span-2">
-                <CardHeader className="flex flex-row items-center gap-4">
-                    <Bookmark className="h-8 w-8 text-primary" />
-                    <div>
-                        <CardTitle>Mes Articles Favoris</CardTitle>
-                        <CardDescription>Vos analyses et articles sauvegardés.</CardDescription>
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    {/* This would be populated from user's saved items in Firestore */}
-                    <p className="text-center text-sm text-muted-foreground mt-4">La fonctionnalité de sauvegarde sera bientôt disponible.</p>
+                    <Button variant="link" className="p-0 h-auto" asChild>
+                        <Link href="/tools/investor-profile-quiz">Refaire le quiz</Link>
+                    </Button>
                 </CardContent>
             </Card>
 
@@ -93,8 +79,19 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    {/* This would be populated from user's enrolled courses */}
-                    <p className="text-center text-sm text-muted-foreground mt-4">Le suivi de la progression sera bientôt disponible.</p>
+                    <ul className="space-y-4">
+                        {enrolledCourses.map(course => (
+                            <li key={course.id}>
+                                <Link href={`/dashboard/my-courses/${course.id}`} className="block p-4 rounded-lg hover:bg-accent">
+                                    <div className="flex justify-between items-center">
+                                        <p className="font-semibold">{course.title}</p>
+                                        <Button variant="secondary">Reprendre</Button>
+                                    </div>
+                                    {/* Future: <Progress value={course.progress} className="mt-2" /> */}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
                 </CardContent>
             </Card>
         </div>
