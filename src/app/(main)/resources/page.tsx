@@ -10,8 +10,8 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 const resources: Resource[] = [
     {
     id: "6",
-    title: "Template d'Analyse Financière (Excel)",
-    description: "Un modèle Excel complet pour réaliser vos propres analyses financières d'entreprises, incluant ratios clés, valorisation et projections.",
+    title: "Calculateur de Frais (Wafabourse) & Suivi de Portefeuille",
+    description: "Un modèle Excel pour calculer les frais de transaction de Wafabourse, l'impôt sur la plus-value, et suivre la performance de votre portefeuille d'actions.",
     price: "100 DH",
     href: "#",
     imageUrl: PlaceHolderImages.find(p => p.id === 'resource-financial-model')?.imageUrl || '',
